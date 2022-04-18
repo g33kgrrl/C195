@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.AddCustomerController">
+    <children>
+        <TextField fx:id="idText" disable="true" editable="false" layoutX="165.0" layoutY="100.0" prefHeight="24.0" prefWidth="142.0" promptText="Auto Gen - Disabled" style="font-style: italic;" />
+        <TextField fx:id="nameText" layoutX="165.0" layoutY="135.0" prefHeight="24.0" prefWidth="142.0" promptText="Part Name" />
+        <TextField fx:id="inventoryText" layoutX="165.0" layoutY="170.0" prefHeight="24.0" prefWidth="142.0" promptText="Part Inventory" />
+        <TextField fx:id="priceText" layoutX="165.0" layoutY="205.0" prefHeight="24.0" prefWidth="142.0" promptText="Part Price/Cost" />
+        <TextField fx:id="maxText" layoutX="165.0" layoutY="240.0" prefHeight="24.0" prefWidth="142.0" promptText="Part Inv Max" />
+        <Button layoutX="406.0" layoutY="346.0" mnemonicParsing="false" onAction="#onSaveButtonAction" prefHeight="33.0" prefWidth="67.0" text="Save" />
+        <Button layoutX="486.0" layoutY="346.0" mnemonicParsing="false" onAction="#onCancelButtonAction" prefHeight="33.0" prefWidth="70.0" text="Cancel" />
+        <Label layoutX="50.0" layoutY="104.0" text="ID" />
+        <Label layoutX="50.0" layoutY="139.0" text="Name" />
+        <Label layoutX="50.0" layoutY="174.0" text="Address" />
+        <Label layoutX="50.0" layoutY="209.0" text="Postal Code" />
+        <Label layoutX="50.0" layoutY="244.0" text="Phone" />
+        <Label layoutX="342.0" layoutY="174.0" text="Division" />
+        <Label layoutX="342.0" layoutY="209.0" text="Country" />
+      <ComboBox fx:id="minText" layoutX="398.0" layoutY="170.0" prefWidth="150.0" />
+      <ComboBox fx:id="sourceText" layoutX="398.0" layoutY="205.0" prefWidth="150.0" />
+    </children>
+</AnchorPane>

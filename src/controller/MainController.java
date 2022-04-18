@@ -1,72 +1,106 @@
 package controller;
 
 import javafx.event.ActionEvent;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.control.*;
-import model.User;
+import javafx.scene.Node;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.scene.control.Button;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
+import javafx.scene.control.TextField;
+import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.stage.Stage;
 
-import java.io.IOException;
 import java.net.URL;
-import java.time.LocalDateTime;
 import java.util.ResourceBundle;
+import java.io.IOException;
+
 
 public class MainController implements Initializable {
+    public Button AddPartButton;
+    public Button ModifyPartButton;
+    public Button DeletePartButton;
+    public Button AddProductButton;
+    public Button ModifyProductButton;
+    public Button DeleteProductButton;
+    public TableView PartsTable;
+    public TableView ProductsTable;
+    public TextField SearchParts;
+    public TextField SearchProducts;
+    public TableColumn partIdCol;
+    public TableColumn partNameCol;
+    public TableColumn partInvCol;
+    public TableColumn partPriceCol;
+    public TableColumn prodIdCol;
+    public TableColumn prodNameCol;
+    public TableColumn prodInvCol;
+    public TableColumn prodPriceCol;
 
-    public TextField userName;
-    public TextField password;
-    public Label zoneIdLabel;
-
-    private int zoneId = 1; // TODO: Query location?
-    private User user;
-
-    /***
-     * Initializes login screen.
-     * Determines the user’s location and displays it in a label on the login form.
-     * Displays the login form in English or French based on the user’s computer
-     * language setting to translate all the text, labels, buttons, and errors on the
-     * form. Automatically translates error control messages into English or French
-     * based on the user’s computer language setting.
-     *
-     * @param url
-     * @param resourceBundle
+    /**
+     * Sets up and displays main screen.
+     * Initializes part and product tables, and populates them with current inventory items.
+     * @param url the url
+     * @param resourceBundle the resource bundle
      */
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        if (zoneId == 1) {
-            zoneIdLabel.setText("Anytown USA");
-        }
+        // Parts table
+        partIdCol.setCellValueFactory(new PropertyValueFactory<>("id"));
+        partNameCol.setCellValueFactory(new PropertyValueFactory<>("name"));
+        partPriceCol.setCellValueFactory(new PropertyValueFactory<>("price"));
+        partInvCol.setCellValueFactory(new PropertyValueFactory<>("stock"));
+
+//        PartsTable.setItems(Inventory.getAllParts());
+
+        // Products table
+        prodIdCol.setCellValueFactory(new PropertyValueFactory<>("id"));
+        prodNameCol.setCellValueFactory(new PropertyValueFactory<>("name"));
+        prodPriceCol.setCellValueFactory(new PropertyValueFactory<>("price"));
+        prodInvCol.setCellValueFactory(new PropertyValueFactory<>("stock"));
+
+//        ProductsTable.setItems(Inventory.getAllProducts());
     }
 
-    /***
-     * Handles login submit request.
-     * Check that user has entered a valid username/password pair, and if so, launches
-     * the main screen. If not, displays an error message prompting user to try again.
-     *
-     * @param actionEvent
+    /**
+     * Navigates user back to the main screen.
+     * @param mainEvent an event requiring redirect to main screen
+     * @throws IOException for input/output exceptions
      */
-    public void onSubmitButtonAction(ActionEvent actionEvent) {
-        if (userName.getText().equals("foo") && password.getText().equals("bar")) {
-            System.out.println("Authenticated!");
-            displayUser();
-        } else {
-            Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setTitle("Login failed");
-            alert.setContentText("Please check your username and password and try again.");
-            alert.showAndWait();
-        }
+    public static void toMain(ActionEvent mainEvent) throws IOException {
+        Parent root = FXMLLoader.load(MainController.class.getResource("/view/Main.fxml"));
+        Stage stage = (Stage)((Node)mainEvent.getSource()).getScene().getWindow();
+        Scene scene = new Scene(root);
+        stage.setTitle("Main");
+        stage.setScene(scene);
+        stage.show();
     }
 
-    public void displayUser() {
-        user = addDummyData();
-        // index = Inventory.getAllParts().indexOf(part);
-        System.out.println(user.getUserId());
-        System.out.println(user.getUserName());
+    public void onAddCustomerButtonAction(ActionEvent actionEvent) {
     }
 
+    public void onModifyCustomerButtonAction(ActionEvent actionEvent) {
+    }
 
-    public static User addDummyData() {
-        User user1 = new User(1, "Ann", "foobar", LocalDateTime.now(), "Lisa", LocalDateTime.now(), "James");
+    public void onDeleteCustomerButtonAction(ActionEvent actionEvent) {
+    }
 
-        return user1;
+    public void onSearchCustomerHandler(ActionEvent actionEvent) {
+    }
+
+    public void onAddApptButtonAction(ActionEvent actionEvent) {
+    }
+
+    public void onModifyApptButtonAction(ActionEvent actionEvent) {
+    }
+
+    public void onDeleteApptButtonAction(ActionEvent actionEvent) {
+    }
+
+    public void onSearchApptsHandler(ActionEvent actionEvent) {
+    }
+
+    public void onExitButtonAction(ActionEvent actionEvent) {
     }
 }
