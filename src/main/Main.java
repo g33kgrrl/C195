@@ -1,5 +1,6 @@
-package sample;
+package main;
 
+import dao.JDBC;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -10,9 +11,9 @@ public class Main extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception{
-        Parent root = FXMLLoader.load(getClass().getResource("sample.fxml"));
-        primaryStage.setTitle("Testing 123 - git");
-        primaryStage.setScene(new Scene(root, 300, 275));
+        Parent root = FXMLLoader.load(getClass().getResource("/view/Main.fxml"));
+        primaryStage.setTitle("Log In");
+        primaryStage.setScene(new Scene(root));
         primaryStage.show();
     }
 
