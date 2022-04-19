@@ -6,14 +6,12 @@ import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
 
 import java.net.URL;
+import java.util.Optional;
 import java.util.ResourceBundle;
 import java.io.IOException;
 
@@ -77,7 +75,19 @@ public class MainController implements Initializable {
         stage.show();
     }
 
-    public void onAddCustomerButtonAction(ActionEvent actionEvent) {
+    /**
+     * Handles add part request.
+     * Launches add part dialog.
+     * @param addCustomerEvent the add part button click event
+     * @throws IOException for input/output exceptions
+     */
+    public void onAddCustomerButtonAction(ActionEvent addCustomerEvent) throws IOException {
+        Parent root = FXMLLoader.load(getClass().getResource("/view/AddCustomer.fxml"));
+        Stage stage = (Stage)((Node)addCustomerEvent.getSource()).getScene().getWindow();
+        Scene scene = new Scene(root);
+        stage.setTitle("Add Customer");
+        stage.setScene(scene);
+        stage.show();
     }
 
     public void onModifyCustomerButtonAction(ActionEvent actionEvent) {
@@ -101,6 +111,21 @@ public class MainController implements Initializable {
     public void onSearchApptsHandler(ActionEvent actionEvent) {
     }
 
-    public void onExitButtonAction(ActionEvent actionEvent) {
+    /**
+     * Handles exit program request.
+     * Displays a confirmation dialog asking the user if they really want to exit. If confirmed, the program
+     * exits. Otherwise the user is returned to the main screen.
+     * @param exitEvent the exit program button click event
+     */
+    public void onExitButtonAction(ActionEvent exitEvent) {
+        System.exit(0);
+        // TODO: add this back in later
+//        Alert alert = new Alert(Alert.AlertType.CONFIRMATION, "Are you sure you want to exit the program?");
+//
+//        Optional<ButtonType> result = alert.showAndWait();
+//
+//        if (result.isPresent() && result.get() == ButtonType.OK) {
+//            System.exit(0);
+//        }
     }
 }

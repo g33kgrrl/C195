@@ -3,13 +3,12 @@ package controller;
 import javafx.event.ActionEvent;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
-//import model.InHouse;
-//import model.Inventory;
-//import model.Outsourced;
-
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
+
+import model.Customer;
+
 
 public class AddCustomerController implements Initializable {
     public RadioButton inHouseRadio;
@@ -42,6 +41,19 @@ public class AddCustomerController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
 //        idText.setText(String.valueOf(nextPartId));
+    }
+
+    public void onSaveButtonAction(ActionEvent actionEvent) {
+    }
+
+    /**
+     * Handles cancel request.
+     * Returns user to main screen without saving any entered textfield values.
+     * @param cancelEvent the Cancel button click event
+     * @throws IOException for input/output exceptions
+     */
+    public void onCancelButtonAction(ActionEvent cancelEvent) throws IOException {
+        MainController.toMain(cancelEvent);
     }
 
 //    /**
