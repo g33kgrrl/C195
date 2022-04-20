@@ -76,8 +76,8 @@ public class MainController implements Initializable {
     }
 
     /**
-     * Handles add part request.
-     * Launches add part dialog.
+     * Handles add customer request.
+     * Launches add customer dialog.
      * @param addCustomerEvent the add part button click event
      * @throws IOException for input/output exceptions
      */
@@ -91,11 +91,11 @@ public class MainController implements Initializable {
     }
 
     /**
-     * Handles modify product request.
-     * Checks that a product has been selected. If so, it fetches that product's information, launches
-     * the modify product dialog, and pre-populates the TextFields with that information. If no product
-     * has been selected, displays an error message instead prompting user to select a product.
-     * @param modifyCustomerEvent the modify product button click event
+     * Handles modify customer request.
+     * Checks that a customer has been selected. If so, it fetches that product's information, launches
+     * the modify customer dialog, and pre-populates the TextFields with that information. If no customer
+     * has been selected, displays an error message instead prompting user to select a customer.
+     * @param modifyCustomerEvent the modify customer button click event
      * @throws IOException for input/output exceptions
      */
     public void onModifyCustomerButtonAction(ActionEvent modifyCustomerEvent) throws IOException {
