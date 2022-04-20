@@ -35,7 +35,7 @@
         </Pane>
         <Pane layoutX="550.0" layoutY="76.0" prefHeight="272.0" prefWidth="541.0" style="-fx-border-style: solid; -fx-border-radius: 10px;" AnchorPane.topAnchor="76.0">
             <children>
-                <TableView fx:id="ProductsTable" layoutX="14.0" layoutY="50.0" prefHeight="172.0" prefWidth="513.0">
+                <TableView fx:id="CustomersTable" layoutX="14.0" layoutY="50.0" prefHeight="172.0" prefWidth="513.0">
                     <columns>
                         <TableColumn fx:id="prodIdCol" prefWidth="100.0" text="Product ID" />
                         <TableColumn fx:id="prodNameCol" prefWidth="125.0" text="Product Name" />

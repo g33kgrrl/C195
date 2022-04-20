@@ -1,5 +1,6 @@
 package controller;
 
+import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
@@ -10,7 +11,7 @@ import java.util.ResourceBundle;
 import model.Customer;
 
 
-public class AddCustomerController implements Initializable {
+public class AddModCustomerController implements Initializable {
     public RadioButton inHouseRadio;
     public RadioButton outsourcedRadio;
     public ToggleGroup sourceGroup;
@@ -18,10 +19,14 @@ public class AddCustomerController implements Initializable {
     public TextField nameText;
     public TextField addressText;
     public TextField postalCodeText;
-    public TextField phone;
+    public TextField phoneText;
     public ComboBox divisionCombo;
     public ComboBox countryCombo;
     public Label sourceLabel;
+
+    private Customer customer;
+//    private ObservableList<Appointments> associatedAppts = FXCollections.observableArrayList();
+
 
 //    private int nextPartId = Inventory.getNextPartId();
 
@@ -41,6 +46,28 @@ public class AddCustomerController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
 //        idText.setText(String.valueOf(nextPartId));
+        System.out.println("Customer: " + customer);
+    }
+
+    /**
+     * Initializes modify product dialog with current data for the selected product.
+     * Gets current data for the selected product, and populates the modify product textfields with that
+     * data. Product ID textfield is disabled to prevent creation of duplicate product IDs.
+     * @param customer1 the selected product to modify
+     */
+    public void displayCustomer(Customer customer1) {
+        this.customer = customer1;
+
+        idText.setText(String.valueOf(customer.getId()));
+        nameText.setText(customer.getName());
+        addressText.setText(String.valueOf(customer.getAddress()));
+        postalCodeText.setText(String.valueOf(customer.getPostalCode()));
+        phoneText.setText(String.valueOf(customer.getPhone()));
+        // TODO: Fix combobox presets
+//        countryCombo.setText(String.valueOf(customer.getCountry()));
+//        divisionCombo.setText(String.valueOf(customer.getDivisionId()));
+
+//        associatedAppts.setAll(customer.getAllAssociatedAppts());
     }
 
     public void onSaveButtonAction(ActionEvent actionEvent) {

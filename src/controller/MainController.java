@@ -9,9 +9,9 @@ import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
+import model.Customer;
 
 import java.net.URL;
-import java.util.Optional;
 import java.util.ResourceBundle;
 import java.io.IOException;
 
@@ -24,7 +24,7 @@ public class MainController implements Initializable {
     public Button ModifyProductButton;
     public Button DeleteProductButton;
     public TableView PartsTable;
-    public TableView ProductsTable;
+    public TableView CustomersTable;
     public TextField SearchParts;
     public TextField SearchProducts;
     public TableColumn partIdCol;
@@ -82,7 +82,7 @@ public class MainController implements Initializable {
      * @throws IOException for input/output exceptions
      */
     public void onAddCustomerButtonAction(ActionEvent addCustomerEvent) throws IOException {
-        Parent root = FXMLLoader.load(getClass().getResource("/view/AddCustomer.fxml"));
+        Parent root = FXMLLoader.load(getClass().getResource("/view/AddModCustomer.fxml"));
         Stage stage = (Stage)((Node)addCustomerEvent.getSource()).getScene().getWindow();
         Scene scene = new Scene(root);
         stage.setTitle("Add Customer");
@@ -90,7 +90,35 @@ public class MainController implements Initializable {
         stage.show();
     }
 
-    public void onModifyCustomerButtonAction(ActionEvent actionEvent) {
+    /**
+     * Handles modify product request.
+     * Checks that a product has been selected. If so, it fetches that product's information, launches
+     * the modify product dialog, and pre-populates the TextFields with that information. If no product
+     * has been selected, displays an error message instead prompting user to select a product.
+     * @param modifyCustomerEvent the modify product button click event
+     * @throws IOException for input/output exceptions
+     */
+    public void onModifyCustomerButtonAction(ActionEvent modifyCustomerEvent) throws IOException {
+        try {
+            Customer selectedItem = (Customer) CustomersTable.getSelectionModel().getSelectedItem();
+
+            FXMLLoader loader = new FXMLLoader();
+            loader.setLocation(getClass().getResource("/view/AddModCustomer.fxml"));
+            loader.load();
+
+            AddModCustomerController addModCustController = loader.getController();
+            addModCustController.displayCustomer(selectedItem);
+
+            Stage stage = (Stage) ((Node) modifyCustomerEvent.getSource()).getScene().getWindow();
+            Parent root = loader.getRoot();
+            stage.setScene(new Scene(root));
+            stage.show();
+        } catch (NullPointerException e) {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Modify customer");
+            alert.setContentText("Please select a customer to modify.");
+            alert.showAndWait();
+        }
     }
 
     public void onDeleteCustomerButtonAction(ActionEvent actionEvent) {

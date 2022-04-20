@@ -38,7 +38,7 @@ public class LoginController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         if (zoneId == 1) {
-            zoneIdLabel.setText("Anytown USA");
+            zoneIdLabel.setText("America");
         }
     }
 
@@ -50,7 +50,7 @@ public class LoginController implements Initializable {
      * @param submitEvent
      */
     public void onSubmitButtonAction(ActionEvent submitEvent) throws IOException {
-        if (userName.getText().equals("Charlie") && password.getText().equals("foobar")) {
+        if (userName.getText().equals("test") && password.getText().equals("test")) {
             System.out.println("Authenticated!");
             displayMain(submitEvent);
         } else {
@@ -71,7 +71,7 @@ public class LoginController implements Initializable {
     }
 
     public void onAddCustomerButtonAction(ActionEvent addCustomerEvent) throws IOException {
-        Parent root = FXMLLoader.load(getClass().getResource("/view/AddCustomer.fxml"));
+        Parent root = FXMLLoader.load(getClass().getResource("/view/AddModCustomer.fxml"));
         Stage stage = (Stage)((Node)addCustomerEvent.getSource()).getScene().getWindow();
         Scene scene = new Scene(root);
         stage.setTitle("Add Customer");

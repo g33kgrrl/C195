@@ -15,8 +15,8 @@
    <children>
       <AnchorPane id="login">
          <children>
-            <TextField fx:id="userName" layoutX="136.0" layoutY="65.0" prefHeight="25.0" prefWidth="168.0" promptText="Enter username" text="Charlie" />
-            <TextField fx:id="password" layoutX="136.0" layoutY="95.0" prefHeight="25.0" prefWidth="168.0" promptText="Enter password" text="foobar" />
+            <TextField fx:id="userName" layoutX="136.0" layoutY="65.0" prefHeight="25.0" prefWidth="168.0" promptText="Enter username" text="test" />
+            <TextField fx:id="password" layoutX="136.0" layoutY="95.0" prefHeight="25.0" prefWidth="168.0" promptText="Enter password" text="test" />
             <Button layoutX="284.0" layoutY="135.0" mnemonicParsing="false" onAction="#onSubmitButtonAction" text="Submit" />
             <Label layoutX="57.0" layoutY="68.0" text="Username:" />
             <Label layoutX="57.0" layoutY="98.0" text="Password:" />
