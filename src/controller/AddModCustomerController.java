@@ -1,11 +1,14 @@
 package controller;
 
+import dao.CustomerQuery;
+import dao.JDBC;
 import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import java.io.IOException;
 import java.net.URL;
+import java.sql.SQLException;
 import java.util.ResourceBundle;
 
 import model.Customer;
@@ -38,8 +41,8 @@ public class AddModCustomerController implements Initializable {
 
     /**
      * Initializes part ID textfield.
-     * The Part ID textfield is assigned a unique part ID that cannot be edited by the user. This prevents
-     * creating a duplicate part ID when adding a new part.
+     * The Customer ID textfield is populated with a unique customer ID that cannot be edited by the user. This prevents
+     * creating a duplicate Customer ID when adding a new customer.
      * @param url the url
      * @param resourceBundle the resource bundle
      */
@@ -50,10 +53,10 @@ public class AddModCustomerController implements Initializable {
     }
 
     /**
-     * Initializes modify product dialog with current data for the selected product.
-     * Gets current data for the selected product, and populates the modify product textfields with that
-     * data. Product ID textfield is disabled to prevent creation of duplicate product IDs.
-     * @param customer1 the selected product to modify
+     * Initializes modify customer dialog with current data for the selected customer.
+     * Gets current data for the selected customer, and populates the modify customer textfields with
+     * that data. Customer ID textfield is disabled to prevent creation of duplicate customer IDs.
+     * @param customer1 the selected customer to modify
      */
     public void displayCustomer(Customer customer1) {
         this.customer = customer1;
@@ -70,7 +73,19 @@ public class AddModCustomerController implements Initializable {
 //        associatedAppts.setAll(customer.getAllAssociatedAppts());
     }
 
-    public void onSaveButtonAction(ActionEvent actionEvent) {
+    public void onSaveButtonAction(ActionEvent actionEvent) throws SQLException {
+        JDBC.makeConnection();
+
+//        int rowsAffected = CustomerQuery.insert(nameText.getText(), addressText.getText(), postalCodeText.getText(), phoneText.getText(), 2);
+        int rowsAffected = CustomerQuery.update(1, nameText.getText(), addressText.getText(), postalCodeText.getText(), phoneText.getText(),777);
+
+        if(rowsAffected > 0) {
+            System.out.println("Customer added!");
+        } else {
+            System.out.println("FAILED TO ADD CUSTOMER!");
+        }
+
+        JDBC.closeConnection();
     }
 
     /**

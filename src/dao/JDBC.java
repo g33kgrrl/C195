@@ -14,7 +14,8 @@ public class JDBC {
         private static final String userName = "sqlUser"; // Username
         private static String password = "Passw0rd!"; // Password
         private static Connection connection = null;  // Connection Interface
-        private static PreparedStatement preparedStatement;
+
+    private static PreparedStatement preparedStatement;
 
          public static void makeConnection() {
 

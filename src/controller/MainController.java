@@ -1,5 +1,6 @@
 package controller;
 
+import dao.CustomerQuery;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -12,6 +13,7 @@ import javafx.stage.Stage;
 import model.Customer;
 
 import java.net.URL;
+import java.sql.SQLException;
 import java.util.ResourceBundle;
 import java.io.IOException;
 
@@ -100,7 +102,10 @@ public class MainController implements Initializable {
      */
     public void onModifyCustomerButtonAction(ActionEvent modifyCustomerEvent) throws IOException {
         try {
-            Customer selectedItem = (Customer) CustomersTable.getSelectionModel().getSelectedItem();
+//            Customer selectedItem = (Customer) CustomersTable.getSelectionModel().getSelectedItem();
+
+            Customer selectedItem = CustomerQuery.select(1);
+
 
             FXMLLoader loader = new FXMLLoader();
             loader.setLocation(getClass().getResource("/view/AddModCustomer.fxml"));
@@ -113,7 +118,7 @@ public class MainController implements Initializable {
             Parent root = loader.getRoot();
             stage.setScene(new Scene(root));
             stage.show();
-        } catch (NullPointerException e) {
+        } catch (NullPointerException | SQLException e) {
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle("Modify customer");
             alert.setContentText("Please select a customer to modify.");
