@@ -102,9 +102,9 @@ public class MainController implements Initializable {
      */
     public void onModifyCustomerButtonAction(ActionEvent modifyCustomerEvent) throws IOException {
         try {
-//            Customer selectedItem = (Customer) CustomersTable.getSelectionModel().getSelectedItem();
+            Customer selectedItem = (Customer) CustomersTable.getSelectionModel().getSelectedItem();
 
-            Customer selectedItem = CustomerQuery.select(1);
+//            Customer selectedItem = CustomerQuery.select();
 
 
             FXMLLoader loader = new FXMLLoader();
@@ -118,7 +118,7 @@ public class MainController implements Initializable {
             Parent root = loader.getRoot();
             stage.setScene(new Scene(root));
             stage.show();
-        } catch (NullPointerException | SQLException e) {
+        } catch (NullPointerException e) {
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle("Modify customer");
             alert.setContentText("Please select a customer to modify.");
