@@ -22,6 +22,11 @@ public class Country {
         return allCountries;
     }
 
+    @Override
+    public String toString() {
+        return("#" + Integer.toString(id) + " " + name);
+    }
+
     public int getId() {
         return id;
     }
