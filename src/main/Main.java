@@ -1,5 +1,6 @@
 package main;
 
+import dao.CountryQuery;
 import dao.CustomerQuery;
 import dao.JDBC;
 import javafx.application.Application;
@@ -26,7 +27,8 @@ public class Main extends Application {
         // TODO: Set/test Locale.setDefault(new Locale("fr"));
         JDBC.makeConnection();
 //        launch(args);
-        CustomerQuery.select(60);
+//        CustomerQuery.select(60);
+        CountryQuery.select();
         JDBC.closeConnection();
     }
 }
