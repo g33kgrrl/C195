@@ -57,8 +57,8 @@ public abstract class CountryQuery {
         ResultSet rs = ps.executeQuery();
 
         while(rs.next()) {
-            int countryId = rs.getInt("Customer_ID");
-            String countryName = rs.getString("Customer_Name");
+            int countryId = rs.getInt("Country_ID");
+            String countryName = rs.getString("Country");
 
             System.out.println(countryId + " | " + countryName);
         }
@@ -72,7 +72,7 @@ public abstract class CountryQuery {
 
         while(rs.next()) {
             int id = rs.getInt("Country_ID");
-            String name = rs.getString("Country_Name");
+            String name = rs.getString("Country");
 
             System.out.println(id + " | " + name);
         }

@@ -3,6 +3,7 @@ package controller;
 import dao.CustomerQuery;
 import dao.JDBC;
 import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
@@ -11,6 +12,7 @@ import java.net.URL;
 import java.sql.SQLException;
 import java.util.ResourceBundle;
 
+import model.Country;
 import model.Customer;
 
 
@@ -23,11 +25,12 @@ public class AddModCustomerController implements Initializable {
     public TextField addressText;
     public TextField postalCodeText;
     public TextField phoneText;
+    public ComboBox<Country> countryCombo;
     public ComboBox divisionCombo;
-    public ComboBox countryCombo;
     public Label sourceLabel;
 
     private Customer customer;
+
 //    private ObservableList<Appointments> associatedAppts = FXCollections.observableArrayList();
 
 
@@ -48,8 +51,15 @@ public class AddModCustomerController implements Initializable {
      */
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+
+        ObservableList<Country> countries = Country.getAllCountries();
+        // allTable = setItems(countries)
+        System.out.println(countries.size() + " countries found.");
+
+        countryCombo.setItems(countries);
+
 //        idText.setText(String.valueOf(nextPartId));
-        System.out.println("Customer: " + customer);
+//        System.out.println("Customer: " + customer);
     }
 
     /**

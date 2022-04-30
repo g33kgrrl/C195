@@ -26,9 +26,9 @@ public class Main extends Application {
     public static void main(String[] args) throws SQLException {
         // TODO: Set/test Locale.setDefault(new Locale("fr"));
         JDBC.makeConnection();
-//        launch(args);
+        launch(args);
 //        CustomerQuery.select(60);
-        CountryQuery.select();
+//        CountryQuery.select("Canada");
         JDBC.closeConnection();
     }
 }

@@ -1,12 +1,25 @@
 package model;
 
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+
+
 public class Country {
+    private static ObservableList<Country> allCountries = FXCollections.observableArrayList();
+
     private int id;
     private String name;
 
-    public Country(int id, String name, String address, String postalCode, String phone, int divisionId) {
+    public Country(int id, String name) {
         this.id = id;
         this.name = name;
+    }
+
+    public static ObservableList<Country> getAllCountries() {
+        allCountries.add(new Country(4, "Mexico"));
+        allCountries.add(new Country(5, "Iceland"));
+
+        return allCountries;
     }
 
     public int getId() {
