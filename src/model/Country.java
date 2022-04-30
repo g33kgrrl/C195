@@ -1,5 +1,6 @@
 package model;
 
+import dao.CountryQuery;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
@@ -16,10 +17,11 @@ public class Country {
     }
 
     public static ObservableList<Country> getAllCountries() {
-        allCountries.add(new Country(4, "Mexico"));
-        allCountries.add(new Country(5, "Iceland"));
+//        allCountries.add(new Country(4, "Mexico"));
+//        allCountries.add(new Country(5, "Iceland"));
 
-        return allCountries;
+//        return allCountries;
+        return CountryQuery.select();
     }
 
     @Override

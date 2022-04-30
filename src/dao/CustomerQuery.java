@@ -1,37 +1,56 @@
 package dao;
 
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+import model.Customer;
+
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
 public abstract class CustomerQuery {
 
-    public static int insert(String customerName, String address, String postalCode, String phone, int divisionId) throws SQLException {
-        String sql = "INSERT INTO customers (Customer_Name, Address, Postal_Code, Phone, Division_ID) VALUES(?, ?, ?, ?, ?)";
-        PreparedStatement ps = JDBC.getConnection().prepareStatement(sql);
-        ps.setString(1, customerName);
-        ps.setString(2, address);
-        ps.setString(3, postalCode);
-        ps.setString(4, phone);
-        ps.setInt(5, divisionId);
+    public static int insert(String customerName, String address, String postalCode, String phone, int divisionId) {
+        try {
+            String sql = "INSERT INTO customers (Customer_ID, Customer_Name, Address, Postal_Code, Phone, Division_ID) VALUES(NULL, ?, ?, ?, ?, ?)";
+            PreparedStatement ps = JDBC.getConnection().prepareStatement(sql);
+            ps.setString(1, customerName);
+            ps.setString(2, address);
+            ps.setString(3, postalCode);
+            ps.setString(4, phone);
+            ps.setInt(5, divisionId);
 
-        int rowsAffected = ps.executeUpdate();
-        System.out.println("Rows affected: " + rowsAffected);
-        return rowsAffected;
+            int rowsAffected = ps.executeUpdate();
+            System.out.println("Rows affected: " + rowsAffected);
+            return rowsAffected;
+        }
+        catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+
+        return -1;
     }
 
-    public static int update(int customerId, String customerName, String address, String postalCode, String phone, int divisionId) throws SQLException {
-        String sql = "UPDATE customers SET Customer_Name = ? WHERE Customer_ID = ?";
-        PreparedStatement ps = JDBC.getConnection().prepareStatement(sql);
-        ps.setString(1, customerName);
-        ps.setString(2, address);
-        ps.setString(3, postalCode);
-        ps.setString(4, phone);
-        ps.setInt(5, divisionId);
+    public static int update(int customerId, String customerName, String address, String postalCode, String phone, int divisionId) {
+        try {
+            String sql = "UPDATE customers SET Customer_Name = ?, Address = ?, Postal_Code = ?, Phone = ?, Division_ID = ? WHERE Customer_ID = ?";
+            PreparedStatement ps = JDBC.getConnection().prepareStatement(sql);
+            ps.setString(1, customerName);
+            ps.setString(2, address);
+            ps.setString(3, postalCode);
+            ps.setString(4, phone);
+            ps.setInt(5, divisionId);
+            ps.setInt(6, customerId);
 
-        int rowsAffected = ps.executeUpdate();
-        System.out.println("Rows affected: " + rowsAffected);
-        return rowsAffected;
+            int rowsAffected = ps.executeUpdate();
+            System.out.println("Rows affected: " + rowsAffected);
+            return rowsAffected;
+        }
+        catch(SQLException ex) {
+            ex.printStackTrace();
+        }
+
+        return -1;
     }
 
     public static int delete(int customerId) throws SQLException {
@@ -44,22 +63,34 @@ public abstract class CustomerQuery {
         return rowsAffected;
     }
 
-    public static void select() throws SQLException {
-        String sql = "SELECT * FROM customers";
-        PreparedStatement ps = JDBC.getConnection().prepareStatement(sql);
-        ResultSet rs = ps.executeQuery();
+    public static ObservableList<Customer> select() {
+        ObservableList<Customer> allCustomers = FXCollections.observableArrayList();
 
-        while(rs.next()) {
-            int customerId = rs.getInt("Customer_ID");
-            String customerName = rs.getString("Customer_Name");
-            String address = rs.getString("Address");
-            String postalCode = rs.getString("Postal_Code");
-            String phone = rs.getString("Phone");
-            int divisionId = rs.getInt("Division_ID");
+        try {
+            String sql = "SELECT * FROM customers";
+            PreparedStatement ps = JDBC.getConnection().prepareStatement(sql);
+            ResultSet rs = ps.executeQuery();
 
-            System.out.println(customerId + " | " + customerName + " | " + address + " | " + postalCode + " | " + phone
-                    + " | " + divisionId);
+            while (rs.next()) {
+                int customerId = rs.getInt("Customer_ID");
+                String customerName = rs.getString("Customer_Name");
+                String address = rs.getString("Address");
+                String postalCode = rs.getString("Postal_Code");
+                String phone = rs.getString("Phone");
+                int divisionId = rs.getInt("Division_ID");
+
+                System.out.println(customerId + " | " + customerName + " | " + address + " | " + postalCode + " | " + phone
+                        + " | " + divisionId);
+
+                Customer c = new Customer(customerId, customerName, address, postalCode, phone, divisionId);
+                allCustomers.add(c);
+            }
         }
+        catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+
+        return allCustomers;
     }
 
     public static void select(int divisionId) throws SQLException {

@@ -1,31 +1,38 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.geometry.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
-<?import javafx.scene.text.*?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.text.Font?>
 
-<AnchorPane xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.MainController">
+<AnchorPane xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.MainController">
     <children>
-        <Label layoutX="22.0" layoutY="41.0" text="Appointment Management System">
+        <Label layoutX="377.0" layoutY="12.0" text="Appointment Management System">
             <font>
                 <Font name="System Bold" size="18.0" />
             </font>
         </Label>
-        <Pane layoutX="22.0" layoutY="76.0" prefHeight="272.0" prefWidth="503.0" style="-fx-border-style: solid; -fx-border-radius: 10px;" AnchorPane.topAnchor="76.0">
+        <Pane layoutX="22.0" layoutY="50.0" prefHeight="272.0" prefWidth="503.0" style="-fx-border-style: solid; -fx-border-radius: 10px;" AnchorPane.topAnchor="50.0">
             <children>
-                <TableView fx:id="PartsTable" layoutX="14.0" layoutY="50.0" prefHeight="172.0" prefWidth="475.0">
+                <TableView fx:id="CustomersTable" layoutX="14.0" layoutY="50.0" prefHeight="172.0" prefWidth="475.0">
                     <columns>
-                        <TableColumn fx:id="partIdCol" prefWidth="75.0" text="Part ID" />
-                        <TableColumn fx:id="partNameCol" prefWidth="97.0" text="Part Name" />
-                        <TableColumn fx:id="partInvCol" prefWidth="133.0" text="Inventory Level" />
-                        <TableColumn fx:id="partPriceCol" minWidth="0.0" prefWidth="168.0" text="Price / Cost Per Unit" />
+                        <TableColumn fx:id="custIdCol" prefWidth="75.0" text="ID" />
+                        <TableColumn fx:id="custNameCol" text="Name" />
+                        <TableColumn fx:id="custAddressCol" text="Address" />
+                        <TableColumn fx:id="custPostalCodeCol" text="Postal" />
+                        <TableColumn fx:id="custPhoneCol" text="Phone" />
+                        <TableColumn fx:id="custDivIdCol" text="Div ID" />
                     </columns>
                 </TableView>
-                <Button fx:id="AddPartButton" layoutX="273.0" layoutY="225.0" mnemonicParsing="false" onAction="#onAddCustomerButtonAction" prefHeight="33.0" prefWidth="62.0" text="Add" />
-                <Button fx:id="ModifyPartButton" layoutX="349.0" layoutY="225.0" mnemonicParsing="false" onAction="#onModifyCustomerButtonAction" prefHeight="33.0" prefWidth="62.0" text="Modify" />
-                <Button fx:id="DeletePartButton" layoutX="423.0" layoutY="225.0" mnemonicParsing="false" onAction="#onDeleteCustomerButtonAction" prefHeight="33.0" prefWidth="62.0" text="Delete" />
-                <TextField fx:id="SearchParts" layoutX="263.0" layoutY="20.0" onAction="#onSearchCustomerHandler" prefHeight="24.0" prefWidth="191.0" promptText="Search by Customer ID or Name" />
+                <Button fx:id="AddCustomerButton" layoutX="273.0" layoutY="225.0" mnemonicParsing="false" onAction="#onAddCustomerButtonAction" prefHeight="33.0" prefWidth="62.0" text="Add" />
+                <Button fx:id="ModifyCustomerButton" layoutX="349.0" layoutY="225.0" mnemonicParsing="false" onAction="#onModifyCustomerButtonAction" prefHeight="33.0" prefWidth="62.0" text="Modify" />
+                <Button fx:id="DeleteCustomerButton" layoutX="423.0" layoutY="225.0" mnemonicParsing="false" onAction="#onDeleteCustomerButtonAction" prefHeight="33.0" prefWidth="62.0" text="Delete" />
+                <TextField fx:id="SearchCustomers" layoutX="263.0" layoutY="20.0" onAction="#onSearchCustomerHandler" prefHeight="24.0" prefWidth="191.0" promptText="Search by Customer ID or Name" />
                 <Label layoutX="27.0" layoutY="22.0" text="Customers">
                     <font>
                         <Font name="System Bold" size="16.0" />
@@ -33,19 +40,19 @@
                 </Label>
             </children>
         </Pane>
-        <Pane layoutX="550.0" layoutY="76.0" prefHeight="272.0" prefWidth="541.0" style="-fx-border-style: solid; -fx-border-radius: 10px;" AnchorPane.topAnchor="76.0">
+        <Pane layoutX="22.0" layoutY="356.0" prefHeight="272.0" prefWidth="994.0" style="-fx-border-style: solid; -fx-border-radius: 10px;" AnchorPane.topAnchor="356.0">
             <children>
-                <TableView fx:id="CustomersTable" layoutX="14.0" layoutY="50.0" prefHeight="172.0" prefWidth="513.0">
+                <TableView fx:id="AppointmentsTable" layoutX="14.0" layoutY="50.0" prefHeight="172.0" prefWidth="968.0">
                     <columns>
-                        <TableColumn fx:id="prodIdCol" prefWidth="100.0" text="Product ID" />
-                        <TableColumn fx:id="prodNameCol" prefWidth="125.0" text="Product Name" />
-                        <TableColumn fx:id="prodInvCol" minWidth="0.0" prefWidth="126.0" text="Inventory Level" />
-                        <TableColumn fx:id="prodPriceCol" prefWidth="160.0" text="Price / Cost Per Unit" />
+                        <TableColumn fx:id="prodIdCol" prefWidth="100.0" text="ID" />
+                        <TableColumn fx:id="prodNameCol" prefWidth="125.0" text="Title" />
+                        <TableColumn fx:id="prodInvCol" minWidth="0.0" prefWidth="126.0" text="Description" />
+                        <TableColumn fx:id="prodPriceCol" prefWidth="160.0" text="Cust ID" />
                     </columns>
                 </TableView>
-                <Button fx:id="AddProductButton" layoutX="273.0" layoutY="225.0" mnemonicParsing="false" onAction="#onAddApptButtonAction" prefHeight="33.0" prefWidth="62.0" text="Add" />
-                <Button fx:id="ModifyProductButton" layoutX="349.0" layoutY="225.0" mnemonicParsing="false" onAction="#onModifyApptButtonAction" prefHeight="33.0" prefWidth="62.0" text="Modify" />
-                <Button fx:id="DeleteProductButton" layoutX="423.0" layoutY="225.0" mnemonicParsing="false" onAction="#onDeleteApptButtonAction" prefHeight="33.0" prefWidth="62.0" text="Delete" />
+                <Button fx:id="AddProductButton" layoutX="752.0" layoutY="225.0" mnemonicParsing="false" onAction="#onAddApptButtonAction" prefHeight="33.0" prefWidth="62.0" text="Add" />
+                <Button fx:id="ModifyProductButton" layoutX="828.0" layoutY="225.0" mnemonicParsing="false" onAction="#onModifyApptButtonAction" prefHeight="33.0" prefWidth="62.0" text="Modify" />
+                <Button fx:id="DeleteProductButton" layoutX="902.0" layoutY="225.0" mnemonicParsing="false" onAction="#onDeleteApptButtonAction" prefHeight="33.0" prefWidth="62.0" text="Delete" />
                 <TextField fx:id="SearchProducts" layoutX="294.0" layoutY="20.0" onAction="#onSearchApptsHandler" prefHeight="24.0" prefWidth="213.0" promptText="Search by Appointment ID or Name" />
                 <Label layoutX="25.0" layoutY="22.0" text="Appointments">
                     <font>
@@ -54,7 +61,7 @@
                 </Label>
             </children>
         </Pane>
-        <Button layoutX="1028.0" layoutY="357.0" mnemonicParsing="false" onAction="#onExitButtonAction" prefHeight="33.0" prefWidth="51.0" text="Exit" AnchorPane.topAnchor="356.0" />
+        <Button layoutX="1035.0" layoutY="595.0" mnemonicParsing="false" onAction="#onExitButtonAction" prefHeight="33.0" prefWidth="51.0" text="Exit" AnchorPane.topAnchor="595.0" />
     </children>
     <padding>
         <Insets bottom="8.0" right="21.0" />

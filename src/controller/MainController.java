@@ -1,6 +1,5 @@
 package controller;
 
-import dao.CustomerQuery;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -13,30 +12,27 @@ import javafx.stage.Stage;
 import model.Customer;
 
 import java.net.URL;
-import java.sql.SQLException;
 import java.util.ResourceBundle;
 import java.io.IOException;
 
 
 public class MainController implements Initializable {
-    public Button AddPartButton;
-    public Button ModifyPartButton;
-    public Button DeletePartButton;
+    public Button AddCustomerButton;
+    public Button ModifyCustomerButton;
+    public Button DeleteCustomerButton;
     public Button AddProductButton;
     public Button ModifyProductButton;
     public Button DeleteProductButton;
-    public TableView PartsTable;
+    public TableView AppointmentsTable;
     public TableView CustomersTable;
-    public TextField SearchParts;
+    public TextField SearchCustomers;
     public TextField SearchProducts;
-    public TableColumn partIdCol;
-    public TableColumn partNameCol;
-    public TableColumn partInvCol;
-    public TableColumn partPriceCol;
-    public TableColumn prodIdCol;
-    public TableColumn prodNameCol;
-    public TableColumn prodInvCol;
-    public TableColumn prodPriceCol;
+    public TableColumn custIdCol;
+    public TableColumn custNameCol;
+    public TableColumn custAddressCol;
+    public TableColumn custDivIdCol;
+    public TableColumn custPostalCodeCol;
+    public TableColumn custPhoneCol;
 
     /**
      * Sets up and displays main screen.
@@ -47,18 +43,21 @@ public class MainController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         // Parts table
-        partIdCol.setCellValueFactory(new PropertyValueFactory<>("id"));
-        partNameCol.setCellValueFactory(new PropertyValueFactory<>("name"));
-        partPriceCol.setCellValueFactory(new PropertyValueFactory<>("price"));
-        partInvCol.setCellValueFactory(new PropertyValueFactory<>("stock"));
+        custIdCol.setCellValueFactory(new PropertyValueFactory<>("id"));
+        custNameCol.setCellValueFactory(new PropertyValueFactory<>("name"));
+        custAddressCol.setCellValueFactory(new PropertyValueFactory<>("address"));
+        custPostalCodeCol.setCellValueFactory(new PropertyValueFactory<>("PostalCode"));
+        custPhoneCol.setCellValueFactory(new PropertyValueFactory<>("phone"));
+        custDivIdCol.setCellValueFactory(new PropertyValueFactory<>("divisionId"));
 
-//        PartsTable.setItems(Inventory.getAllParts());
+
+        CustomersTable.setItems(Customer.getAllCustomers());
 
         // Products table
-        prodIdCol.setCellValueFactory(new PropertyValueFactory<>("id"));
-        prodNameCol.setCellValueFactory(new PropertyValueFactory<>("name"));
-        prodPriceCol.setCellValueFactory(new PropertyValueFactory<>("price"));
-        prodInvCol.setCellValueFactory(new PropertyValueFactory<>("stock"));
+//        prodIdCol.setCellValueFactory(new PropertyValueFactory<>("id"));
+//        prodNameCol.setCellValueFactory(new PropertyValueFactory<>("name"));
+//        prodPriceCol.setCellValueFactory(new PropertyValueFactory<>("price"));
+//        prodInvCol.setCellValueFactory(new PropertyValueFactory<>("stock"));
 
 //        ProductsTable.setItems(Inventory.getAllProducts());
     }

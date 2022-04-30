@@ -1,13 +1,18 @@
 package model;
 
+import dao.CustomerQuery;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+
 public class Customer {
+    private static ObservableList<Customer> allCustomers = FXCollections.observableArrayList();
+
     private int id;
     private String name;
     private String address;
     private String postalCode;
     private String phone;
     private int divisionId;
-
 
     public Customer(int id, String name, String address, String postalCode, String phone, int divisionId) {
         this.id = id;
@@ -16,6 +21,11 @@ public class Customer {
         this.postalCode = postalCode;
         this.phone = phone;
         this.divisionId = divisionId;
+    }
+
+    public static ObservableList<Customer> getAllCustomers() {
+
+        return CustomerQuery.select();
     }
 
     public int getId() {

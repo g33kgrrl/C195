@@ -84,18 +84,14 @@ public class AddModCustomerController implements Initializable {
     }
 
     public void onSaveButtonAction(ActionEvent actionEvent) throws SQLException {
-        JDBC.makeConnection();
-
 //        int rowsAffected = CustomerQuery.insert(nameText.getText(), addressText.getText(), postalCodeText.getText(), phoneText.getText(), 2);
-        int rowsAffected = CustomerQuery.update(1, nameText.getText(), addressText.getText(), postalCodeText.getText(), phoneText.getText(),777);
+        int rowsAffected = CustomerQuery.update(9, nameText.getText(), addressText.getText(), postalCodeText.getText(), phoneText.getText(),777);
 
         if(rowsAffected > 0) {
             System.out.println("Customer added!");
         } else {
             System.out.println("FAILED TO ADD CUSTOMER!");
         }
-
-        JDBC.closeConnection();
     }
 
     /**

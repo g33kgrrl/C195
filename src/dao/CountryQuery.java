@@ -1,5 +1,9 @@
 package dao;
 
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+import model.Country;
+
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -37,17 +41,27 @@ public abstract class CountryQuery {
         return rowsAffected;
     }
 
-    public static void select() throws SQLException {
-        String sql = "SELECT * FROM countries";
-        PreparedStatement ps = JDBC.getConnection().prepareStatement(sql);
-        ResultSet rs = ps.executeQuery();
+    public static ObservableList<Country> select() {
+        ObservableList<Country> allCountries = FXCollections.observableArrayList();
 
-        while(rs.next()) {
-            int id = rs.getInt("Country_ID");
-            String name = rs.getString("Country");
+        try {
+            String sql = "SELECT * FROM countries";
+            PreparedStatement ps = JDBC.getConnection().prepareStatement(sql);
+            ResultSet rs = ps.executeQuery();
 
-            System.out.println(id + " | " + name);
+            while (rs.next()) {
+                int id = rs.getInt("Country_ID");
+                String name = rs.getString("Country");
+                Country c = new Country(id, name);
+                allCountries.add(c);
+
+                System.out.println(id + " | " + name);
+            }
         }
+        catch(SQLException ex) {
+            ex.printStackTrace();
+        }
+        return allCountries;
     }
 
     public static void select(int id) throws SQLException {
