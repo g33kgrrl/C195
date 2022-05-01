@@ -17,16 +17,13 @@ public class Country {
     }
 
     public static ObservableList<Country> getAllCountries() {
-//        allCountries.add(new Country(4, "Mexico"));
-//        allCountries.add(new Country(5, "Iceland"));
-
-//        return allCountries;
         return CountryQuery.selectAll();
     }
 
     @Override
     public String toString() {
-        return("#" + Integer.toString(id) + " " + name);
+//        return("#" + Integer.toString(id) + " " + name);
+        return(name);
     }
 
     public int getId() {

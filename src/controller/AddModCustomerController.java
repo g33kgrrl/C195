@@ -1,5 +1,6 @@
 package controller;
 
+import dao.CountryQuery;
 import dao.CustomerQuery;
 import dao.DivisionQuery;
 import javafx.collections.ObservableList;
@@ -57,6 +58,11 @@ public class AddModCustomerController implements Initializable {
         System.out.println(countries.size() + " countries found.");
 
         countryCombo.setItems(countries);
+        countryCombo.getSelectionModel().selectFirst();
+        System.out.println(countryCombo.getValue().toString());
+
+        divisionCombo.setPromptText("First choose country");
+
 //        countryCombo.setSelectionModel(SingleSelectionModel<Country> singleSelectionModel);
 //        divisionCombo.setItems(DivisionQuery.selectAllForCountry(1));
 
@@ -72,6 +78,7 @@ public class AddModCustomerController implements Initializable {
      */
     public void displayCustomer(Customer customer1) {
         this.customer = customer1;
+        int divisionId = customer.getDivisionId();
 
         idText.setText(String.valueOf(customer.getId()));
         nameText.setText(customer.getName());
@@ -79,16 +86,24 @@ public class AddModCustomerController implements Initializable {
         postalCodeText.setText(String.valueOf(customer.getPostalCode()));
         phoneText.setText(String.valueOf(customer.getPhone()));
         // TODO: Fix combobox presets
+        countryCombo.setValue(CountryQuery.select(DivisionQuery.getCountryId(divisionId)));
+        divisionCombo.setValue(divisionId);
+//        int countryIdFK = countryCombo.getSelectionModel().getSelectedItem().getId();
+//        ObservableList<Division> countryDivisions = DivisionQuery.selectAllForCountry(countryIdFK);
+//
+//        divisionCombo.setItems(countryDivisions);
+
+
 //        countryCombo.setText(String.valueOf(customer.getCountry()));
 //        divisionCombo.setText(String.valueOf(customer.getDivisionId()));
 
 //        associatedAppts.setAll(customer.getAllAssociatedAppts());
     }
 
-    public void onSaveButtonAction(ActionEvent saveEvent) throws SQLException, IOException {
+    public void onSaveButtonAction(ActionEvent saveEvent) throws IOException {
         int rowsAffected;
 
-        if(this.customer == null) {
+        if (this.customer == null) {
             rowsAffected = CustomerQuery.insert(
                     nameText.getText(), addressText.getText(), postalCodeText.getText(), phoneText.getText(), 60
             );
@@ -99,7 +114,7 @@ public class AddModCustomerController implements Initializable {
             );
         }
 
-        if(rowsAffected > 0) {
+        if (rowsAffected > 0) {
             System.out.println("Customer added!");
         } else {
             System.out.println("FAILED TO ADD CUSTOMER!");
@@ -120,8 +135,11 @@ public class AddModCustomerController implements Initializable {
 
     public void onCountryCombo(ActionEvent countryComboEvent) {
         try {
-            int countryIdFK = Integer.parseInt(String.valueOf(countryCombo.getSelectionModel()));
+//            int countryIdFK = Integer.parseInt(String.valueOf(countryCombo.getSelectionModel()));
+            int countryIdFK = countryCombo.getSelectionModel().getSelectedItem().getId();
             ObservableList<Division> countryDivisions = DivisionQuery.selectAllForCountry(countryIdFK);
+
+            divisionCombo.setItems(countryDivisions);
         }
         catch (NumberFormatException e) {
             e.printStackTrace();

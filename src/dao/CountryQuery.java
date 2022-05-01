@@ -43,18 +43,30 @@ public abstract class CountryQuery {
         return allCountries;
     }
 
-    public static void select(int id) throws SQLException {
-        String sql = "SELECT * FROM countries WHERE Country_ID = ?";
-        PreparedStatement ps = JDBC.getConnection().prepareStatement(sql);
-        ps.setInt(1, id);
-        ResultSet rs = ps.executeQuery();
+    public static Country select(int id) {
+        ObservableList<Country> selectedCountry = FXCollections.observableArrayList();
 
-        while(rs.next()) {
-            int countryId = rs.getInt("Country_ID");
-            String countryName = rs.getString("Country");
+        try {
+            String sql = "SELECT * FROM countries WHERE Country_ID = ?";
+            PreparedStatement ps = JDBC.getConnection().prepareStatement(sql);
+            ps.setInt(1, id);
+            ResultSet rs = ps.executeQuery();
 
-            System.out.println(countryId + " | " + countryName);
+            while(rs.next()) {
+                int countryId = rs.getInt("Country_ID");
+                String countryName = rs.getString("Country");
+
+                Country c = new Country(countryId, countryName);
+                selectedCountry.add(c);
+
+                System.out.println(countryId + " | " + countryName);
+            }
         }
+        catch(SQLException ex) {
+            ex.printStackTrace();
+        }
+
+        return selectedCountry.get(0);
     }
 
     public static void select(String countryName) throws SQLException {

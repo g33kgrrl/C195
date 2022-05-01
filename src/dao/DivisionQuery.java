@@ -2,7 +2,6 @@ package dao;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import model.Country;
 import model.Division;
 
 import java.sql.PreparedStatement;
@@ -49,31 +48,26 @@ public abstract class DivisionQuery {
         return allDivisions;
     }
 
-    public static void select(int id) throws SQLException {
-        String sql = "SELECT * FROM first_level_divisions WHERE Country_ID = ?";
-        PreparedStatement ps = JDBC.getConnection().prepareStatement(sql);
-        ps.setInt(1, id);
-        ResultSet rs = ps.executeQuery();
+    public static int getCountryId(int divisionId) {
+        try {
+            String sql = "SELECT Country_ID FROM first_level_divisions WHERE Division_ID = ?";
+            PreparedStatement ps = JDBC.getConnection().prepareStatement(sql);
+            ps.setInt(1, divisionId);
+            ResultSet rs = ps.executeQuery();
 
-        while(rs.next()) {
-            int countryId = rs.getInt("Country_ID");
-            String countryName = rs.getString("Country");
+            while (rs.next()) {
+                int countryId = rs.getInt("Country_ID");
 
-            System.out.println(countryId + " | " + countryName);
+                System.out.println(countryId);
+
+                return countryId;
+            }
         }
+        catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+
+        return -1;
     }
 
-    public static void select(String countryName) throws SQLException {
-        String sql = "SELECT * FROM first_level_divisions WHERE Country = ?";
-        PreparedStatement ps = JDBC.getConnection().prepareStatement(sql);
-        ps.setString(1, countryName);
-        ResultSet rs = ps.executeQuery();
-
-        while(rs.next()) {
-            int id = rs.getInt("Country_ID");
-            String name = rs.getString("Country");
-
-            System.out.println(id + " | " + name);
-        }
-    }
 }

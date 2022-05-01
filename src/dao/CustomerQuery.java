@@ -62,8 +62,6 @@ public abstract class CustomerQuery {
             int rowsAffected = ps.executeUpdate();
             System.out.println("Rows affected: " + rowsAffected);
             return rowsAffected;
-
-//            return allParts.remove(selectedPart);
         }
         catch(SQLException ex) {
             ex.printStackTrace();
