@@ -40,12 +40,14 @@ public abstract class DivisionQuery {
 
                 System.out.println(id + " | " + name + "|" + countryIdFK);
             }
+
+            return allDivisions;
         }
         catch(SQLException ex) {
             ex.printStackTrace();
         }
 
-        return allDivisions;
+        return null;
     }
 
     public static int getCountryId(int divisionId) {
