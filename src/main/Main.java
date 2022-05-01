@@ -11,13 +11,19 @@ import javafx.stage.Stage;
 
 import java.sql.SQLException;
 import java.util.Locale;
+import java.util.Objects;
 
 public class Main extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception{
-        Parent root = FXMLLoader.load(getClass().getResource("/view/Login.fxml"));
-        primaryStage.setTitle("Log In");
+//        TODO: Re-enable login screen after other stuff
+//        Parent root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/view/Login.fxml")));
+//        primaryStage.setTitle("Log In");
+
+        Parent root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/view/Main.fxml")));
+
+        primaryStage.setTitle("TEMP Schedule Management System");
         primaryStage.setScene(new Scene(root));
         primaryStage.show();
     }

@@ -25,7 +25,7 @@ public class Customer {
 
     public static ObservableList<Customer> getAllCustomers() {
 
-        return CustomerQuery.select();
+        return CustomerQuery.selectAll();
     }
 
     public int getId() {

@@ -10,27 +10,6 @@ import java.sql.SQLException;
 
 public abstract class CountryQuery {
 
-    public static int insert(String name) throws SQLException {
-        String sql = "INSERT INTO countries (Country) VALUES(?)";
-        PreparedStatement ps = JDBC.getConnection().prepareStatement(sql);
-        ps.setString(1, name);
-
-        int rowsAffected = ps.executeUpdate();
-        System.out.println("Rows affected: " + rowsAffected);
-        return rowsAffected;
-    }
-
-    public static int update(int id, String name) throws SQLException {
-        String sql = "UPDATE countries SET Country = ? WHERE Country_ID = ?";
-        PreparedStatement ps = JDBC.getConnection().prepareStatement(sql);
-        ps.setString(1, name);
-        ps.setInt(2, id);
-
-        int rowsAffected = ps.executeUpdate();
-        System.out.println("Rows affected: " + rowsAffected);
-        return rowsAffected;
-    }
-
     public static int delete(int id) throws SQLException {
         String sql = "DELETE FROM countries WHERE Country_ID = ?";
         PreparedStatement ps = JDBC.getConnection().prepareStatement(sql);
@@ -41,7 +20,7 @@ public abstract class CountryQuery {
         return rowsAffected;
     }
 
-    public static ObservableList<Country> select() {
+    public static ObservableList<Country> selectAll() {
         ObservableList<Country> allCountries = FXCollections.observableArrayList();
 
         try {

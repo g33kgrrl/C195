@@ -21,7 +21,7 @@ public class Country {
 //        allCountries.add(new Country(5, "Iceland"));
 
 //        return allCountries;
-        return CountryQuery.select();
+        return CountryQuery.selectAll();
     }
 
     @Override

@@ -53,17 +53,26 @@ public abstract class CustomerQuery {
         return -1;
     }
 
-    public static int delete(int customerId) throws SQLException {
-        String sql = "DELETE FROM customers WHERE Customer_ID = ?";
-        PreparedStatement ps = JDBC.getConnection().prepareStatement(sql);
-        ps.setInt(1, customerId);
+    public static int delete(int customerId) {
+        try {
+            String sql = "DELETE FROM customers WHERE Customer_ID = ?";
+            PreparedStatement ps = JDBC.getConnection().prepareStatement(sql);
+            ps.setInt(1, customerId);
 
-        int rowsAffected = ps.executeUpdate();
-        System.out.println("Rows affected: " + rowsAffected);
-        return rowsAffected;
+            int rowsAffected = ps.executeUpdate();
+            System.out.println("Rows affected: " + rowsAffected);
+            return rowsAffected;
+
+//            return allParts.remove(selectedPart);
+        }
+        catch(SQLException ex) {
+            ex.printStackTrace();
+        }
+
+        return -1;
     }
 
-    public static ObservableList<Customer> select() {
+    public static ObservableList<Customer> selectAll() {
         ObservableList<Customer> allCustomers = FXCollections.observableArrayList();
 
         try {
@@ -79,8 +88,8 @@ public abstract class CustomerQuery {
                 String phone = rs.getString("Phone");
                 int divisionId = rs.getInt("Division_ID");
 
-                System.out.println(customerId + " | " + customerName + " | " + address + " | " + postalCode + " | " + phone
-                        + " | " + divisionId);
+//                System.out.println(customerId + " | " + customerName + " | " + address + " | " + postalCode + " | " + phone
+//                        + " | " + divisionId);
 
                 Customer c = new Customer(customerId, customerName, address, postalCode, phone, divisionId);
                 allCustomers.add(c);

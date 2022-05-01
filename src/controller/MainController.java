@@ -1,5 +1,6 @@
 package controller;
 
+import dao.CustomerQuery;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -12,6 +13,8 @@ import javafx.stage.Stage;
 import model.Customer;
 
 import java.net.URL;
+import java.sql.SQLException;
+import java.util.Optional;
 import java.util.ResourceBundle;
 import java.io.IOException;
 
@@ -46,7 +49,7 @@ public class MainController implements Initializable {
         custIdCol.setCellValueFactory(new PropertyValueFactory<>("id"));
         custNameCol.setCellValueFactory(new PropertyValueFactory<>("name"));
         custAddressCol.setCellValueFactory(new PropertyValueFactory<>("address"));
-        custPostalCodeCol.setCellValueFactory(new PropertyValueFactory<>("PostalCode"));
+        custPostalCodeCol.setCellValueFactory(new PropertyValueFactory<>("postalCode"));
         custPhoneCol.setCellValueFactory(new PropertyValueFactory<>("phone"));
         custDivIdCol.setCellValueFactory(new PropertyValueFactory<>("divisionId"));
 
@@ -71,7 +74,7 @@ public class MainController implements Initializable {
         Parent root = FXMLLoader.load(MainController.class.getResource("/view/Main.fxml"));
         Stage stage = (Stage)((Node)mainEvent.getSource()).getScene().getWindow();
         Scene scene = new Scene(root);
-        stage.setTitle("Main");
+        stage.setTitle("Schedule Management System");
         stage.setScene(scene);
         stage.show();
     }
@@ -103,9 +106,6 @@ public class MainController implements Initializable {
         try {
             Customer selectedItem = (Customer) CustomersTable.getSelectionModel().getSelectedItem();
 
-//            Customer selectedItem = CustomerQuery.select();
-
-
             FXMLLoader loader = new FXMLLoader();
             loader.setLocation(getClass().getResource("/view/AddModCustomer.fxml"));
             loader.load();
@@ -125,7 +125,35 @@ public class MainController implements Initializable {
         }
     }
 
-    public void onDeleteCustomerButtonAction(ActionEvent actionEvent) {
+    public void onDeleteCustomerButtonAction(ActionEvent deleteCustomerEvent) {
+        try {
+            Customer selectedCustomer = (Customer) CustomersTable.getSelectionModel().getSelectedItem();
+
+            String deleteConfirm = "Permanently delete this customer?\n\n" +
+                    "\tId: " + selectedCustomer.getId() + "\n\n" +
+                    "\tName: " + selectedCustomer.getName() + "\n\n" +
+                    "\tAddress: " + selectedCustomer.getAddress() + "\n\n" +
+                    "\tPostal Code: " + selectedCustomer.getPostalCode() + "\n\n" +
+                    "\tPhone: " + selectedCustomer.getPhone() + "\n\n" +
+                    "\tDivision ID: " + selectedCustomer.getDivisionId() + "\n";
+
+            Alert alert = new Alert(Alert.AlertType.CONFIRMATION, deleteConfirm);
+
+            Optional<ButtonType> result = alert.showAndWait();
+
+            if (result.isPresent() && result.get() == ButtonType.OK) {
+                CustomerQuery.delete(selectedCustomer.getId());
+            }
+
+            CustomersTable.setItems(Customer.getAllCustomers());
+//            CustomersTable.setItems(Customer.getAllCustomers());
+
+        } catch (NullPointerException e) {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Delete customer");
+            alert.setContentText("Please select a customer to delete.");
+            alert.showAndWait();
+        }
     }
 
     public void onSearchCustomerHandler(ActionEvent actionEvent) {
