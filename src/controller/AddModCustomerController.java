@@ -79,6 +79,7 @@ public class AddModCustomerController implements Initializable {
     public void displayCustomer(Customer customer1) {
         this.customer = customer1;
         int divisionId = customer.getDivisionId();
+        int countryId = DivisionQuery.getCountryId(divisionId);
 
         idText.setText(String.valueOf(customer.getId()));
         nameText.setText(customer.getName());
@@ -86,7 +87,10 @@ public class AddModCustomerController implements Initializable {
         postalCodeText.setText(String.valueOf(customer.getPostalCode()));
         phoneText.setText(String.valueOf(customer.getPhone()));
         // TODO: Fix combobox presets
-        countryCombo.setValue(CountryQuery.select(DivisionQuery.getCountryId(divisionId)));
+        countryCombo.setItems(CountryQuery.selectAll());
+        countryCombo.setValue(CountryQuery.select(countryId));
+
+        divisionCombo.setItems(DivisionQuery.selectAllForCountry(countryId));
         divisionCombo.setValue(divisionId);
 //        int countryIdFK = countryCombo.getSelectionModel().getSelectedItem().getId();
 //        ObservableList<Division> countryDivisions = DivisionQuery.selectAllForCountry(countryIdFK);
