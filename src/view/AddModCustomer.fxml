@@ -7,7 +7,7 @@
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane xmlns="http://javafx.com/javafx/11.0.2" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.AddModCustomerController">
+<AnchorPane xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.AddModCustomerController">
     <children>
         <TextField fx:id="idText" disable="true" editable="false" layoutX="140.0" layoutY="22.0" prefHeight="25.0" prefWidth="142.0" promptText="Auto Gen - Disabled" style="font-style: italic;" />
         <TextField fx:id="nameText" layoutX="140.0" layoutY="58.0" prefHeight="24.0" prefWidth="142.0" promptText="Name" />
@@ -23,8 +23,8 @@
         <Label layoutX="29.0" layoutY="167.0" text="Phone" />
         <Label layoutX="314.0" layoutY="167.0" text="Division" />
         <Label layoutX="314.0" layoutY="131.0" text="Country" />
-      <ComboBox fx:id="divisionCombo" layoutX="370.0" layoutY="163.0" prefWidth="150.0" promptText="Choose Division" />
-      <ComboBox fx:id="countryCombo" layoutX="370.0" layoutY="127.0" prefWidth="150.0" promptText="Choose Country" />
+        <ComboBox fx:id="countryCombo" layoutX="370.0" layoutY="127.0" onAction="#onCountryCombo" prefWidth="150.0" promptText="Choose Country" />
+        <ComboBox fx:id="divisionCombo" layoutX="370.0" layoutY="163.0" prefWidth="150.0" promptText="First choose country" />
     </children>
    <padding>
       <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />

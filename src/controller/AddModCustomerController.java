@@ -1,8 +1,7 @@
 package controller;
 
 import dao.CustomerQuery;
-import dao.JDBC;
-import javafx.collections.FXCollections;
+import dao.DivisionQuery;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.Initializable;
@@ -14,6 +13,7 @@ import java.util.ResourceBundle;
 
 import model.Country;
 import model.Customer;
+import model.Division;
 
 
 public class AddModCustomerController implements Initializable {
@@ -57,6 +57,8 @@ public class AddModCustomerController implements Initializable {
         System.out.println(countries.size() + " countries found.");
 
         countryCombo.setItems(countries);
+//        countryCombo.setSelectionModel(SingleSelectionModel<Country> singleSelectionModel);
+//        divisionCombo.setItems(DivisionQuery.selectAllForCountry(1));
 
 //        idText.setText(String.valueOf(nextPartId));
 //        System.out.println("Customer: " + customer);
@@ -87,9 +89,14 @@ public class AddModCustomerController implements Initializable {
         int rowsAffected;
 
         if(this.customer == null) {
-            rowsAffected = CustomerQuery.insert(nameText.getText(), addressText.getText(), postalCodeText.getText(), phoneText.getText(), 60);
+            rowsAffected = CustomerQuery.insert(
+                    nameText.getText(), addressText.getText(), postalCodeText.getText(), phoneText.getText(), 60
+            );
         } else {
-            rowsAffected = CustomerQuery.update(this.customer.getId(), nameText.getText(), addressText.getText(), postalCodeText.getText(), phoneText.getText(), this.customer.getDivisionId());
+            rowsAffected = CustomerQuery.update(
+                    this.customer.getId(), nameText.getText(), addressText.getText(), postalCodeText.getText(),
+                    phoneText.getText(), this.customer.getDivisionId()
+            );
         }
 
         if(rowsAffected > 0) {
@@ -109,6 +116,16 @@ public class AddModCustomerController implements Initializable {
      */
     public void onCancelButtonAction(ActionEvent cancelEvent) throws IOException {
         MainController.toMain(cancelEvent);
+    }
+
+    public void onCountryCombo(ActionEvent countryComboEvent) {
+        try {
+            int countryIdFK = Integer.parseInt(String.valueOf(countryCombo.getSelectionModel()));
+            ObservableList<Division> countryDivisions = DivisionQuery.selectAllForCountry(countryIdFK);
+        }
+        catch (NumberFormatException e) {
+            e.printStackTrace();
+        }
     }
 
 //    /**

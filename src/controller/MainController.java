@@ -1,6 +1,7 @@
 package controller;
 
 import dao.CustomerQuery;
+import dao.DivisionQuery;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -13,7 +14,6 @@ import javafx.stage.Stage;
 import model.Customer;
 
 import java.net.URL;
-import java.sql.SQLException;
 import java.util.Optional;
 import java.util.ResourceBundle;
 import java.io.IOException;
@@ -63,6 +63,8 @@ public class MainController implements Initializable {
 //        prodInvCol.setCellValueFactory(new PropertyValueFactory<>("stock"));
 
 //        ProductsTable.setItems(Inventory.getAllProducts());
+
+//        DivisionQuery.selectAllForCountry();
     }
 
     /**
@@ -143,11 +145,9 @@ public class MainController implements Initializable {
 
             if (result.isPresent() && result.get() == ButtonType.OK) {
                 CustomerQuery.delete(selectedCustomer.getId());
+                // TODO: Why doesn't the table auto-update without this?
+                CustomersTable.setItems(Customer.getAllCustomers());
             }
-
-            CustomersTable.setItems(Customer.getAllCustomers());
-//            CustomersTable.setItems(Customer.getAllCustomers());
-
         } catch (NullPointerException e) {
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle("Delete customer");
