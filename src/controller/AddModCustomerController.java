@@ -27,7 +27,7 @@ public class AddModCustomerController implements Initializable {
     public TextField postalCodeText;
     public TextField phoneText;
     public ComboBox<Country> countryCombo;
-    public ComboBox divisionCombo;
+    public ComboBox<Division> divisionCombo;
     public Label sourceLabel;
 
     private Customer customer;
@@ -54,14 +54,13 @@ public class AddModCustomerController implements Initializable {
     public void initialize(URL url, ResourceBundle resourceBundle) {
 
         ObservableList<Country> countries = Country.getAllCountries();
-        // allTable = setItems(countries)
-        System.out.println(countries.size() + " countries found.");
 
         countryCombo.setItems(countries);
-        countryCombo.getSelectionModel().selectFirst();
-        System.out.println(countryCombo.getValue().toString());
+        countryCombo.setPromptText("Select country");
+//        System.out.println(countryCombo.getValue().toString());
 
-        divisionCombo.setPromptText("First choose country");
+        divisionCombo.setPromptText("First select country");
+        divisionCombo.setVisibleRowCount(5);
 
 //        countryCombo.setSelectionModel(SingleSelectionModel<Country> singleSelectionModel);
 //        divisionCombo.setItems(DivisionQuery.selectAllForCountry(1));
@@ -91,17 +90,30 @@ public class AddModCustomerController implements Initializable {
         countryCombo.setValue(CountryQuery.select(countryId));
 
         divisionCombo.setItems(DivisionQuery.selectAllForCountry(countryId));
-        divisionCombo.setValue(divisionId);
-//        int countryIdFK = countryCombo.getSelectionModel().getSelectedItem().getId();
-//        ObservableList<Division> countryDivisions = DivisionQuery.selectAllForCountry(countryIdFK);
-//
-//        divisionCombo.setItems(countryDivisions);
+        divisionCombo.setValue(DivisionQuery.select(divisionId));
+    }
+
+    public void onCountryCombo(ActionEvent countryComboEvent) {
+
+        try {
+            int countryIdFK = countryCombo.getSelectionModel().getSelectedItem().getId();
+
+//            System.out.println("Division (before): " + divisionCombo.getSelectionModel().getSelectedItem().getName());
+
+            divisionCombo.setItems(DivisionQuery.selectAllForCountry(countryIdFK));
+//            divisionCombo.getSelectionModel().clearSelection();
+//            divisionCombo.setValue(null);
+            divisionCombo.setPromptText("Select division");
+//            System.out.println("Division (after): " + divisionCombo.getSelectionModel().getSelectedItem().getName());
 
 
-//        countryCombo.setText(String.valueOf(customer.getCountry()));
-//        divisionCombo.setText(String.valueOf(customer.getDivisionId()));
+        }
+        catch (NumberFormatException e) {
+            e.printStackTrace();
+        }
 
-//        associatedAppts.setAll(customer.getAllAssociatedAppts());
+        divisionCombo.setPromptText("Select division");
+
     }
 
     public void onSaveButtonAction(ActionEvent saveEvent) throws IOException {
@@ -135,19 +147,6 @@ public class AddModCustomerController implements Initializable {
      */
     public void onCancelButtonAction(ActionEvent cancelEvent) throws IOException {
         MainController.toMain(cancelEvent);
-    }
-
-    public void onCountryCombo(ActionEvent countryComboEvent) {
-        try {
-//            int countryIdFK = Integer.parseInt(String.valueOf(countryCombo.getSelectionModel()));
-            int countryIdFK = countryCombo.getSelectionModel().getSelectedItem().getId();
-            ObservableList<Division> countryDivisions = DivisionQuery.selectAllForCountry(countryIdFK);
-
-            divisionCombo.setItems(countryDivisions);
-        }
-        catch (NumberFormatException e) {
-            e.printStackTrace();
-        }
     }
 
 //    /**

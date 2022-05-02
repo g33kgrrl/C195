@@ -6,7 +6,7 @@ import javafx.collections.ObservableList;
 
 
 public class Division {
-    private static ObservableList<Division> allDivisions = FXCollections.observableArrayList();
+    private static ObservableList<Division> allDivisions = FXCollections.observableArrayList(); // put in another class?
 
     private int id;
     private String name;
@@ -18,17 +18,14 @@ public class Division {
         this.countryId = countryId;
     }
 
+    // List not good idea - should prob be in another class
     public static ObservableList<Division> getAllDivisions(int countryId) {
-//        allCountries.add(new Country(4, "Mexico"));
-//        allCountries.add(new Country(5, "Iceland"));
-
-//        return allCountries;
         return DivisionQuery.selectAllForCountry(countryId);
     }
 
     @Override
     public String toString() {
-        return("#" + Integer.toString(id) + " " + name);
+        return(name);
     }
 
     public int getId() {

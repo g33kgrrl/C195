@@ -10,16 +10,6 @@ import java.sql.SQLException;
 
 public abstract class CountryQuery {
 
-    public static int delete(int id) throws SQLException {
-        String sql = "DELETE FROM countries WHERE Country_ID = ?";
-        PreparedStatement ps = JDBC.getConnection().prepareStatement(sql);
-        ps.setInt(1, id);
-
-        int rowsAffected = ps.executeUpdate();
-        System.out.println("Rows affected: " + rowsAffected);
-        return rowsAffected;
-    }
-
     public static ObservableList<Country> selectAll() {
         ObservableList<Country> allCountries = FXCollections.observableArrayList();
 
@@ -34,7 +24,7 @@ public abstract class CountryQuery {
                 Country c = new Country(id, name);
                 allCountries.add(c);
 
-                System.out.println(id + " | " + name);
+//                System.out.println(id + " | " + name);
             }
         }
         catch(SQLException ex) {
@@ -59,7 +49,7 @@ public abstract class CountryQuery {
                 Country c = new Country(countryId, countryName);
                 selectedCountry.add(c);
 
-                System.out.println(countryId + " | " + countryName);
+//                System.out.println(countryId + " | " + countryName);
             }
         }
         catch(SQLException ex) {
@@ -67,19 +57,5 @@ public abstract class CountryQuery {
         }
 
         return selectedCountry.get(0);
-    }
-
-    public static void select(String countryName) throws SQLException {
-        String sql = "SELECT * FROM countries WHERE Country = ?";
-        PreparedStatement ps = JDBC.getConnection().prepareStatement(sql);
-        ps.setString(1, countryName);
-        ResultSet rs = ps.executeQuery();
-
-        while(rs.next()) {
-            int id = rs.getInt("Country_ID");
-            String name = rs.getString("Country");
-
-            System.out.println(id + " | " + name);
-        }
     }
 }
