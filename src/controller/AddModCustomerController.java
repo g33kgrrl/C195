@@ -85,7 +85,6 @@ public class AddModCustomerController implements Initializable {
         addressText.setText(String.valueOf(customer.getAddress()));
         postalCodeText.setText(String.valueOf(customer.getPostalCode()));
         phoneText.setText(String.valueOf(customer.getPhone()));
-        // TODO: Fix combobox presets
         countryCombo.setItems(CountryQuery.selectAll());
         countryCombo.setValue(CountryQuery.select(countryId));
 

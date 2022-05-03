@@ -100,6 +100,7 @@ public abstract class CustomerQuery {
         return allCustomers;
     }
 
+    // TODO: Is this needed?
     public static void select(int divisionId) throws SQLException {
         String sql = "SELECT * FROM customers WHERE Division_ID = ?";
         PreparedStatement ps = JDBC.getConnection().prepareStatement(sql);

@@ -66,7 +66,6 @@ public class LoginController implements Initializable {
         // index = Inventory.getAllParts().indexOf(part);
         System.out.println(user.getUserId());
         System.out.println(user.getUserName());
-        // TODO: Display main screen
         MainController.toMain(mainEvent);
     }
 
