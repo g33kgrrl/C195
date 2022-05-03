@@ -121,12 +121,13 @@ public class AddModCustomerController implements Initializable {
 
         if (this.customer == null) {
             rowsAffected = CustomerQuery.insert(
-                    nameText.getText(), addressText.getText(), postalCodeText.getText(), phoneText.getText(), 60
+                    nameText.getText(), addressText.getText(), postalCodeText.getText(), phoneText.getText(),
+                    divisionCombo.getSelectionModel().getSelectedItem().getId()
             );
         } else {
             rowsAffected = CustomerQuery.update(
                     this.customer.getId(), nameText.getText(), addressText.getText(), postalCodeText.getText(),
-                    phoneText.getText(), this.customer.getDivisionId()
+                    phoneText.getText(), divisionCombo.getSelectionModel().getSelectedItem().getId()
             );
         }
 
