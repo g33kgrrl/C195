@@ -1,5 +1,6 @@
 package controller;
 
+import dao.UserQuery;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -12,6 +13,7 @@ import model.User;
 
 import java.io.IOException;
 import java.net.URL;
+import java.sql.SQLException;
 import java.time.LocalDateTime;
 import java.util.ResourceBundle;
 
@@ -50,23 +52,17 @@ public class LoginController implements Initializable {
      * @param submitEvent
      */
     public void onSubmitButtonAction(ActionEvent submitEvent) throws IOException {
-        if (userName.getText().equals("test") && password.getText().equals("test")) {
-            System.out.println("Authenticated!");
-            displayMain(submitEvent);
-        } else {
+        User user1 = UserQuery.select(userName.getText());
+
+        if ((user1 == null) || (!user1.getPassword().equals(password.getText()))) {
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle("Login failed");
             alert.setContentText("Please check your username and password and try again.");
             alert.showAndWait();
+        } else {
+            System.out.println("Authenticated!");
+            MainController.toMain(submitEvent);
         }
-    }
-
-    public void displayMain(ActionEvent mainEvent) throws IOException {
-        user = addDummyUser();
-        // index = Inventory.getAllParts().indexOf(part);
-        System.out.println(user.getUserId());
-        System.out.println(user.getUserName());
-        MainController.toMain(mainEvent);
     }
 
     public void onAddCustomerButtonAction(ActionEvent addCustomerEvent) throws IOException {
@@ -76,12 +72,5 @@ public class LoginController implements Initializable {
         stage.setTitle("Add Customer");
         stage.setScene(scene);
         stage.show();
-    }
-
-
-    public static User addDummyUser() {
-        User user1 = new User(1, "Foo", "bar", LocalDateTime.now(), "Lisa", LocalDateTime.now(), "James");
-
-        return user1;
     }
 }
