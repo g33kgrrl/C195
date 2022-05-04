@@ -15,6 +15,7 @@ public abstract class ContactQuery {
         ObservableList<Contact> allContacts = FXCollections.observableArrayList();
 
         try {
+            // TODO: Add WHERE appointmentID = ?
             String sql = "SELECT * FROM contacts";
             PreparedStatement ps = JDBC.getConnection().prepareStatement(sql);
             ResultSet rs = ps.executeQuery();

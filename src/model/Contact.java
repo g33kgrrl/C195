@@ -1,5 +1,6 @@
 package model;
 
+import dao.ContactQuery;
 import dao.CountryQuery;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -19,7 +20,7 @@ public class Contact {
     }
 
     public static ObservableList<Contact> getAllContacts() {
-        return CountryQuery.selectAll();
+        return ContactQuery.selectAll();
     }
 
     @Override
