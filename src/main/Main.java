@@ -29,9 +29,15 @@ public class Main extends Application {
         // TODO: Set/test Locale.setDefault(new Locale("fr"));
         JDBC.makeConnection();
 
-        AppointmentQuery.insert("Appt1", "My first appt", "Bahamas", "Pleasure cruise",
-                LocalDateTime.now(), LocalDateTime.now(), LocalDateTime.now(), "Lisa", LocalDateTime.now(),
-                "Michael", 2, 1, 3);
+        System.out.println(LocalDateTime.parse("2017-10-06T17:48:23.558"));
+
+        AppointmentQuery.insert("Appt2", "My second appt", "Hawaii", "Vacation",
+                LocalDateTime.parse("2022-05-06T11:15:23.558"), LocalDateTime.parse("2022-05-06T11:30:23.558"), LocalDateTime.parse("2022-04-06T17:48:23.558"), "Michael", LocalDateTime.parse("2017-05-01T10:20:23.558"),
+                "Lisa", 1, 1, 2);
+
+        System.out.println("-------");
+
+        AppointmentQuery.selectAll();
 
         launch(args);
 

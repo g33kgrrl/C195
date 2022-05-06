@@ -1,7 +1,5 @@
 package model;
 
-import dao.AppointmentQuery;
-import dao.CustomerQuery;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
@@ -24,24 +22,6 @@ public class Appointment {
     private int customerId;
     private int userId;
     private int contactId;
-
-    /*
-    Appointment_ID INT(10) (PK)
-    Title VARCHAR(50)
-    Description VARCHAR(50)
-    Location VARCHAR(50)
-    Type VARCHAR(50)
-    Start DATETIME
-    End DATETIME
-    Create_Date DATETIME
-    Created_By VARCHAR(50)
-    Last_Update TIMESTAMP
-    Last_Updated_By VARCHAR(50)
-    Customer_ID INT(10) (FK)
-    User_ID INT(10) (FK)
-    Contact_ID INT(10) (FK)
-
-     */
 
     public Appointment(int id, String title, String description, String location, String type, LocalDateTime start,
                        LocalDateTime end, LocalDateTime createDate, String createdBy, LocalDateTime lastUpdate,
