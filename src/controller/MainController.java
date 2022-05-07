@@ -1,7 +1,7 @@
 package controller;
 
+import dao.AppointmentQuery;
 import dao.CustomerQuery;
-import dao.DivisionQuery;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -36,6 +36,20 @@ public class MainController implements Initializable {
     public TableColumn custDivIdCol;
     public TableColumn custPostalCodeCol;
     public TableColumn custPhoneCol;
+    public TableColumn apptIdCol;
+    public TableColumn apptTitleCol;
+    public TableColumn apptLocationCol;
+    public TableColumn apptDescriptionCol;
+    public TableColumn apptTypeCol;
+    public TableColumn apptStartCol;
+    public TableColumn apptEndCol;
+    public TableColumn apptCreateDateCol;
+    public TableColumn apptCreatedByCol;
+    public TableColumn apptLastUpdateCol;
+    public TableColumn apptLastUpdatedByCol;
+    public TableColumn apptCustomerIdCol;
+    public TableColumn apptUserIdCol;
+    public TableColumn apptContactIdCol;
 
     /**
      * Sets up and displays main screen.
@@ -57,12 +71,23 @@ public class MainController implements Initializable {
         CustomersTable.setItems(Customer.getAllCustomers());
 
         // Products table
-//        prodIdCol.setCellValueFactory(new PropertyValueFactory<>("id"));
-//        prodNameCol.setCellValueFactory(new PropertyValueFactory<>("name"));
-//        prodPriceCol.setCellValueFactory(new PropertyValueFactory<>("price"));
-//        prodInvCol.setCellValueFactory(new PropertyValueFactory<>("stock"));
+        apptIdCol.setCellValueFactory(new PropertyValueFactory<>("id"));
+        apptTitleCol.setCellValueFactory(new PropertyValueFactory<>("title"));
+        apptDescriptionCol.setCellValueFactory(new PropertyValueFactory<>("description"));
+        apptLocationCol.setCellValueFactory(new PropertyValueFactory<>("location"));
+        apptTypeCol.setCellValueFactory(new PropertyValueFactory<>("type"));
+        apptStartCol.setCellValueFactory(new PropertyValueFactory<>("start"));
+        apptEndCol.setCellValueFactory(new PropertyValueFactory<>("end"));
+        apptCreateDateCol.setCellValueFactory(new PropertyValueFactory<>("createDate"));
+        apptCreatedByCol.setCellValueFactory(new PropertyValueFactory<>("createdBy"));
+        apptLastUpdateCol.setCellValueFactory(new PropertyValueFactory<>("lastUpdate"));
+        apptLastUpdatedByCol.setCellValueFactory(new PropertyValueFactory<>("lastUpdatedBy"));
+        apptCustomerIdCol.setCellValueFactory(new PropertyValueFactory<>("customerId"));
+        apptUserIdCol.setCellValueFactory(new PropertyValueFactory<>("userId"));
+        apptContactIdCol.setCellValueFactory(new PropertyValueFactory<>("contactId"));
 
-//        ProductsTable.setItems(Inventory.getAllProducts());
+
+        AppointmentsTable.setItems(AppointmentQuery.selectAll());
 
 //        DivisionQuery.selectAllForCountry();
     }

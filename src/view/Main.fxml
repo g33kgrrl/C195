@@ -39,10 +39,22 @@
             <children>
                 <TableView fx:id="AppointmentsTable" layoutX="14.0" layoutY="50.0" prefHeight="172.0" prefWidth="968.0">
                     <columns>
-                        <TableColumn fx:id="prodIdCol" prefWidth="100.0" text="ID" />
-                        <TableColumn fx:id="prodNameCol" prefWidth="125.0" text="Title" />
-                        <TableColumn fx:id="prodInvCol" minWidth="0.0" prefWidth="126.0" text="Description" />
-                        <TableColumn fx:id="prodPriceCol" prefWidth="160.0" text="Cust ID" />
+                        <TableColumn fx:id="apptIdCol" text="ID" />
+                        <TableColumn fx:id="apptTitleCol" text="Title" />
+                        <TableColumn fx:id="apptDescriptionCol" text="Description" />
+                        <TableColumn fx:id="apptLocationCol" text="Location" />
+                        <TableColumn fx:id="apptTypeCol" text="Type" />
+                        <TableColumn fx:id="apptStartCol" text="Start" />
+                        <TableColumn fx:id="apptEndCol" text="End" />
+                        <TableColumn fx:id="apptCreateDateCol" text="Created" />
+                        <TableColumn fx:id="apptCreatedByCol" text="By" />
+                        <TableColumn fx:id="apptLastUpdateCol" text="Updated" />
+                        <TableColumn fx:id="apptLastUpdatedByCol" text="By" />
+                        <TableColumn fx:id="apptCustomerIdCol" text="Cust ID" />
+                        <TableColumn fx:id="apptUserIdCol" text="User ID" />
+                        <TableColumn fx:id="apptContactIdCol" text="Contact ID" />
+
+
                     </columns>
                 </TableView>
                 <Button fx:id="AddProductButton" layoutX="752.0" layoutY="229.0" mnemonicParsing="false" onAction="#onAddApptButtonAction" prefHeight="33.0" prefWidth="62.0" text="Add" />

@@ -79,11 +79,11 @@ public abstract class AppointmentQuery {
         return -1;
     }
 
-    public static int delete(int customerId) {
+    public static int delete(int appointmentId) {
         try {
             String sql = "DELETE FROM appointments WHERE Appointment_ID = ?";
             PreparedStatement ps = JDBC.getConnection().prepareStatement(sql);
-            ps.setInt(1, customerId);
+            ps.setInt(1, appointmentId);
 
             int rowsAffected = ps.executeUpdate();
             System.out.println("Rows affected: " + rowsAffected);
@@ -110,13 +110,11 @@ public abstract class AppointmentQuery {
                 String description = rs.getString("Description");
                 String location = rs.getString("Location");
                 String type = rs.getString("Type");
-                LocalDateTime start = rs.getTimestamp("Start").toLocalDateTime().atZone(localZoneId).withZoneSameInstant(ZoneOffset.UTC).toLocalDateTime();
-                //            LocalDateTime lastUpdate = rs.getTimestamp("Last_Update").toLocalDateTime().atZone(localZoneId).withZoneSameInstant(ZoneOffset.UTC).toLocalDateTime();
-
-                LocalDateTime end = rs.getTimestamp("End").toLocalDateTime().atZone(localZoneId).withZoneSameInstant(ZoneOffset.UTC).toLocalDateTime();
-                LocalDateTime createDate = rs.getTimestamp("Create_Date").toLocalDateTime().atZone(localZoneId).withZoneSameInstant(ZoneOffset.UTC).toLocalDateTime();
+                LocalDateTime start = rs.getTimestamp("Start").toLocalDateTime();
+                LocalDateTime end = rs.getTimestamp("End").toLocalDateTime();
+                LocalDateTime createDate = rs.getTimestamp("Create_Date").toLocalDateTime();
                 String createdBy = rs.getString("Created_By");
-                LocalDateTime lastUpdate = rs.getTimestamp("Last_Update").toLocalDateTime().atZone(localZoneId).withZoneSameInstant(ZoneOffset.UTC).toLocalDateTime();
+                LocalDateTime lastUpdate = rs.getTimestamp("Last_Update").toLocalDateTime();
                 String lastUpdatedBy = rs.getString("Last_Updated_By");
                 int customerId = rs.getInt("Customer_ID");
                 int userId = rs.getInt("User_ID");
@@ -155,21 +153,19 @@ public abstract class AppointmentQuery {
             String location = rs.getString("Location");
             String type = rs.getString("Type");
 
-//            LocalDateTime start = LocalDateTime.now(); //Local date time
-//
-//            ZoneId zoneId = ZoneId.of( "Asia/Kolkata" );  //Zone information
-//
-//            ZonedDateTime zdtAtAsia = start.atZone( zoneId );	//Local time in Asia timezone
-//
-//            ZonedDateTime zdtAtET = zdtAtAsia
-//                    .withZoneSameInstant( ZoneId.of( "America/New_York" ) ); //Same time in ET timezone
+            /*
+            LocalDateTime start = LocalDateTime.now(); //Local date time
+            ZoneId zoneId = ZoneId.of( "Asia/Kolkata" );  //Zone information
+            ZonedDateTime zdtAtAsia = start.atZone( zoneId );	//Local time in Asia timezone
+            ZonedDateTime zdtAtET = zdtAtAsia
+                    .withZoneSameInstant( ZoneId.of( "America/New_York" ) ); //Same time in ET timezone
+             */
 
-
-            LocalDateTime start = rs.getTimestamp("Start").toLocalDateTime().atZone(ZoneOffset.UTC).withZoneSameInstant(localZoneId).toLocalDateTime(); // atZone(localZoneId).withZoneSameInstant(ZoneOffset.UTC).toLocalDateTime();
-            LocalDateTime end = rs.getTimestamp("End").toLocalDateTime().atZone(ZoneOffset.UTC).withZoneSameInstant(localZoneId).toLocalDateTime();
-            LocalDateTime createDate = rs.getTimestamp("Create_Date").toLocalDateTime().atZone(ZoneOffset.UTC).withZoneSameInstant(localZoneId).toLocalDateTime();
+            LocalDateTime start = rs.getTimestamp("Start").toLocalDateTime(); // atZone(localZoneId).withZoneSameInstant(ZoneOffset.UTC).toLocalDateTime();
+            LocalDateTime end = rs.getTimestamp("End").toLocalDateTime(); // .atZone(ZoneOffset.UTC).withZoneSameInstant(localZoneId).toLocalDateTime();
+            LocalDateTime createDate = rs.getTimestamp("Create_Date").toLocalDateTime(); // .atZone(ZoneOffset.UTC).withZoneSameInstant(localZoneId).toLocalDateTime();
             String createdBy = rs.getString("Created_By");
-            LocalDateTime lastUpdate = rs.getTimestamp("Last_Update").toLocalDateTime().atZone(ZoneOffset.UTC).withZoneSameInstant(localZoneId).toLocalDateTime();
+            LocalDateTime lastUpdate = rs.getTimestamp("Last_Update").toLocalDateTime(); //.atZone(ZoneOffset.UTC).withZoneSameInstant(localZoneId).toLocalDateTime();
             String lastUpdatedBy = rs.getString("Last_Updated_By");
             int customerId = rs.getInt("Customer_ID");
             int userId = rs.getInt("User_ID");

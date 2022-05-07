@@ -15,6 +15,7 @@ import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
 import java.time.LocalDateTime;
+import java.time.ZoneId;
 import java.util.ResourceBundle;
 
 public class LoginController implements Initializable {
@@ -40,7 +41,7 @@ public class LoginController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         if (zoneId == 1) {
-            zoneIdLabel.setText("America");
+            zoneIdLabel.setText(ZoneId.systemDefault().toString());
         }
     }
 
