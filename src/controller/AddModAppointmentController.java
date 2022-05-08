@@ -1,6 +1,7 @@
 package controller;
 
 import dao.ContactQuery;
+import dao.CountryQuery;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -43,10 +44,13 @@ public class AddModAppointmentController implements Initializable {
     public DatePicker endDatePicker;
     public ComboBox endHourCombo;
     public ComboBox endMinuteCombo;
+    public Label customerIdLabel;
+    public Label userIdLabel;
 
     //    private Product product;
 //    private ObservableList<Part> associatedParts = FXCollections.observableArrayList();
     private Contact appointmentContact;
+    private Appointment appointment;
 
 
 //  When adding and updating an appointment, record the following data: Appointment_ID, title, description, location,
@@ -70,24 +74,34 @@ public class AddModAppointmentController implements Initializable {
     public void onSaveButtonAction(ActionEvent actionEvent) {
     }
 
-//    /**
-//     * Initializes modify product dialog with current data for the selected product.
-//     * Gets current data for the selected product, and populates the modify product textfields with that
-//     * data. Product ID textfield is disabled to prevent creation of duplicate product IDs.
-//     * @param product1 the selected product to modify
-//     */
-//    public void displayProduct(Product product1) {
-//        this.product = product1;
-//
-//        idText.setText(String.valueOf(product.getId()));
-//        nameText.setText(product.getName());
-//        inventoryText.setText(String.valueOf(product.getStock()));
-//        priceText.setText(String.valueOf(product.getPrice()));
-//        maxText.setText(String.valueOf(product.getMax()));
-//        minText.setText(String.valueOf(product.getMin()));
-//
+    /**
+     * Initializes modify product dialog with current data for the selected product.
+     * Gets current data for the selected product, and populates the modify product textfields with that
+     * data. Product ID textfield is disabled to prevent creation of duplicate product IDs.
+     * @param appointment1 the selected appointment to modify
+     */
+    public void displayAppointment(Appointment appointment1) {
+        this.appointment = appointment1;
+
+        idText.setText(String.valueOf(appointment.getId()));
+        titleText.setText(appointment.getTitle());
+        descriptionText.setText(String.valueOf(appointment.getDescription()));
+        locationText.setText(String.valueOf(appointment.getLocation()));
+        contactCombo.setValue(ContactQuery.select(appointment.getContactId()));
+        typeText.setText(String.valueOf(appointment.getType()));
+//        startDatePicker.setda  . setText(String.valueOf(appointment.getMax()));
+//        startHourCombo.setSelectionModel();
+//        startMinuteCombo.setSelectionModel();
+//        endDatePicker.setda  . setText(String.valueOf(appointment.getMax()));
+//        endHourCombo.setSelectionModel();
+//        endMinuteCombo.setSelectionModel();
+        customerIdLabel.setText("CustomerId: " + appointment.getCustomerId());
+        userIdLabel.setText("UserId: " + appointment.getUserId());
+
+//        // Appointment_ID, title, description, location, contact, type, start date and time, end date and time, Customer_ID, and User_ID
+
 //        associatedParts.setAll(product.getAllAssociatedParts());
-//    }
+    }
 //
 //    /**
 //     * Handles search parts request.

@@ -14,6 +14,7 @@ import java.util.Optional;
 import java.util.ResourceBundle;
 import java.io.IOException;
 
+import model.Appointment;
 import model.Customer;
 import dao.AppointmentQuery;
 import dao.CustomerQuery;
@@ -185,7 +186,27 @@ public class MainController implements Initializable {
     public void onAddApptButtonAction(ActionEvent actionEvent) {
     }
 
-    public void onModifyApptButtonAction(ActionEvent actionEvent) {
+    public void onModifyApptButtonAction(ActionEvent addModApptEvent) throws IOException {
+        try {
+            Appointment selectedItem = (Appointment) AppointmentsTable.getSelectionModel().getSelectedItem();
+
+            FXMLLoader loader = new FXMLLoader();
+            loader.setLocation(getClass().getResource("/view/AddModAppointment.fxml"));
+            loader.load();
+
+            AddModAppointmentController addModAppointmentController = loader.getController();
+            addModAppointmentController.displayAppointment(selectedItem);
+
+            Stage stage = (Stage) ((Node) addModApptEvent.getSource()).getScene().getWindow();
+            Parent root = loader.getRoot();
+            stage.setScene(new Scene(root));
+            stage.show();
+        } catch (NullPointerException e) {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Modify appointment");
+            alert.setContentText("Please select an appointment to modify.");
+            alert.showAndWait();
+        }
     }
 
     public void onDeleteApptButtonAction(ActionEvent actionEvent) {

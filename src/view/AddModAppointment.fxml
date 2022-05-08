@@ -33,8 +33,8 @@
                 <Label layoutX="285.0" layoutY="60.0" text="Type" />
                 <Label layoutX="285.0" layoutY="100.0" text="Start" />
                 <Label layoutX="285.0" layoutY="140.0" text="End" />
-                <Label layoutX="67.0" layoutY="189.0" text="Customer ID" />
-                <Label layoutX="149.0" layoutY="189.0" prefHeight="17.0" prefWidth="45.0" text="User ID" />
+                <Label fx:id="customerIdLabel" layoutX="67.0" layoutY="189.0" prefHeight="17.0" prefWidth="105.0" text="Customer ID" />
+                <Label fx:id="userIdLabel" layoutX="220.0" layoutY="189.0" prefHeight="17.0" prefWidth="82.0" text="User ID" />
                 <Button layoutX="401.0" layoutY="190.0" mnemonicParsing="false" onAction="#onSaveButtonAction" prefHeight="33.0" prefWidth="67.0" text="Save" />
                 <Button layoutX="479.0" layoutY="190.0" mnemonicParsing="false" onAction="#onCancelButtonAction" prefHeight="33.0" prefWidth="70.0" text="Cancel" />
             </children>
