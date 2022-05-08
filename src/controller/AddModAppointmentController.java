@@ -69,6 +69,8 @@ public class AddModAppointmentController implements Initializable {
      */
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        contactCombo.setItems(ContactQuery.selectAll());
+//        startHourCombo.setItems();
     }
 
     public void onSaveButtonAction(ActionEvent actionEvent) {
