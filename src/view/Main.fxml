@@ -53,8 +53,6 @@
                         <TableColumn fx:id="apptCustomerIdCol" text="Cust ID" />
                         <TableColumn fx:id="apptUserIdCol" text="User ID" />
                         <TableColumn fx:id="apptContactIdCol" text="Contact ID" />
-
-
                     </columns>
                 </TableView>
                 <Button fx:id="AddProductButton" layoutX="752.0" layoutY="229.0" mnemonicParsing="false" onAction="#onAddApptButtonAction" prefHeight="33.0" prefWidth="62.0" text="Add" />

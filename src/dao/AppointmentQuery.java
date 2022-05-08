@@ -10,7 +10,7 @@ import java.time.format.DateTimeFormatter;
 
 public abstract class AppointmentQuery {
 
-    private static ZoneId localZoneId = ZoneId.of("America/Los_Angeles");
+    private static ZoneId localZoneId = ZoneId.systemDefault();
     private static DateTimeFormatter dtf = DateTimeFormatter.ofPattern("MM-dd-yyyy HH:mm");
 
     public static int insert(String title, String description, String location, String type, LocalDateTime start,

@@ -1,6 +1,5 @@
 package controller;
 
-import dao.UserQuery;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -9,8 +8,6 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.stage.Stage;
-import model.User;
-
 import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
@@ -18,13 +15,14 @@ import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.util.ResourceBundle;
 
+import model.User;
+import dao.UserQuery;
+
 public class LoginController implements Initializable {
 
     public TextField userName;
     public TextField password;
     public Label zoneIdLabel;
-
-    private int zoneId = 1; // TODO: Query location?
     private User user;
 
     /***
@@ -40,9 +38,7 @@ public class LoginController implements Initializable {
      */
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        if (zoneId == 1) {
             zoneIdLabel.setText(ZoneId.systemDefault().toString());
-        }
     }
 
     /***

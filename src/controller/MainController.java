@@ -1,7 +1,5 @@
 package controller;
 
-import dao.AppointmentQuery;
-import dao.CustomerQuery;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -11,12 +9,14 @@ import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
-import model.Customer;
-
 import java.net.URL;
 import java.util.Optional;
 import java.util.ResourceBundle;
 import java.io.IOException;
+
+import model.Customer;
+import dao.AppointmentQuery;
+import dao.CustomerQuery;
 
 
 public class MainController implements Initializable {
@@ -59,7 +59,7 @@ public class MainController implements Initializable {
      */
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        // Parts table
+        // Customer table
         custIdCol.setCellValueFactory(new PropertyValueFactory<>("id"));
         custNameCol.setCellValueFactory(new PropertyValueFactory<>("name"));
         custAddressCol.setCellValueFactory(new PropertyValueFactory<>("address"));
@@ -67,10 +67,9 @@ public class MainController implements Initializable {
         custPhoneCol.setCellValueFactory(new PropertyValueFactory<>("phone"));
         custDivIdCol.setCellValueFactory(new PropertyValueFactory<>("divisionId"));
 
-
         CustomersTable.setItems(Customer.getAllCustomers());
 
-        // Products table
+        // Appointments table
         apptIdCol.setCellValueFactory(new PropertyValueFactory<>("id"));
         apptTitleCol.setCellValueFactory(new PropertyValueFactory<>("title"));
         apptDescriptionCol.setCellValueFactory(new PropertyValueFactory<>("description"));
@@ -85,7 +84,6 @@ public class MainController implements Initializable {
         apptCustomerIdCol.setCellValueFactory(new PropertyValueFactory<>("customerId"));
         apptUserIdCol.setCellValueFactory(new PropertyValueFactory<>("userId"));
         apptContactIdCol.setCellValueFactory(new PropertyValueFactory<>("contactId"));
-
 
         AppointmentsTable.setItems(AppointmentQuery.selectAll());
 

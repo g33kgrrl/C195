@@ -18,7 +18,7 @@ public class Main extends Application {
     @Override
     public void start(Stage primaryStage) throws Exception{
 //        TODO: Re-enable login screen after other stuff
-        Parent root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/view/Login.fxml")));
+        Parent root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/view/AddModAppointment.fxml")));
         primaryStage.setTitle("Log In");
         primaryStage.setScene(new Scene(root));
         primaryStage.show();
@@ -29,17 +29,11 @@ public class Main extends Application {
         // TODO: Set/test Locale.setDefault(new Locale("fr"));
         JDBC.makeConnection();
 
-        System.out.println(LocalDateTime.parse("2017-10-06T17:48:23.558"));
+//        System.out.println(LocalDateTime.parse("2017-10-06T17:48:23.558"));
 
 //        AppointmentQuery.insert("Appt2", "My third appt", "Hawaii", "Vacation",
 //                LocalDateTime.parse("2022-05-06T11:15:23.558"), LocalDateTime.parse("2022-05-06T11:30:23.558"), LocalDateTime.parse("2022-04-06T17:48:23.558"), "Michael", LocalDateTime.parse("2017-05-01T10:20:23.558"),
 //                "Lisa", 1, 1, 2);
-
-        AppointmentQuery.delete(10);
-
-        System.out.println("-------");
-
-        AppointmentQuery.selectAll();
 
         launch(args);
 
