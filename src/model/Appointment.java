@@ -6,7 +6,7 @@ import javafx.collections.ObservableList;
 import java.time.LocalDateTime;
 
 public class Appointment {
-    private static ObservableList<Appointment> allCustomers = FXCollections.observableArrayList();
+    private static ObservableList<Appointment> allAppointments = FXCollections.observableArrayList();
 
     private int id;
     private String title;
@@ -48,9 +48,9 @@ public class Appointment {
 //        return AppointmentQuery.selectAll();
 //    }
 
-    public static void setAllCustomers(ObservableList<Appointment> allCustomers) {
-        Appointment.allCustomers = allCustomers;
-    }
+//    public static void setAllCustomers(ObservableList<Appointment> allCustomers) {
+//        Appointment.allCustomers = allCustomers;
+//    }
 
     public int getId() {
         return id;

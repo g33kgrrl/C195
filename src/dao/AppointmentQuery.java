@@ -122,11 +122,11 @@ public abstract class AppointmentQuery {
 
                 // LocalDateTime ldt = LocalDateTime.parse(<string>, dtf);
 
-                System.out.println(appointmentId + " | " + title + " | " + description + " | " + location + " | " + type
-                        + " | " + dtf.format(start) + " | " + dtf.format(end) + " | " + dtf.format(createDate) + " | "
-                        + createdBy + " | " + dtf.format(lastUpdate) + " | " + lastUpdatedBy + " | " + customerId
-                        + " | " + userId + " | " + contactId
-                );
+//                System.out.println(appointmentId + " | " + title + " | " + description + " | " + location + " | " + type
+//                        + " | " + dtf.format(start) + " | " + dtf.format(end) + " | " + dtf.format(createDate) + " | "
+//                        + createdBy + " | " + dtf.format(lastUpdate) + " | " + lastUpdatedBy + " | " + customerId
+//                        + " | " + userId + " | " + contactId
+//                );
 
                 Appointment a = new Appointment(appointmentId, title, description, location, type, start, end, createDate,
                         createdBy, lastUpdate, lastUpdatedBy, customerId, userId, contactId);

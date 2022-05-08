@@ -20,11 +20,13 @@
                 <ComboBox fx:id="contactCombo" layoutX="340.0" layoutY="17.0" prefHeight="25.0" prefWidth="142.0" />
                 <TextField fx:id="typeText" layoutX="340.0" layoutY="57.0" prefHeight="25.0" prefWidth="142.0" promptText="Type" />
                 <DatePicker fx:id="startDatePicker" layoutX="340.0" layoutY="97.0" prefHeight="25.0" prefWidth="105.0" promptText="Date" />
-                <ComboBox fx:id="startHourCombo" layoutX="456.0" layoutY="97.0" prefHeight="25.0" prefWidth="50.0" />
-                <ComboBox fx:id="startMinuteCombo" layoutX="511.0" layoutY="97.0" prefHeight="25.0" prefWidth="50.0" />
+                <ComboBox fx:id="startHourCombo" layoutX="456.0" layoutY="97.0" prefHeight="25.0" prefWidth="60.0" />
+                <Label layoutX="521.0" layoutY="101.0" text=":" />
+                <ComboBox fx:id="startMinuteCombo" layoutX="528.0" layoutY="97.0" prefHeight="25.0" prefWidth="60.0" />
                 <DatePicker fx:id="endDatePicker" layoutX="340.0" layoutY="137.0" prefHeight="25.0" prefWidth="105.0" promptText="Date" />
-                <ComboBox fx:id="endHourCombo" layoutX="456.0" layoutY="137.0" prefHeight="25.0" prefWidth="50.0" />
-                <ComboBox fx:id="endMinuteCombo" layoutX="511.0" layoutY="137.0" prefHeight="25.0" prefWidth="50.0" />
+                <ComboBox fx:id="endHourCombo" layoutX="456.0" layoutY="137.0" prefHeight="25.0" prefWidth="60.0" />
+                <Label layoutX="521.0" layoutY="141.0" text=":" />
+                <ComboBox fx:id="endMinuteCombo" layoutX="528.0" layoutY="137.0" prefHeight="25.0" prefWidth="60.0" />
                 <Label layoutX="25.0" layoutY="20.0" text="ID" />
                 <Label layoutX="25.0" layoutY="60.0" text="Title" />
                 <Label layoutX="25.0" layoutY="100.0" text="Description" />
@@ -35,8 +37,8 @@
                 <Label layoutX="285.0" layoutY="140.0" text="End" />
                 <Label fx:id="customerIdLabel" layoutX="67.0" layoutY="189.0" prefHeight="17.0" prefWidth="105.0" text="Customer ID" />
                 <Label fx:id="userIdLabel" layoutX="220.0" layoutY="189.0" prefHeight="17.0" prefWidth="82.0" text="User ID" />
-                <Button layoutX="401.0" layoutY="190.0" mnemonicParsing="false" onAction="#onSaveButtonAction" prefHeight="33.0" prefWidth="67.0" text="Save" />
-                <Button layoutX="479.0" layoutY="190.0" mnemonicParsing="false" onAction="#onCancelButtonAction" prefHeight="33.0" prefWidth="70.0" text="Cancel" />
+                <Button layoutX="440.0" layoutY="190.0" mnemonicParsing="false" onAction="#onSaveButtonAction" prefHeight="33.0" prefWidth="67.0" text="Save" />
+                <Button layoutX="518.0" layoutY="190.0" mnemonicParsing="false" onAction="#onCancelButtonAction" prefHeight="33.0" prefWidth="70.0" text="Cancel" />
             </children>
          <padding>
             <Insets left="15.0" right="15.0" top="15.0" />
