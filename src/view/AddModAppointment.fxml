@@ -17,7 +17,8 @@
                 <TextField fx:id="titleText" layoutX="100.0" layoutY="57.0" prefHeight="24.0" prefWidth="142.0" promptText="Title" />
                 <TextField fx:id="descriptionText" layoutX="100.0" layoutY="97.0" prefHeight="24.0" prefWidth="142.0" promptText="Description" />
                 <TextField fx:id="locationText" layoutX="100.0" layoutY="137.0" prefHeight="24.0" prefWidth="142.0" promptText="Location" />
-                <ComboBox fx:id="contactCombo" layoutX="340.0" layoutY="17.0" prefHeight="25.0" prefWidth="142.0" />
+                <ComboBox fx:id="customerCombo" layoutX="100.0" layoutY="177.0" prefHeight="25.0" prefWidth="142.0" promptText="Select Customer" />
+                <ComboBox fx:id="contactCombo" layoutX="340.0" layoutY="17.0" prefHeight="25.0" prefWidth="142.0" promptText="Select Contact" />
                 <TextField fx:id="typeText" layoutX="340.0" layoutY="57.0" prefHeight="25.0" prefWidth="142.0" promptText="Type" />
                 <DatePicker fx:id="startDatePicker" layoutX="340.0" layoutY="97.0" prefHeight="25.0" prefWidth="105.0" promptText="Date" />
                 <ComboBox fx:id="startHourCombo" layoutX="456.0" layoutY="97.0" prefHeight="25.0" prefWidth="60.0" />
@@ -31,12 +32,12 @@
                 <Label layoutX="25.0" layoutY="60.0" text="Title" />
                 <Label layoutX="25.0" layoutY="100.0" text="Description" />
                 <Label layoutX="25.0" layoutY="140.0" text="Location" />
+                <Label layoutX="25.0" layoutY="180.0" text="Customer" />
                 <Label layoutX="285.0" layoutY="20.0" text="Contact" />
                 <Label layoutX="285.0" layoutY="60.0" text="Type" />
                 <Label layoutX="285.0" layoutY="100.0" text="Start" />
                 <Label layoutX="285.0" layoutY="140.0" text="End" />
-                <Label fx:id="customerIdLabel" layoutX="67.0" layoutY="189.0" prefHeight="17.0" prefWidth="105.0" text="Customer ID" />
-                <Label fx:id="userIdLabel" layoutX="220.0" layoutY="189.0" prefHeight="17.0" prefWidth="82.0" text="User ID" />
+                <Label fx:id="userIdLabel" layoutX="285.0" layoutY="195.0" prefHeight="17.0" prefWidth="82.0" text="User ID" />
                 <Button layoutX="440.0" layoutY="190.0" mnemonicParsing="false" onAction="#onSaveButtonAction" prefHeight="33.0" prefWidth="67.0" text="Save" />
                 <Button layoutX="518.0" layoutY="190.0" mnemonicParsing="false" onAction="#onCancelButtonAction" prefHeight="33.0" prefWidth="70.0" text="Cancel" />
             </children>

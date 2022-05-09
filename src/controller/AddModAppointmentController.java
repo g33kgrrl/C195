@@ -1,21 +1,16 @@
 package controller;
 
-import dao.AppointmentQuery;
-import dao.ContactQuery;
-import dao.CountryQuery;
-import dao.UserQuery;
+import dao.*;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
-import javafx.scene.control.cell.PropertyValueFactory;
+
 import java.io.IOException;
 import java.net.URL;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
-import java.util.Optional;
 import java.util.ResourceBundle;
 
 import model.*;
@@ -41,6 +36,7 @@ public class AddModAppointmentController implements Initializable {
     public TextField titleText;
     public TextField descriptionText;
     public TextField locationText;
+    public ComboBox customerCombo;
     public ComboBox contactCombo;
     public TextField typeText;
     public DatePicker startDatePicker;
@@ -49,7 +45,6 @@ public class AddModAppointmentController implements Initializable {
     public DatePicker endDatePicker;
     public ComboBox endHourCombo;
     public ComboBox endMinuteCombo;
-    public Label customerIdLabel;
     public Label userIdLabel;
 
     //    private Product product;
@@ -75,6 +70,7 @@ public class AddModAppointmentController implements Initializable {
      */
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        customerCombo.setItems(CustomerQuery.getAll());
         contactCombo.setItems(ContactQuery.selectAll());
 
         ObservableList<String> hours = FXCollections.observableArrayList();
@@ -112,7 +108,7 @@ public class AddModAppointmentController implements Initializable {
         titleText.setText(appointment.getTitle());
         descriptionText.setText(String.valueOf(appointment.getDescription()));
         locationText.setText(String.valueOf(appointment.getLocation()));
-        contactCombo.setValue(ContactQuery.select(appointment.getContactId()));
+        contactCombo.setValue(ContactQuery.getContact(appointment.getContactId()));
         typeText.setText(String.valueOf(appointment.getType()));
         startDatePicker.setValue(start.toLocalDate());
         startHourCombo.setValue(String.format("%02d",start.getHour()));
@@ -120,7 +116,7 @@ public class AddModAppointmentController implements Initializable {
         endDatePicker.setValue(end.toLocalDate());
         endHourCombo.setValue(String.format("%02d",end.getHour()));
         endMinuteCombo.setValue(String.format("%02d",end.getMinute()));
-        customerIdLabel.setText("CustomerId: " + appointment.getCustomerId());
+        customerCombo.setValue(CustomerQuery.getCustomer(appointment.getCustomerId()));
         userIdLabel.setText("UserId: " + appointment.getUserId());
     }
 //
@@ -258,7 +254,7 @@ public class AddModAppointmentController implements Initializable {
 //            customerIdLabel.setText("CustomerId: " + appointment.getCustomerId());
 //            userIdLabel.setText("UserId: " + appointment.getUserId());
 
-//            int customerId = ((Customer) customerCombo.getValue()).getId();
+            int customerId = ((Customer) customerCombo.getValue()).getId();
             int userId = UserQuery.getCurrentUserId();
             int contactId = ((Contact) contactCombo.getValue()).getId();
 
@@ -269,8 +265,8 @@ public class AddModAppointmentController implements Initializable {
 
             System.out.println("Title: " + title + " | Description: " + description + " | Location: " +
                     location + " | Type: " + type + " | Start: " + start.toString() +
-                    " | End: " + end.toString() + " | CreateDate: " + createDate.toString() + " | UserID: " + userId +
-                    " | ContactID: " + contactId
+                    " | End: " + end.toString() + " | CreateDate: " + createDate.toString() + " | CustomerID: " +
+                    customerId + " | UserID: " + userId + " | ContactID: " + contactId
             );
 
 

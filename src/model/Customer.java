@@ -23,9 +23,15 @@ public class Customer {
         this.divisionId = divisionId;
     }
 
+    @Override
+    public String toString() {
+//        return("#" + Integer.toString(id) + " " + name);
+        return(name);
+    }
+
     public static ObservableList<Customer> getAllCustomers() {
 
-        return CustomerQuery.selectAll();
+        return CustomerQuery.getAll();
     }
 
     public int getId() {

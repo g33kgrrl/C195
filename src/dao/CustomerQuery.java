@@ -70,7 +70,7 @@ public abstract class CustomerQuery {
         return -1;
     }
 
-    public static ObservableList<Customer> selectAll() {
+    public static ObservableList<Customer> getAll() {
         ObservableList<Customer> allCustomers = FXCollections.observableArrayList();
 
         try {
@@ -100,8 +100,38 @@ public abstract class CustomerQuery {
         return allCustomers;
     }
 
+    public static Customer getCustomer(int divisionId) {
+        try {
+            String sql = "SELECT * FROM customers WHERE Customer_ID = ?";
+            PreparedStatement ps = JDBC.getConnection().prepareStatement(sql);
+            ps.setInt(1, divisionId);
+            ResultSet rs = ps.executeQuery();
+
+            if (rs.next()) {
+                int customerId = rs.getInt("Customer_ID");
+                String customerName = rs.getString("Customer_Name");
+                String address = rs.getString("Address");
+                String postalCode = rs.getString("Postal_Code");
+                String phone = rs.getString("Phone");
+                int divisionIdFK = rs.getInt("Division_ID");
+
+//                System.out.println(customerId + " | " + customerName + " | " + address + " | " + postalCode + " | " + phone
+//                        + " | " + divisionIdFK);
+
+                Customer c = new Customer(customerId, customerName, address, postalCode, phone, divisionId);
+
+                return c;
+            }
+        }
+        catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+
+        return null;
+    }
+
     // TODO: Is this needed?
-    public static void select(int divisionId) throws SQLException {
+    public static void getByDivisionId(int divisionId) throws SQLException {
         String sql = "SELECT * FROM customers WHERE Division_ID = ?";
         PreparedStatement ps = JDBC.getConnection().prepareStatement(sql);
         ps.setInt(1, divisionId);

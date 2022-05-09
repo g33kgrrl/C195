@@ -12,7 +12,7 @@ import java.time.LocalTime;
 public abstract class UserQuery {
     private static User currentUser;
 
-    public static ObservableList<Country> selectAll() {
+    public static ObservableList<Country> getAll() {
         ObservableList<Country> allCountries = FXCollections.observableArrayList();
 
         try {
@@ -53,11 +53,10 @@ public abstract class UserQuery {
 
                 currentUser = new User(userId, enteredUsername, password, createDate, createdBy, lastUpdate, lastUpdatedBy);
 
-                System.out.println(currentUser);
-
-                System.out.println("User: " + userId + " | " + enteredUsername + " | " + password + " | " + createDate + " | "
-                    + createdBy + " | " + lastUpdate + " | " + lastUpdatedBy
-                );
+//                System.out.println(currentUser);
+//                System.out.println("User: " + userId + " | " + enteredUsername + " | " + password + " | " + createDate + " | "
+//                    + createdBy + " | " + lastUpdate + " | " + lastUpdatedBy
+//                );
 
                 return true;
             }

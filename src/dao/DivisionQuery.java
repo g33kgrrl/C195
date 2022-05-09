@@ -10,7 +10,7 @@ import java.sql.SQLException;
 
 public abstract class DivisionQuery {
 
-    public static Division select(int id) {
+    public static Division getDivision(int id) {
         try {
             String sql = "SELECT * FROM first_level_divisions WHERE Division_ID = ?";
             PreparedStatement ps = JDBC.getConnection().prepareStatement(sql);

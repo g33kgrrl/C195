@@ -9,7 +9,6 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import java.io.IOException;
 import java.net.URL;
-import java.sql.SQLException;
 import java.util.ResourceBundle;
 
 import model.Country;
@@ -86,10 +85,10 @@ public class AddModCustomerController implements Initializable {
         postalCodeText.setText(String.valueOf(customer.getPostalCode()));
         phoneText.setText(String.valueOf(customer.getPhone()));
         countryCombo.setItems(CountryQuery.selectAll());
-        countryCombo.setValue(CountryQuery.select(countryId));
+        countryCombo.setValue(CountryQuery.getCountry(countryId));
 
         divisionCombo.setItems(DivisionQuery.selectAllForCountry(countryId));
-        divisionCombo.setValue(DivisionQuery.select(divisionId));
+        divisionCombo.setValue(DivisionQuery.getDivision(divisionId));
     }
 
     public void onCountryCombo(ActionEvent countryComboEvent) {
@@ -104,15 +103,12 @@ public class AddModCustomerController implements Initializable {
 //            divisionCombo.setValue(null);
             divisionCombo.setPromptText("Select division");
 //            System.out.println("Division (after): " + divisionCombo.getSelectionModel().getSelectedItem().getName());
-
-
         }
         catch (NumberFormatException e) {
             e.printStackTrace();
         }
 
         divisionCombo.setPromptText("Select division");
-
     }
 
     public void onSaveButtonAction(ActionEvent saveEvent) throws IOException {

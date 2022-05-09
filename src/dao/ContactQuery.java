@@ -36,7 +36,7 @@ public abstract class ContactQuery {
         return allContacts;
     }
 
-    public static Contact select(int id) {
+    public static Contact getContact(int id) {
         ObservableList<Contact> selectedContact = FXCollections.observableArrayList();
 
         try {

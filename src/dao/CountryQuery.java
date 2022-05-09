@@ -33,7 +33,7 @@ public abstract class CountryQuery {
         return allCountries;
     }
 
-    public static Country select(int id) {
+    public static Country getCountry(int id) {
         ObservableList<Country> selectedCountry = FXCollections.observableArrayList();
 
         try {
