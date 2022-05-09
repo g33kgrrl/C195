@@ -11,7 +11,9 @@ import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import java.io.IOException;
 import java.net.URL;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.Optional;
 import java.util.ResourceBundle;
 
@@ -92,9 +94,6 @@ public class AddModAppointmentController implements Initializable {
         endMinuteCombo.setItems(minutes);
     }
 
-    public void onSaveButtonAction(ActionEvent actionEvent) {
-    }
-
     /**
      * Initializes modify product dialog with current data for the selected product.
      * Gets current data for the selected product, and populates the modify product textfields with that
@@ -121,10 +120,6 @@ public class AddModAppointmentController implements Initializable {
         endMinuteCombo.setValue(String.format("%02d",end.getMinute()));
         customerIdLabel.setText("CustomerId: " + appointment.getCustomerId());
         userIdLabel.setText("UserId: " + appointment.getUserId());
-
-//        // Appointment_ID, title, description, location, contact, type, start date and time, end date and time, Customer_ID, and User_ID
-
-//        associatedParts.setAll(product.getAllAssociatedParts());
     }
 //
 //    /**
@@ -202,25 +197,47 @@ public class AddModAppointmentController implements Initializable {
 //        }
 //    }
 //
-//    /**
-//     * Handles save product request.
-//     * Gets values from textfields, ensures input is valid, gets the list of associated parts, and then
-//     * calls Inventory.updateProduct() to replace the current product object with a new product using the
-//     * given data. Tracks next unique product ID to be used, and returns user to main screen. If input is
-//     * invalid, an error message is displayed instead.
-//     * @param saveEvent the save product button clidk event
-//     * @throws IOException for input/output exceptions
-//     */
-//    public void onSaveButtonAction(ActionEvent saveEvent) throws IOException {
-//        try {
+    /**
+     * Handles save product request.
+     * Gets values from textfields, ensures input is valid, gets the list of associated parts, and then
+     * calls Inventory.updateProduct() to replace the current product object with a new product using the
+     * given data. Tracks next unique product ID to be used, and returns user to main screen. If input is
+     * invalid, an error message is displayed instead.
+     * @param saveEvent the save product button clidk event
+     * @throws IOException for input/output exceptions
+     * //        // Appointment_ID, title, description, location, contact, type, start date and time, end date and time, Customer_ID, and User_ID
+     */
+    public void onSaveButtonAction(ActionEvent saveEvent) throws IOException {
+        try {
 //            int index = Inventory.getAllProducts().indexOf(product);
-//            int id = Integer.parseInt(idText.getText());
+////            int id = Integer.parseInt(idText.getText());
 //            String name = nameText.getText();
 //            float price = Float.parseFloat(priceText.getText());
 //            int stock = Integer.parseInt(inventoryText.getText());
 //            int min = Integer.parseInt(minText.getText());
 //            int max = Integer.parseInt(maxText.getText());
-//
+
+            int id = Integer.parseInt(idText.getText());
+            String title = titleText.getText();
+            String description = descriptionText.getText();
+            String location = locationText.getText();
+            int contactId = ((Contact) contactCombo.getValue()).getId();
+            String type = typeText.getText();
+            LocalDate startDate = startDatePicker.getValue();
+            LocalTime startTime = LocalTime.of(Integer.parseInt(startHourCombo.getValue().toString()),
+                    Integer.parseInt(startMinuteCombo.getValue().toString()));
+            LocalDate endDate = endDatePicker.getValue();
+            LocalTime endTime = LocalTime.of(Integer.parseInt(endHourCombo.getValue().toString()),
+                    Integer.parseInt(endMinuteCombo.getValue().toString()));
+//            customerIdLabel.setText("CustomerId: " + appointment.getCustomerId());
+//            userIdLabel.setText("UserId: " + appointment.getUserId());
+
+            System.out.println("ApptID: " + id + " | Title: " + title + " | Description: " + description + " | Location: " +
+                    location + " | Contact ID: " + contactId + " | Type: " + type + " | Start date: " + startDate.toString() +
+                    " | Start time: " + startTime.toString() + " | End date: " + endDate.toString() + " | End time: " +
+                    endTime.toString()
+            );
+
 //            if (min < 0 || min >= max || stock < min || stock > max) {
 //                Alert alert = new Alert(Alert.AlertType.ERROR);
 //                alert.setTitle("Invalid inventory settings");
@@ -234,17 +251,17 @@ public class AddModAppointmentController implements Initializable {
 //                }
 //
 //                Inventory.updateProduct(index, product1);
-//
-//                MainController.toMain(saveEvent);
+
+                MainController.toMain(saveEvent);
 //            }
-//        } catch (NumberFormatException e) {
-//            Alert alert = new Alert(Alert.AlertType.ERROR);
-//            alert.setTitle("Modify product form");
-//            alert.setContentText("Please enter valid values in text fields.");
-//            alert.showAndWait();
-//        }
-//    }
-//
+        } catch (NumberFormatException e) {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Modify appointment form");
+            alert.setContentText("Please enter valid values in text fields.");
+            alert.showAndWait();
+        }
+    }
+
     /**
      * Handles cancel request.
      * Returns user to main screen without saving any entered textfield values.
