@@ -47,11 +47,13 @@ public class AddModAppointmentController implements Initializable {
     public ComboBox endMinuteCombo;
     public Label userIdLabel;
 
-    //    private Product product;
-//    private ObservableList<Part> associatedParts = FXCollections.observableArrayList();
     private Contact appointmentContact;
     private Appointment appointment;
+
+    private LocalDateTime createDate;
     private String createdBy;
+    private LocalDateTime lastUpdate;
+    private String lastUpdatedBy;
 
 
 //  When adding and updating an appointment, record the following data: Appointment_ID, title, description, location,
@@ -206,19 +208,11 @@ public class AddModAppointmentController implements Initializable {
      * //        // Appointment_ID, title, description, location, contact, type, start date and time, end date and time, Customer_ID, and User_ID
      */
     public void onSaveButtonAction(ActionEvent saveEvent) throws IOException {
-        int rowsAffected;
-
-
-//        if(this.appointment == null) {
-//            rowsAffected = AppointmentQuery.insert(Integer.parseInt(idText.getText())), )
-//        } else {
-//
-//        }
-
-
         try {
-//            LocalDateTime createDate = new LocalDateTime
-//            int id = Integer.parseInt(idText.getText());
+            int rowsAffected;
+            User currentUser = UserQuery.getCurrentUser();
+            String currentUserName = currentUser.getUserName();
+
             String title = titleText.getText();
             String description = descriptionText.getText();
             String location = locationText.getText();
@@ -238,24 +232,19 @@ public class AddModAppointmentController implements Initializable {
                     )
             );
 
-            LocalDateTime createDate;
-            String createdBy;
             if(this.appointment == null) {
                 createDate = LocalDateTime.now();
-//                createdBy =
+                createdBy = currentUserName;
             } else {
                 createDate = appointment.getCreateDate();
                 createdBy = appointment.getCreatedBy();
             }
 
-            LocalDateTime lastUpdate = LocalDateTime.now();
-//            String lastUpdatedBy =
-
-//            customerIdLabel.setText("CustomerId: " + appointment.getCustomerId());
-//            userIdLabel.setText("UserId: " + appointment.getUserId());
+            lastUpdate = LocalDateTime.now();
+            lastUpdatedBy = currentUserName;
 
             int customerId = ((Customer) customerCombo.getValue()).getId();
-            int userId = UserQuery.getCurrentUserId();
+            int userId = currentUser.getUserId();
             int contactId = ((Contact) contactCombo.getValue()).getId();
 
 //            public static int insert(String title, String description, String location, String type, LocalDateTime start,
@@ -265,10 +254,22 @@ public class AddModAppointmentController implements Initializable {
 
             System.out.println("Title: " + title + " | Description: " + description + " | Location: " +
                     location + " | Type: " + type + " | Start: " + start.toString() +
-                    " | End: " + end.toString() + " | CreateDate: " + createDate.toString() + " | CustomerID: " +
-                    customerId + " | UserID: " + userId + " | ContactID: " + contactId
+                    " | End: " + end.toString() + " | CreateDate: " + createDate.toString() + " | CreatedBy: " +
+                    createdBy + " | LastUpdate : " + lastUpdate + " | LastUpdatedBy: " +
+                    lastUpdatedBy + " | CustomerID: " + customerId + " | UserID: " + userId + " | ContactID: " + contactId
             );
 
+            if(this.appointment == null) {
+                rowsAffected = AppointmentQuery.insert(
+                        title, description, location, type, start, end, createDate, createdBy, lastUpdate, lastUpdatedBy,
+                        customerId, userId, contactId
+                );
+            } else {
+                rowsAffected = AppointmentQuery.update(
+                        appointment.getId(), title, description, location, type, start, end, createDate, createdBy,
+                        lastUpdate, lastUpdatedBy, customerId, userId, contactId
+                );
+            }
 
 //            insert(id, title, description, location, contactId, type, startdate, startTime, endDate, endTime)
 

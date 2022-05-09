@@ -71,4 +71,8 @@ public abstract class UserQuery {
     public static int getCurrentUserId() {
         return currentUser.getUserId();
     }
+
+    public static User getCurrentUser() {
+        return currentUser;
+    }
 }

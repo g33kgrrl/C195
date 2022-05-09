@@ -17,23 +17,23 @@ public abstract class AppointmentQuery {
                              LocalDateTime end, LocalDateTime createDate, String createdBy, LocalDateTime lastUpdate,
                              String lastUpdatedBy, int customerId, int userId, int contactId) {
         try {
-            String sql = "INSERT INTO appointments (Appointment_ID, Title, Description, Location, Type, Start, End," +
+            String sql = "INSERT INTO appointments (Title, Description, Location, Type, Start, End," +
                     "Create_Date, Created_By, Last_Update, Last_Updated_By, Customer_ID, User_ID, Contact_ID) " +
                     "VALUES(NULL, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
             PreparedStatement ps = JDBC.getConnection().prepareStatement(sql);
-            ps.setString(1, title);
-            ps.setString(2, description);
-            ps.setString(3, location);
-            ps.setString(4, type);
-            ps.setTimestamp(5, Timestamp.valueOf(start));
-            ps.setTimestamp(6, Timestamp.valueOf(end));
-            ps.setTimestamp(7, Timestamp.valueOf(createDate));
-            ps.setString(8, createdBy);
-            ps.setTimestamp(9, Timestamp.valueOf(lastUpdate));
-            ps.setString(10, lastUpdatedBy);
-            ps.setInt(11, customerId);
-            ps.setInt(12, userId);
-            ps.setInt(13, contactId);
+            ps.setString(2, title);
+            ps.setString(3, description);
+            ps.setString(4, location);
+            ps.setString(5, type);
+            ps.setTimestamp(6, Timestamp.valueOf(start));
+            ps.setTimestamp(7, Timestamp.valueOf(end));
+            ps.setTimestamp(8, Timestamp.valueOf(createDate));
+            ps.setString(9, createdBy);
+            ps.setTimestamp(10, Timestamp.valueOf(lastUpdate));
+            ps.setString(11, lastUpdatedBy);
+            ps.setInt(12, customerId);
+            ps.setInt(13, userId);
+            ps.setInt(14, contactId);
 
             int rowsAffected = ps.executeUpdate();
             System.out.println("Rows affected: " + rowsAffected);
@@ -46,13 +46,13 @@ public abstract class AppointmentQuery {
         return -1;
     }
 
-    public static int update(String title, String description, String location, String type, LocalDateTime start,
+    public static int update(int id, String title, String description, String location, String type, LocalDateTime start,
                              LocalDateTime end, LocalDateTime createDate, String createdBy, LocalDateTime lastUpdate,
                              String lastUpdatedBy, int customerId, int userId, int contactId) {
         try {
             String sql = "UPDATE appointments SET Title = ?, Description = ?, Location = ?, Type = ?, Start = ?," +
                     " End = ?, Create_Date = ?, Created_By = ?, Last_Update = ?, Last_Updated_By = ?, Customer_ID = ?," +
-                    " User_ID = ?, Contact_ID =?";
+                    " User_ID = ?, Contact_ID = ? WHERE Appointment_ID = ?";
             PreparedStatement ps = JDBC.getConnection().prepareStatement(sql);
             ps.setString(1, title);
             ps.setString(2, description);
@@ -67,6 +67,8 @@ public abstract class AppointmentQuery {
             ps.setInt(11, customerId);
             ps.setInt(12, userId);
             ps.setInt(13, contactId);
+            ps.setInt(14, id);
+
 
             int rowsAffected = ps.executeUpdate();
             System.out.println("Rows affected: " + rowsAffected);
