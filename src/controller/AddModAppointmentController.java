@@ -55,6 +55,7 @@ public class AddModAppointmentController implements Initializable {
 //    private ObservableList<Part> associatedParts = FXCollections.observableArrayList();
     private Contact appointmentContact;
     private Appointment appointment;
+    private String createdBy;
 
 
 //  When adding and updating an appointment, record the following data: Appointment_ID, title, description, location,
@@ -208,35 +209,71 @@ public class AddModAppointmentController implements Initializable {
      * //        // Appointment_ID, title, description, location, contact, type, start date and time, end date and time, Customer_ID, and User_ID
      */
     public void onSaveButtonAction(ActionEvent saveEvent) throws IOException {
-        try {
-//            int index = Inventory.getAllProducts().indexOf(product);
-////            int id = Integer.parseInt(idText.getText());
-//            String name = nameText.getText();
-//            float price = Float.parseFloat(priceText.getText());
-//            int stock = Integer.parseInt(inventoryText.getText());
-//            int min = Integer.parseInt(minText.getText());
-//            int max = Integer.parseInt(maxText.getText());
+        int rowsAffected;
 
-            int id = Integer.parseInt(idText.getText());
+
+//        if(this.appointment == null) {
+//            rowsAffected = AppointmentQuery.insert(Integer.parseInt(idText.getText())), )
+//        } else {
+//
+//        }
+
+
+        try {
+//            LocalDateTime createDate = new LocalDateTime
+//            int id = Integer.parseInt(idText.getText());
             String title = titleText.getText();
             String description = descriptionText.getText();
             String location = locationText.getText();
-            int contactId = ((Contact) contactCombo.getValue()).getId();
             String type = typeText.getText();
-            LocalDate startDate = startDatePicker.getValue();
-            LocalTime startTime = LocalTime.of(Integer.parseInt(startHourCombo.getValue().toString()),
-                    Integer.parseInt(startMinuteCombo.getValue().toString()));
-            LocalDate endDate = endDatePicker.getValue();
-            LocalTime endTime = LocalTime.of(Integer.parseInt(endHourCombo.getValue().toString()),
-                    Integer.parseInt(endMinuteCombo.getValue().toString()));
+            LocalDateTime start =
+                    LocalDateTime.of(startDatePicker.getValue(),
+                    LocalTime.of(
+                            Integer.parseInt(startHourCombo.getValue().toString()),
+                            Integer.parseInt(startMinuteCombo.getValue().toString())
+                    )
+            );
+            LocalDateTime end =
+                    LocalDateTime.of(endDatePicker.getValue(),
+                    LocalTime.of(
+                            Integer.parseInt(endHourCombo.getValue().toString()),
+                            Integer.parseInt(endMinuteCombo.getValue().toString())
+                    )
+            );
+
+            LocalDateTime createDate;
+            String createdBy;
+            if(this.appointment == null) {
+                createDate = LocalDateTime.now();
+//                createdBy =
+            } else {
+                createDate = appointment.getCreateDate();
+                createdBy = appointment.getCreatedBy();
+            }
+
+            LocalDateTime lastUpdate = LocalDateTime.now();
+//            String lastUpdatedBy =
+
 //            customerIdLabel.setText("CustomerId: " + appointment.getCustomerId());
 //            userIdLabel.setText("UserId: " + appointment.getUserId());
 
-            System.out.println("ApptID: " + id + " | Title: " + title + " | Description: " + description + " | Location: " +
-                    location + " | Contact ID: " + contactId + " | Type: " + type + " | Start date: " + startDate.toString() +
-                    " | Start time: " + startTime.toString() + " | End date: " + endDate.toString() + " | End time: " +
-                    endTime.toString()
+//            int customerId = ((Customer) customerCombo.getValue()).getId();
+//            int userId =
+            int contactId = ((Contact) contactCombo.getValue()).getId();
+
+//            public static int insert(String title, String description, String location, String type, LocalDateTime start,
+//                             LocalDateTime end, LocalDateTime createDate, String createdBy, LocalDateTime lastUpdate,
+//                             String lastUpdatedBy, int customerId, int userId, int contactId)
+
+
+            System.out.println("Title: " + title + " | Description: " + description + " | Location: " +
+                    location + " | Type: " + type + " | Start: " + start.toString() +
+                    " | End: " + end.toString() + " | CreateDate: " + createDate.toString() + " | Contact ID: "
+                    + contactId
             );
+
+
+//            insert(id, title, description, location, contactId, type, startdate, startTime, endDate, endTime)
 
 //            if (min < 0 || min >= max || stock < min || stock > max) {
 //                Alert alert = new Alert(Alert.AlertType.ERROR);
