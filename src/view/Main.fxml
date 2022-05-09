@@ -55,9 +55,9 @@
                         <TableColumn fx:id="apptContactIdCol" text="Contact ID" />
                     </columns>
                 </TableView>
-                <Button fx:id="AddProductButton" layoutX="752.0" layoutY="229.0" mnemonicParsing="false" onAction="#onAddApptButtonAction" prefHeight="33.0" prefWidth="62.0" text="Add" />
-                <Button fx:id="ModifyProductButton" layoutX="828.0" layoutY="229.0" mnemonicParsing="false" onAction="#onModifyApptButtonAction" prefHeight="33.0" prefWidth="62.0" text="Modify" />
-                <Button fx:id="DeleteProductButton" layoutX="902.0" layoutY="229.0" mnemonicParsing="false" onAction="#onDeleteApptButtonAction" prefHeight="33.0" prefWidth="62.0" text="Delete" />
+                <Button fx:id="AddAppointmentButton" layoutX="752.0" layoutY="229.0" mnemonicParsing="false" onAction="#onAddAppointmentButtonAction" prefHeight="33.0" prefWidth="62.0" text="Add" />
+                <Button fx:id="ModifyAppointmentButton" layoutX="828.0" layoutY="229.0" mnemonicParsing="false" onAction="#onModifyAppointmentButtonAction" prefHeight="33.0" prefWidth="62.0" text="Modify" />
+                <Button fx:id="DeleteAppointmentButton" layoutX="902.0" layoutY="229.0" mnemonicParsing="false" onAction="#onDeleteAppointmentButtonAction" prefHeight="33.0" prefWidth="62.0" text="Delete" />
                 <TextField fx:id="SearchProducts" layoutX="294.0" layoutY="20.0" onAction="#onSearchApptsHandler" prefHeight="24.0" prefWidth="213.0" promptText="Search by Appointment ID or Name" />
                 <Label layoutX="25.0" layoutY="22.0" text="Appointments">
                     <font>

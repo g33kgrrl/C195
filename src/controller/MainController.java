@@ -24,9 +24,9 @@ public class MainController implements Initializable {
     public Button AddCustomerButton;
     public Button ModifyCustomerButton;
     public Button DeleteCustomerButton;
-    public Button AddProductButton;
-    public Button ModifyProductButton;
-    public Button DeleteProductButton;
+    public Button AddAppointmentButton;
+    public Button ModifyAppointmentButton;
+    public Button DeleteAppointmentButton;
     public TableView AppointmentsTable;
     public TableView CustomersTable;
     public TextField SearchCustomers;
@@ -183,10 +183,16 @@ public class MainController implements Initializable {
     public void onSearchCustomerHandler(ActionEvent actionEvent) {
     }
 
-    public void onAddApptButtonAction(ActionEvent actionEvent) {
+    public void onAddAppointmentButtonAction(ActionEvent addAppointmentEvent) throws IOException {
+        Parent root = FXMLLoader.load(getClass().getResource("/view/AddModAppointment.fxml"));
+        Stage stage = (Stage)((Node)addAppointmentEvent.getSource()).getScene().getWindow();
+        Scene scene = new Scene(root);
+        stage.setTitle("Add Appointment");
+        stage.setScene(scene);
+        stage.show();
     }
 
-    public void onModifyApptButtonAction(ActionEvent addModApptEvent) throws IOException {
+    public void onModifyAppointmentButtonAction(ActionEvent addModApptEvent) throws IOException {
         try {
             Appointment selectedItem = (Appointment) AppointmentsTable.getSelectionModel().getSelectedItem();
 
@@ -209,7 +215,7 @@ public class MainController implements Initializable {
         }
     }
 
-    public void onDeleteApptButtonAction(ActionEvent actionEvent) {
+    public void onDeleteAppointmentButtonAction(ActionEvent actionEvent) {
     }
 
     public void onSearchApptsHandler(ActionEvent actionEvent) {
