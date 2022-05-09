@@ -3,6 +3,7 @@ package controller;
 import dao.AppointmentQuery;
 import dao.ContactQuery;
 import dao.CountryQuery;
+import dao.UserQuery;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -258,7 +259,7 @@ public class AddModAppointmentController implements Initializable {
 //            userIdLabel.setText("UserId: " + appointment.getUserId());
 
 //            int customerId = ((Customer) customerCombo.getValue()).getId();
-//            int userId =
+            int userId = UserQuery.getCurrentUserId();
             int contactId = ((Contact) contactCombo.getValue()).getId();
 
 //            public static int insert(String title, String description, String location, String type, LocalDateTime start,
@@ -268,8 +269,8 @@ public class AddModAppointmentController implements Initializable {
 
             System.out.println("Title: " + title + " | Description: " + description + " | Location: " +
                     location + " | Type: " + type + " | Start: " + start.toString() +
-                    " | End: " + end.toString() + " | CreateDate: " + createDate.toString() + " | Contact ID: "
-                    + contactId
+                    " | End: " + end.toString() + " | CreateDate: " + createDate.toString() + " | UserID: " + userId +
+                    " | ContactID: " + contactId
             );
 
 

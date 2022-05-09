@@ -3,7 +3,6 @@ package dao;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import model.Country;
-import model.Division;
 import model.User;
 
 import java.sql.*;
@@ -11,6 +10,7 @@ import java.time.LocalDateTime;
 import java.time.LocalTime;
 
 public abstract class UserQuery {
+    private static User currentUser;
 
     public static ObservableList<Country> selectAll() {
         ObservableList<Country> allCountries = FXCollections.observableArrayList();
@@ -35,11 +35,12 @@ public abstract class UserQuery {
         return allCountries;
     }
 
-    public static User select(String userName) {
+    public static boolean checkIfAuthorized(String enteredUsername, String enteredPassword) {
         try {
-            String sql = "SELECT * FROM users WHERE User_Name = ?";
+            String sql = "SELECT * FROM users WHERE User_Name = ? AND Password = ?";
             PreparedStatement ps = JDBC.getConnection().prepareStatement(sql);
-            ps.setString(1, userName);
+            ps.setString(1, enteredUsername);
+            ps.setString(2, enteredPassword);
 
             ResultSet rs = ps.executeQuery();
             if (rs.next()) {
@@ -50,21 +51,25 @@ public abstract class UserQuery {
                 LocalDateTime lastUpdate = rs.getDate("Last_Update").toLocalDate().atTime(LocalTime.now());
                 String lastUpdatedBy = rs.getString("Last_Updated_By");
 
-                User user1 = new User(userId, userName, password, createDate, createdBy, lastUpdate, lastUpdatedBy);
+                currentUser = new User(userId, enteredUsername, password, createDate, createdBy, lastUpdate, lastUpdatedBy);
 
-                System.out.println(user1);
+                System.out.println(currentUser);
 
-                System.out.println("User: " + userId + " | " + userName + " | " + password + " | " + createDate + " | "
+                System.out.println("User: " + userId + " | " + enteredUsername + " | " + password + " | " + createDate + " | "
                     + createdBy + " | " + lastUpdate + " | " + lastUpdatedBy
                 );
 
-                return user1;
+                return true;
             }
         }
         catch(SQLException ex) {
             ex.printStackTrace();
         }
 
-        return null;
+        return false;
+    }
+
+    public static int getCurrentUserId() {
+        return currentUser.getUserId();
     }
 }

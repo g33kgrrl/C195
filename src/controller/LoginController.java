@@ -1,29 +1,23 @@
 package controller;
 
 import javafx.event.ActionEvent;
-import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.Node;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.*;
-import javafx.stage.Stage;
+
 import java.io.IOException;
 import java.net.URL;
-import java.sql.SQLException;
-import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.util.ResourceBundle;
 
-import model.User;
 import dao.UserQuery;
+import model.User;
 
 public class LoginController implements Initializable {
 
     public TextField userName;
     public TextField password;
     public Label zoneIdLabel;
-    private User user;
+//    private static User currentUser = UserQuery.getUserByName();
 
     /***
      * Initializes login screen.
@@ -49,25 +43,17 @@ public class LoginController implements Initializable {
      * @param submitEvent
      */
     public void onSubmitButtonAction(ActionEvent submitEvent) throws IOException {
-        User user1 = UserQuery.select(userName.getText());
+        boolean authorized = UserQuery.checkIfAuthorized(userName.getText(), password.getText());
 
-        if ((user1 == null) || (!user1.getPassword().equals(password.getText()))) {
+        if (authorized == false) {
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle("Login failed");
             alert.setContentText("Please check your username and password and try again.");
             alert.showAndWait();
         } else {
             System.out.println("Authenticated!");
+
             MainController.toMain(submitEvent);
         }
-    }
-
-    public void onAddCustomerButtonAction(ActionEvent addCustomerEvent) throws IOException {
-        Parent root = FXMLLoader.load(getClass().getResource("/view/AddModCustomer.fxml"));
-        Stage stage = (Stage)((Node)addCustomerEvent.getSource()).getScene().getWindow();
-        Scene scene = new Scene(root);
-        stage.setTitle("Add Customer");
-        stage.setScene(scene);
-        stage.show();
     }
 }
