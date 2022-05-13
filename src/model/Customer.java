@@ -29,11 +29,6 @@ public class Customer {
         return(name);
     }
 
-    public static ObservableList<Customer> getAllCustomers() {
-
-        return CustomerQuery.getAll();
-    }
-
     public int getId() {
         return id;
     }

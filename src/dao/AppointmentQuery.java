@@ -3,7 +3,9 @@ package dao;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import model.Appointment;
+import model.Customer;
 
+import java.io.IOException;
 import java.sql.*;
 import java.time.*;
 import java.time.format.DateTimeFormatter;
@@ -98,7 +100,64 @@ public abstract class AppointmentQuery {
         return -1;
     }
 
-    public static ObservableList<Appointment> selectAll() {
+    public static int deleteAllForCustomerId(int customerId) {
+        ObservableList<Appointment> thisCustomerAppointments = getAllForCustomerId(customerId);
+
+        for (Appointment appointment : thisCustomerAppointments
+        ) {
+            delete(appointment.getId());
+        }
+
+        System.out.println(thisCustomerAppointments.size());
+        return thisCustomerAppointments.size();
+    }
+
+    public static ObservableList<Appointment> getAllForCustomerId(int customerId) {
+        ObservableList<Appointment> allAppointments = FXCollections.observableArrayList();
+
+        try {
+            String sql = "SELECT * FROM appointments WHERE Customer_ID = ?";
+            PreparedStatement ps = JDBC.getConnection().prepareStatement(sql);
+            ps.setInt(1, customerId);
+            ResultSet rs = ps.executeQuery();
+
+            while (rs.next()) {
+                int appointmentId = rs.getInt("Appointment_ID");
+                String title = rs.getString("Title");
+                String description = rs.getString("Description");
+                String location = rs.getString("Location");
+                String type = rs.getString("Type");
+                LocalDateTime start = rs.getTimestamp("Start").toLocalDateTime();
+                LocalDateTime end = rs.getTimestamp("End").toLocalDateTime();
+                LocalDateTime createDate = rs.getTimestamp("Create_Date").toLocalDateTime();
+                String createdBy = rs.getString("Created_By");
+                LocalDateTime lastUpdate = rs.getTimestamp("Last_Update").toLocalDateTime();
+                String lastUpdatedBy = rs.getString("Last_Updated_By");
+                int userId = rs.getInt("User_ID");
+                int contactId = rs.getInt("Contact_ID");
+
+                // LocalDateTime ldt = LocalDateTime.parse(<string>, dtf);
+
+                System.out.println(appointmentId + " | " + title + " | " + description + " | " + location + " | " + type
+                        + " | " + dtf.format(start) + " | " + dtf.format(end) + " | " + dtf.format(createDate) + " | "
+                        + createdBy + " | " + dtf.format(lastUpdate) + " | " + lastUpdatedBy + " | " + customerId
+                        + " | " + userId + " | " + contactId
+                );
+
+                Appointment a = new Appointment(appointmentId, title, description, location, type, start, end, createDate,
+                        createdBy, lastUpdate, lastUpdatedBy, customerId, userId, contactId);
+
+                allAppointments.add(a);
+            }
+        }
+        catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+
+        return allAppointments;
+    }
+
+    public static ObservableList<Appointment> getAll() {
         ObservableList<Appointment> allAppointments = FXCollections.observableArrayList();
 
         try {

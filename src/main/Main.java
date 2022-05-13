@@ -34,6 +34,7 @@ public class Main extends Application {
 //        AppointmentQuery.insert("Appt2", "My third appt", "Hawaii", "Vacation",
 //                LocalDateTime.parse("2022-05-06T11:15:23.558"), LocalDateTime.parse("2022-05-06T11:30:23.558"), LocalDateTime.parse("2022-04-06T17:48:23.558"), "Michael", LocalDateTime.parse("2017-05-01T10:20:23.558"),
 //                "Lisa", 1, 1, 2);
+//        AppointmentQuery.deleteAllForCustomerId(17);
 
         launch(args);
 

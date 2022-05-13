@@ -42,7 +42,7 @@ public abstract class CountryQuery {
             ps.setInt(1, id);
             ResultSet rs = ps.executeQuery();
 
-            while(rs.next()) {
+            if(rs.next()) {
                 int countryId = rs.getInt("Country_ID");
                 String countryName = rs.getString("Country");
 
@@ -57,5 +57,32 @@ public abstract class CountryQuery {
         }
 
         return selectedCountry.get(0);
+    }
+
+    public static Country getCountryByDivId(int id) {
+        ObservableList<Country> selectedCountry = FXCollections.observableArrayList();
+
+        try {
+            String sql = "SELECT * FROM countries WHERE Division_ID = ?";
+            PreparedStatement ps = JDBC.getConnection().prepareStatement(sql);
+            ps.setInt(1, id);
+            ResultSet rs = ps.executeQuery();
+
+            if(rs.next()) {
+                int countryId = rs.getInt("Country_ID");
+                String countryName = rs.getString("Country");
+
+                Country c = new Country(countryId, countryName);
+
+                System.out.println(countryId + " | " + countryName);
+
+                return c;
+            }
+        }
+        catch(SQLException ex) {
+            ex.printStackTrace();
+        }
+
+        return null;
     }
 }

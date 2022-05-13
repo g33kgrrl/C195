@@ -1,5 +1,6 @@
 package controller;
 
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -34,9 +35,10 @@ public class MainController implements Initializable {
     public TableColumn custIdCol;
     public TableColumn custNameCol;
     public TableColumn custAddressCol;
-    public TableColumn custDivIdCol;
     public TableColumn custPostalCodeCol;
     public TableColumn custPhoneCol;
+    public TableColumn custCountryCol;
+    public TableColumn custDivIdCol;
     public TableColumn apptIdCol;
     public TableColumn apptTitleCol;
     public TableColumn apptLocationCol;
@@ -52,6 +54,7 @@ public class MainController implements Initializable {
     public TableColumn apptUserIdCol;
     public TableColumn apptContactIdCol;
 
+
     /**
      * Sets up and displays main screen.
      * Initializes part and product tables, and populates them with current inventory items.
@@ -66,9 +69,58 @@ public class MainController implements Initializable {
         custAddressCol.setCellValueFactory(new PropertyValueFactory<>("address"));
         custPostalCodeCol.setCellValueFactory(new PropertyValueFactory<>("postalCode"));
         custPhoneCol.setCellValueFactory(new PropertyValueFactory<>("phone"));
+//        custCountryCol.setCellValueFactory(new PropertyValueFactory<>("country"));
         custDivIdCol.setCellValueFactory(new PropertyValueFactory<>("divisionId"));
 
-        CustomersTable.setItems(Customer.getAllCustomers());
+        // TODO: How to add Country data in TableColumn?
+//        custCountryCol.setCellValueFactory(new PropertyValueFactory<>());
+//        TableColumn<Country, String> firstNameColumn= =
+//                TableColumn<>("");
+
+        ObservableList<Customer> allCustomers = CustomerQuery.getAll();
+
+
+//        ObservableList<String> countries;
+
+//        TableColumn<String, country> countries;
+
+//        allCustomers.forEach(custDivIdCol -> CustomerQuery.getcustDivIdCol.getDivisionId()
+//        );
+
+//        allCustomers.forEach(custDivIdCol -> CountryQuery.getCountryByDivId(custDivIdCol.getDivisionId()));
+
+//        TableColumn<String, country> count = allCustomers.forEach(custDivIdCol -> DivisionQuery.getCountryId(custDivIdCol.getDivisionId()));
+
+//        ObservableList<Country> data = ...
+//        TableView<Customer> tableView = new TableView<Customer>(allCustomers);
+
+//        custCountryCol.setCellValueFactory((Callback<TableColumn.CellDataFeatures, ObservableValue>) cellDataFeatures -> CountryQuery.getCountryByDivId(custDivIdCol.getCellFactory()));
+
+
+//        TableColumn<Country,String> custCountryCol = new TableColumn<Country,String>("Country");
+//        custCountryCol.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<Division, Integer>, String>() {
+//            public String call(TableColumn.CellDataFeatures<Division, Integer> div) {
+//                // p.getValue() returns the Person instance for a particular TableView row
+//                return CountryQuery.getCountryByDivId(div.getValue().getCountryId()).getName();
+//            }
+//        });
+//
+//        CustomersTable.getColumns().add(custCountryCol);}
+
+//        custCountryCol.setCellValueFactory(
+//                new PropertyValueFactory<Country, String>(CountryQuery.getCountry(DivisionQuery.getCountryId(Integer.parseInt(custDivIdCol.getId()))).getName()));
+
+//        for (Customer customer : allCustomers) {
+//
+//        }
+//        static List<TableColumn> getFlattenedColumns(TableView<?> table) {
+//            List<TableColumn> l = new ArrayList<>();
+//            table.getColumns()
+//                    .forEach(c -> l.addAll(flatten(c)));
+//            return l;
+//        }
+
+        CustomersTable.setItems(allCustomers);
 
         // Appointments table
         apptIdCol.setCellValueFactory(new PropertyValueFactory<>("id"));
@@ -86,7 +138,7 @@ public class MainController implements Initializable {
         apptUserIdCol.setCellValueFactory(new PropertyValueFactory<>("userId"));
         apptContactIdCol.setCellValueFactory(new PropertyValueFactory<>("contactId"));
 
-        AppointmentsTable.setItems(AppointmentQuery.selectAll());
+        AppointmentsTable.setItems(AppointmentQuery.getAll());
 
 //        DivisionQuery.selectAllForCountry();
     }
@@ -168,9 +220,9 @@ public class MainController implements Initializable {
             Optional<ButtonType> result = alert.showAndWait();
 
             if (result.isPresent() && result.get() == ButtonType.OK) {
+//                AppointmentQuery.delete()
                 CustomerQuery.delete(selectedCustomer.getId());
-                // TODO: Why doesn't the table auto-update without this?
-                CustomersTable.setItems(Customer.getAllCustomers());
+                CustomersTable.setItems(CustomerQuery.getAll());
             }
         } catch (NullPointerException e) {
             Alert alert = new Alert(Alert.AlertType.ERROR);

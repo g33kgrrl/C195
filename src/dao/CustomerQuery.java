@@ -129,24 +129,4 @@ public abstract class CustomerQuery {
 
         return null;
     }
-
-    // TODO: Is this needed?
-    public static void getByDivisionId(int divisionId) throws SQLException {
-        String sql = "SELECT * FROM customers WHERE Division_ID = ?";
-        PreparedStatement ps = JDBC.getConnection().prepareStatement(sql);
-        ps.setInt(1, divisionId);
-        ResultSet rs = ps.executeQuery();
-
-        while(rs.next()) {
-            int customerId = rs.getInt("Customer_ID");
-            String customerName = rs.getString("Customer_Name");
-            String address = rs.getString("Address");
-            String postalCode = rs.getString("Postal_Code");
-            String phone = rs.getString("Phone");
-            int divisionIdFK = rs.getInt("Division_ID");
-
-            System.out.println(customerId + " | " + customerName + " | " + address + " | " + postalCode + " | " + phone
-                    + " | " + divisionIdFK);
-        }
-    }
 }
