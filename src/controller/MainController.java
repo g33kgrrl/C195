@@ -206,22 +206,24 @@ public class MainController implements Initializable {
     public void onDeleteCustomerButtonAction(ActionEvent deleteCustomerEvent) {
         try {
             Customer selectedCustomer = (Customer) CustomersTable.getSelectionModel().getSelectedItem();
+            int selectedCustomerId = selectedCustomer.getId();
 
-            String deleteConfirm = "Permanently delete this customer?\n\n" +
-                    "\tId: " + selectedCustomer.getId() + "\n\n" +
+            String deleteConfirm = "Permanently delete this customer and all associated appointments?\n\n" +
+                    "\tId: " + selectedCustomerId + "\n\n" +
                     "\tName: " + selectedCustomer.getName() + "\n\n" +
                     "\tAddress: " + selectedCustomer.getAddress() + "\n\n" +
                     "\tPostal Code: " + selectedCustomer.getPostalCode() + "\n\n" +
                     "\tPhone: " + selectedCustomer.getPhone() + "\n\n" +
-                    "\tDivision ID: " + selectedCustomer.getDivisionId() + "\n";
+                    "\tDivision ID: " + selectedCustomer.getDivisionId() + "\n\n" +
+                    "\tAssociated appointments: " + AppointmentQuery.getAllForCustomerId(selectedCustomerId).size();
 
             Alert alert = new Alert(Alert.AlertType.CONFIRMATION, deleteConfirm);
 
             Optional<ButtonType> result = alert.showAndWait();
 
             if (result.isPresent() && result.get() == ButtonType.OK) {
-//                AppointmentQuery.delete()
-                CustomerQuery.delete(selectedCustomer.getId());
+                AppointmentQuery.deleteAllForCustomerId(selectedCustomerId);
+                CustomerQuery.delete(selectedCustomerId);
                 CustomersTable.setItems(CustomerQuery.getAll());
             }
         } catch (NullPointerException e) {
