@@ -70,56 +70,11 @@ public class MainController implements Initializable {
         custAddressCol.setCellValueFactory(new PropertyValueFactory<>("address"));
         custPostalCodeCol.setCellValueFactory(new PropertyValueFactory<>("postalCode"));
         custPhoneCol.setCellValueFactory(new PropertyValueFactory<>("phone"));
-//        custCountryCol.setCellValueFactory(new PropertyValueFactory<>("country"));
+        custCountryCol.setCellValueFactory(new PropertyValueFactory<>("country"));
         custDivIdCol.setCellValueFactory(new PropertyValueFactory<>("divisionId"));
 
-        // TODO: How to add Country data in TableColumn?
-//        custCountryCol.setCellValueFactory(new PropertyValueFactory<>());
-//        TableColumn<Country, String> firstNameColumn= =
-//                TableColumn<>("");
-
+        // TODO: Make this static and initialize in Customer instead
         ObservableList<Customer> allCustomers = CustomerQuery.getAll();
-
-
-//        ObservableList<String> countries;
-
-//        TableColumn<String, country> countries;
-
-//        allCustomers.forEach(custDivIdCol -> CustomerQuery.getcustDivIdCol.getDivisionId()
-//        );
-
-//        allCustomers.forEach(custDivIdCol -> CountryQuery.getCountryByDivId(custDivIdCol.getDivisionId()));
-
-//        TableColumn<String, country> count = allCustomers.forEach(custDivIdCol -> DivisionQuery.getCountryId(custDivIdCol.getDivisionId()));
-
-//        ObservableList<Country> data = ...
-//        TableView<Customer> tableView = new TableView<Customer>(allCustomers);
-
-//        custCountryCol.setCellValueFactory((Callback<TableColumn.CellDataFeatures, ObservableValue>) cellDataFeatures -> CountryQuery.getCountryByDivId(custDivIdCol.getCellFactory()));
-
-
-//        TableColumn<Country,String> custCountryCol = new TableColumn<Country,String>("Country");
-//        custCountryCol.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<Division, Integer>, String>() {
-//            public String call(TableColumn.CellDataFeatures<Division, Integer> div) {
-//                // p.getValue() returns the Person instance for a particular TableView row
-//                return CountryQuery.getCountryByDivId(div.getValue().getCountryId()).getName();
-//            }
-//        });
-//
-//        CustomersTable.getColumns().add(custCountryCol);}
-
-//        custCountryCol.setCellValueFactory(
-//                new PropertyValueFactory<Country, String>(CountryQuery.getCountry(DivisionQuery.getCountryId(Integer.parseInt(custDivIdCol.getId()))).getName()));
-
-//        for (Customer customer : allCustomers) {
-//
-//        }
-//        static List<TableColumn> getFlattenedColumns(TableView<?> table) {
-//            List<TableColumn> l = new ArrayList<>();
-//            table.getColumns()
-//                    .forEach(c -> l.addAll(flatten(c)));
-//            return l;
-//        }
 
         CustomersTable.setItems(allCustomers);
 
@@ -140,8 +95,6 @@ public class MainController implements Initializable {
         apptContactIdCol.setCellValueFactory(new PropertyValueFactory<>("contactId"));
 
         AppointmentsTable.setItems(AppointmentQuery.getAll());
-
-//        DivisionQuery.selectAllForCountry();
     }
 
     /**
@@ -291,9 +244,8 @@ public class MainController implements Initializable {
                     "\tLast Update: " + selectedAppointment.getLastUpdate() + "\n\n" +
                     "\tLast Updated By: " + selectedAppointment.getLastUpdatedBy() + "\n\n" +
                     "\tCustomer ID: " + selectedCustomerId + "\n\n" +
-                    "\tDivision ID: " + CustomerQuery.getCustomer(selectedCustomerId).getDivisionId() +
-                        "\n\n";
-            // appointment -> ? -> divisionId
+                    "\tUser ID: " + selectedAppointment.getUserId() + "\n\n" +
+                    "\tContact ID: " + selectedAppointment.getContactId() + "\n\n";
 
             Alert alert = new Alert(Alert.AlertType.CONFIRMATION, deleteConfirm);
 
@@ -301,9 +253,7 @@ public class MainController implements Initializable {
 
             // Must delete all associated Appointments first, then Customer can be deleted.
             if (result.isPresent() && result.get() == ButtonType.OK) {
-                AppointmentQuery.deleteAllForCustomerId(selectedCustomerId);
-                CustomerQuery.delete(selectedCustomerId);
-                CustomersTable.setItems(CustomerQuery.getAll());
+                AppointmentQuery.delete(selectedAppointmentId);
                 AppointmentsTable.setItems(AppointmentQuery.getAll());
             }
         } catch (NullPointerException e) {

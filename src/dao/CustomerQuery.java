@@ -100,15 +100,15 @@ public abstract class CustomerQuery {
         return allCustomers;
     }
 
-    public static Customer getCustomer(int divisionId) {
+    // TODO: PICK ONE, DIVISION ID OR CUSTOMER ID
+    public static Customer getCustomer(int customerId) {
         try {
             String sql = "SELECT * FROM customers WHERE Customer_ID = ?";
             PreparedStatement ps = JDBC.getConnection().prepareStatement(sql);
-            ps.setInt(1, divisionId);
+            ps.setInt(1, customerId);
             ResultSet rs = ps.executeQuery();
 
             if (rs.next()) {
-                int customerId = rs.getInt("Customer_ID");
                 String customerName = rs.getString("Customer_Name");
                 String address = rs.getString("Address");
                 String postalCode = rs.getString("Postal_Code");
@@ -118,7 +118,7 @@ public abstract class CustomerQuery {
 //                System.out.println(customerId + " | " + customerName + " | " + address + " | " + postalCode + " | " + phone
 //                        + " | " + divisionIdFK);
 
-                Customer c = new Customer(customerId, customerName, address, postalCode, phone, divisionId);
+                Customer c = new Customer(customerId, customerName, address, postalCode, phone, divisionIdFK);
 
                 return c;
             }

@@ -3,6 +3,7 @@ package dao;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import model.Country;
+import model.Division;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -59,24 +60,19 @@ public abstract class CountryQuery {
         return selectedCountry.get(0);
     }
 
-    public static Country getCountryByDivId(int id) {
+    public static Country getCountryByDivId(int divisionId) {
         ObservableList<Country> selectedCountry = FXCollections.observableArrayList();
 
         try {
-            String sql = "SELECT * FROM countries WHERE Division_ID = ?";
+            String sql = "SELECT * FROM first_level_divisions WHERE Division_ID = ?";
             PreparedStatement ps = JDBC.getConnection().prepareStatement(sql);
-            ps.setInt(1, id);
+            ps.setInt(1, divisionId);
             ResultSet rs = ps.executeQuery();
 
             if(rs.next()) {
                 int countryId = rs.getInt("Country_ID");
-                String countryName = rs.getString("Country");
 
-                Country c = new Country(countryId, countryName);
-
-                System.out.println(countryId + " | " + countryName);
-
-                return c;
+                return CountryQuery.getCountry(countryId);
             }
         }
         catch(SQLException ex) {

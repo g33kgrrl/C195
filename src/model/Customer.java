@@ -1,5 +1,6 @@
 package model;
 
+import dao.CountryQuery;
 import dao.CustomerQuery;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -12,6 +13,7 @@ public class Customer {
     private String address;
     private String postalCode;
     private String phone;
+    private String country;
     private int divisionId;
 
     public Customer(int id, String name, String address, String postalCode, String phone, int divisionId) {
@@ -75,5 +77,9 @@ public class Customer {
 
     public void setDivisionId(int divisionId) {
         this.divisionId = divisionId;
+    }
+
+    public String getCountry() {
+        return String.valueOf(CountryQuery.getCountryByDivId(divisionId));
     }
 }
