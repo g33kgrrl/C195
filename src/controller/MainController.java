@@ -73,10 +73,7 @@ public class MainController implements Initializable {
         custCountryCol.setCellValueFactory(new PropertyValueFactory<>("country"));
         custDivIdCol.setCellValueFactory(new PropertyValueFactory<>("divisionId"));
 
-        // TODO: Make this static and initialize in Customer instead
-        ObservableList<Customer> allCustomers = CustomerQuery.getAll();
-
-        CustomersTable.setItems(allCustomers);
+        CustomersTable.setItems(CustomerQuery.getAll());
 
         // Appointments table
         apptIdCol.setCellValueFactory(new PropertyValueFactory<>("id"));
