@@ -1,5 +1,6 @@
 package controller;
 
+import dao.DivisionQuery;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
@@ -221,10 +222,12 @@ public class MainController implements Initializable {
 
             Optional<ButtonType> result = alert.showAndWait();
 
+            // Must delete all associated Appointments first, then Customer can be deleted.
             if (result.isPresent() && result.get() == ButtonType.OK) {
                 AppointmentQuery.deleteAllForCustomerId(selectedCustomerId);
                 CustomerQuery.delete(selectedCustomerId);
                 CustomersTable.setItems(CustomerQuery.getAll());
+                AppointmentsTable.setItems(AppointmentQuery.getAll());
             }
         } catch (NullPointerException e) {
             Alert alert = new Alert(Alert.AlertType.ERROR);
@@ -269,7 +272,46 @@ public class MainController implements Initializable {
         }
     }
 
-    public void onDeleteAppointmentButtonAction(ActionEvent actionEvent) {
+    public void onDeleteAppointmentButtonAction(ActionEvent deleteAppointmentEvent) {
+        try {
+            Appointment selectedAppointment = (Appointment) AppointmentsTable.getSelectionModel().getSelectedItem();
+            int selectedAppointmentId = selectedAppointment.getId();
+            int selectedCustomerId = selectedAppointment.getCustomerId();
+
+            String deleteConfirm = "Permanently delete this appointment?\n\n" +
+                    "\tId: " + selectedAppointmentId + "\n\n" +
+                    "\tTitle: " + selectedAppointment.getTitle() + "\n\n" +
+                    "\tDescription: " + selectedAppointment.getDescription() + "\n\n" +
+                    "\tLocation: " + selectedAppointment.getLocation() + "\n\n" +
+                    "\tType: " + selectedAppointment.getType() + "\n\n" +
+                    "\tStart: " + selectedAppointment.getStart() + "\n\n" +
+                    "\tEnd: " + selectedAppointment.getEnd() + "\n\n" +
+                    "\tCreate Date: " + selectedAppointment.getCreateDate() + "\n\n" +
+                    "\tCreated By: " + selectedAppointment.getCreatedBy() + "\n\n" +
+                    "\tLast Update: " + selectedAppointment.getLastUpdate() + "\n\n" +
+                    "\tLast Updated By: " + selectedAppointment.getLastUpdatedBy() + "\n\n" +
+                    "\tCustomer ID: " + selectedCustomerId + "\n\n" +
+                    "\tDivision ID: " + CustomerQuery.getCustomer(selectedCustomerId).getDivisionId() +
+                        "\n\n";
+            // appointment -> ? -> divisionId
+
+            Alert alert = new Alert(Alert.AlertType.CONFIRMATION, deleteConfirm);
+
+            Optional<ButtonType> result = alert.showAndWait();
+
+            // Must delete all associated Appointments first, then Customer can be deleted.
+            if (result.isPresent() && result.get() == ButtonType.OK) {
+                AppointmentQuery.deleteAllForCustomerId(selectedCustomerId);
+                CustomerQuery.delete(selectedCustomerId);
+                CustomersTable.setItems(CustomerQuery.getAll());
+                AppointmentsTable.setItems(AppointmentQuery.getAll());
+            }
+        } catch (NullPointerException e) {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Delete customer");
+            alert.setContentText("Please select a customer to delete.");
+            alert.showAndWait();
+        }
     }
 
     public void onSearchApptsHandler(ActionEvent actionEvent) {
