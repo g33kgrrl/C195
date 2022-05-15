@@ -228,7 +228,7 @@ public class MainController implements Initializable {
             int selectedAppointmentId = selectedAppointment.getId();
             int selectedCustomerId = selectedAppointment.getCustomerId();
 
-            String deleteConfirm = "Permanently delete this appointment?\n\n" +
+            String toDeleteMsg = "Permanently delete this appointment?\n\n" +
                     "\tId: " + selectedAppointmentId + "\n\n" +
                     "\tTitle: " + selectedAppointment.getTitle() + "\n\n" +
                     "\tDescription: " + selectedAppointment.getDescription() + "\n\n" +
@@ -244,19 +244,26 @@ public class MainController implements Initializable {
                     "\tUser ID: " + selectedAppointment.getUserId() + "\n\n" +
                     "\tContact ID: " + selectedAppointment.getContactId() + "\n\n";
 
-            Alert alert = new Alert(Alert.AlertType.CONFIRMATION, deleteConfirm);
+            Alert toDeleteAlert = new Alert(Alert.AlertType.CONFIRMATION, toDeleteMsg);
 
-            Optional<ButtonType> result = alert.showAndWait();
+            Optional<ButtonType> toDeletePrompt = toDeleteAlert.showAndWait();
 
-            // Must delete all associated Appointments first, then Customer can be deleted.
-            if (result.isPresent() && result.get() == ButtonType.OK) {
+            if (toDeletePrompt.isPresent() && toDeletePrompt.get() == ButtonType.OK) {
                 AppointmentQuery.delete(selectedAppointmentId);
                 AppointmentsTable.setItems(AppointmentQuery.getAll());
+
+                String deletedApptConfirm = "Deleted appointment:\n\n" +
+                        "\tId: " + selectedAppointmentId + "\n\n" +
+                        "\tType: " + selectedAppointment.getType() + "\n\n";
+
+                Alert deletedAlert = new Alert(Alert.AlertType.CONFIRMATION, deletedApptConfirm);
+
+                Optional<ButtonType> deletedPrompt = deletedAlert.showAndWait();
             }
         } catch (NullPointerException e) {
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle("Delete customer");
-            alert.setContentText("Please select a customer to delete.");
+            alert.setContentText("Please select an appointment to delete.");
             alert.showAndWait();
         }
     }
