@@ -45,17 +45,17 @@ public class Main extends Application {
 //                "888-333-4444", 61);
 
         // UNCOMMENT, FIX CUSTOMERID, AND RUN SECOND
-        AppointmentQuery.insert("Doc Hollywood", "Doctor's appt", "Anytown", "Medical",
-                LocalDateTime.parse("2022-05-10T11:15:23.558"), LocalDateTime.parse("2022-05-10T12:30:41.369"),
-                LocalDateTime.parse("2022-04-06T17:48:23.558"), "Michael",
-                LocalDateTime.parse("2017-05-01T10:20:23.558"), "Test", 2, 1, 2
-        );
-
-        AppointmentQuery.insert("Captain Marvel", "Costume fitting", "New York", "Hero stuff",
-                LocalDateTime.parse("2022-05-10T11:15:23.558"), LocalDateTime.parse("2022-05-10T12:30:41.369"),
-                LocalDateTime.parse("2022-04-06T17:48:23.558"), "Stan Lee",
-                LocalDateTime.parse("2017-05-01T10:20:23.558"), "Admin", 2, 2, 3
-        );
+//        AppointmentQuery.insert("Doc Hollywood", "Doctor's appt", "Anytown", "Medical",
+//                LocalDateTime.parse("2022-05-10T11:15:23.558"), LocalDateTime.parse("2022-05-10T12:30:41.369"),
+//                LocalDateTime.parse("2022-04-06T17:48:23.558"), "Michael",
+//                LocalDateTime.parse("2017-05-01T10:20:23.558"), "Test", 2, 1, 2
+//        );
+//
+//        AppointmentQuery.insert("Captain Marvel", "Costume fitting", "New York", "Hero stuff",
+//                LocalDateTime.parse("2022-05-10T11:15:23.558"), LocalDateTime.parse("2022-05-10T12:30:41.369"),
+//                LocalDateTime.parse("2022-04-06T17:48:23.558"), "Stan Lee",
+//                LocalDateTime.parse("2017-05-01T10:20:23.558"), "Admin", 2, 2, 3
+//        );
 
 //        Customer c = new Customer(21, "Trinity Matrix", "1010 Battery Drive", "54321",
 //        "888-333-4444", 103);

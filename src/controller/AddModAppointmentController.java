@@ -38,6 +38,7 @@ public class AddModAppointmentController implements Initializable {
     public TextField locationText;
     public ComboBox customerCombo;
     public ComboBox contactCombo;
+    public ComboBox userCombo;
     public TextField typeText;
     public DatePicker startDatePicker;
     public ComboBox startHourCombo;
@@ -74,6 +75,8 @@ public class AddModAppointmentController implements Initializable {
     public void initialize(URL url, ResourceBundle resourceBundle) {
         customerCombo.setItems(CustomerQuery.getAll());
         contactCombo.setItems(ContactQuery.selectAll());
+//        userCombo.setItems(UserQuery.getAll());
+        userCombo.setItems(UserQuery.getAll());
 
         ObservableList<String> hours = FXCollections.observableArrayList();
         ObservableList<String> minutes = FXCollections.observableArrayList();

@@ -2,37 +2,48 @@ package dao;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import model.Country;
+import model.User;
 import model.User;
 
 import java.sql.*;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 
 public abstract class UserQuery {
     private static User currentUser;
 
-    public static ObservableList<Country> getAll() {
-        ObservableList<Country> allCountries = FXCollections.observableArrayList();
+    public static ObservableList<User> getAll() {
+        ObservableList<User> allUsers = FXCollections.observableArrayList();
 
         try {
-            String sql = "SELECT * FROM countries";
+            String sql = "SELECT * FROM users";
             PreparedStatement ps = JDBC.getConnection().prepareStatement(sql);
             ResultSet rs = ps.executeQuery();
 
             while (rs.next()) {
-                int id = rs.getInt("Country_ID");
-                String name = rs.getString("Country");
-                Country c = new Country(id, name);
-                allCountries.add(c);
+                int id = rs.getInt("User_ID");
+                String name = rs.getString("User_Name");
+                String password = rs.getString("Password");
+                LocalDateTime createDate = rs.getDate("Create_Date");
+                String createdBy = rs.getString("Created_By");
+                LocalDateTime lastUpdate = rs.getDate("Last_Update");
+                String lastUpdatedBy = rs.getString("Last_Updated_By");
+
+                User u = new User(id, name, password, createDate, createdBy,lastUpdate, lastUpdatedBy);
+
+                allUsers.add(u);
 
 //                System.out.println(id + " | " + name);
             }
+
+            return allUsers;
         }
         catch(SQLException ex) {
             ex.printStackTrace();
         }
-        return allCountries;
+
+        return null;
     }
 
     public static boolean checkIfAuthorized(String enteredUsername, String enteredPassword) {

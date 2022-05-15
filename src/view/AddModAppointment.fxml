@@ -11,7 +11,7 @@
 
 <AnchorPane xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.AddModAppointmentController">
     <children>
-        <Pane layoutX="22.0" layoutY="18.0" style="-fx-border-style: solid; -fx-border-radius: 10px;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+        <Pane fx:id="userCombo" layoutX="22.0" layoutY="18.0" style="-fx-border-style: solid; -fx-border-radius: 10px;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
             <children>
                 <TextField fx:id="idText" disable="true" editable="false" layoutX="100.0" layoutY="17.0" prefHeight="24.0" prefWidth="142.0" promptText="Auto Gen - Disabled" />
                 <TextField fx:id="titleText" layoutX="100.0" layoutY="57.0" prefHeight="24.0" prefWidth="142.0" promptText="Title" />
@@ -37,9 +37,10 @@
                 <Label layoutX="285.0" layoutY="60.0" text="Type" />
                 <Label layoutX="285.0" layoutY="100.0" text="Start" />
                 <Label layoutX="285.0" layoutY="140.0" text="End" />
-                <Label fx:id="userIdLabel" layoutX="285.0" layoutY="195.0" prefHeight="17.0" prefWidth="82.0" text="User ID" />
-                <Button layoutX="440.0" layoutY="190.0" mnemonicParsing="false" onAction="#onSaveButtonAction" prefHeight="33.0" prefWidth="67.0" text="Save" />
-                <Button layoutX="518.0" layoutY="190.0" mnemonicParsing="false" onAction="#onCancelButtonAction" prefHeight="33.0" prefWidth="70.0" text="Cancel" />
+                <Label fx:id="userIdLabel" layoutX="285.0" layoutY="181.0" prefHeight="17.0" prefWidth="51.0" text="User ID" />
+                <Button layoutX="454.0" layoutY="228.0" mnemonicParsing="false" onAction="#onSaveButtonAction" prefHeight="33.0" prefWidth="67.0" text="Save" />
+                <Button layoutX="532.0" layoutY="228.0" mnemonicParsing="false" onAction="#onCancelButtonAction" prefHeight="33.0" prefWidth="70.0" text="Cancel" />
+            <ComboBox fx:id="customerCombo1" layoutX="340.0" layoutY="177.0" prefHeight="25.0" prefWidth="142.0" promptText="Select User" />
             </children>
          <padding>
             <Insets left="15.0" right="15.0" top="15.0" />
