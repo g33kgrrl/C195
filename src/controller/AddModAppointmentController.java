@@ -124,7 +124,9 @@ public class AddModAppointmentController implements Initializable {
         endHourCombo.setValue(String.format("%02d",end.getHour()));
         endMinuteCombo.setValue(String.format("%02d",end.getMinute()));
         customerCombo.setValue(CustomerQuery.getCustomer(appointment.getCustomerId()));
-        userCombo.setValue(UserQuery.getUser(appointment.getUserId()));
+        userCombo.setValue(UserQuery.getUser(appointment.getUserId()).getUserName());
+//        userCombo.setValue(appointment.getUserId());
+        System.out.println("EXISTING USER: " + UserQuery.getUser(appointment.getUserId()).getUserName());
     }
 //
 //    /**
@@ -248,6 +250,7 @@ public class AddModAppointmentController implements Initializable {
 
             int customerId = ((Customer) customerCombo.getValue()).getId();
             int userId = ((User) userCombo.getValue()).getUserId();
+            System.out.println("USER ID: " + String.valueOf(userId));
             int contactId = ((Contact) contactCombo.getValue()).getId();
 
 //            public static int insert(String title, String description, String location, String type, LocalDateTime start,
