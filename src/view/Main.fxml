@@ -35,9 +35,9 @@
                     </font>
                 </Label>
             </children>
-         <padding>
-            <Insets bottom="6.0" right="12.0" />
-         </padding>
+            <padding>
+                <Insets bottom="6.0" right="12.0" />
+            </padding>
         </Pane>
         <Pane layoutX="20.0" layoutY="305.0" prefHeight="272.0" style="-fx-border-style: solid; -fx-border-radius: 10px;" AnchorPane.bottomAnchor="10.0" AnchorPane.topAnchor="305.0">
             <children>
@@ -69,9 +69,9 @@
                     </font>
                 </Label>
             </children>
-         <padding>
-            <Insets right="12.0" />
-         </padding>
+            <padding>
+                <Insets right="12.0" />
+            </padding>
         </Pane>
     </children>
     <padding>

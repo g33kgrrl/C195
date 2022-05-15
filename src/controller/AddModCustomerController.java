@@ -113,24 +113,25 @@ public class AddModCustomerController implements Initializable {
     }
 
     public void onSaveButtonAction(ActionEvent saveEvent) throws IOException {
+        int id = this.customer.getId();
+        String name = nameText.getText();
+        String address = addressText.getText();
+        String postalCode = postalCodeText.getText();
+        String phone = phoneText.getText();
+        int divId = divisionCombo.getSelectionModel().getSelectedItem().getId();
+
         int rowsAffected;
 
         if (this.customer == null) {
-            rowsAffected = CustomerQuery.insert(
-                    nameText.getText(), addressText.getText(), postalCodeText.getText(), phoneText.getText(),
-                    divisionCombo.getSelectionModel().getSelectedItem().getId()
-            );
+            rowsAffected = CustomerQuery.insert(name, address, postalCode, phone, divId);
         } else {
-            rowsAffected = CustomerQuery.update(
-                    this.customer.getId(), nameText.getText(), addressText.getText(), postalCodeText.getText(),
-                    phoneText.getText(), divisionCombo.getSelectionModel().getSelectedItem().getId()
-            );
+            rowsAffected = CustomerQuery.update(id, name, address, postalCode, phone, divId);
         }
 
         if (rowsAffected > 0) {
-            System.out.println("Customer added!");
+            System.out.println("Customer added.");
         } else {
-            System.out.println("FAILED TO ADD CUSTOMER!");
+            System.out.println("Failed to add customer!");
         }
 
         MainController.toMain(saveEvent);
