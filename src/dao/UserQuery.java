@@ -25,19 +25,49 @@ public abstract class UserQuery {
                 int id = rs.getInt("User_ID");
                 String name = rs.getString("User_Name");
                 String password = rs.getString("Password");
-                LocalDateTime createDate = rs.getDate("Create_Date");
+                LocalDateTime createDate = rs.getTimestamp("Create_Date").toLocalDateTime();
                 String createdBy = rs.getString("Created_By");
-                LocalDateTime lastUpdate = rs.getDate("Last_Update");
+                LocalDateTime lastUpdate = rs.getTimestamp("Last_Update").toLocalDateTime();
                 String lastUpdatedBy = rs.getString("Last_Updated_By");
 
                 User u = new User(id, name, password, createDate, createdBy,lastUpdate, lastUpdatedBy);
 
                 allUsers.add(u);
 
-//                System.out.println(id + " | " + name);
+                System.out.println(id + " | " + name);
             }
 
             return allUsers;
+        }
+        catch(SQLException ex) {
+            ex.printStackTrace();
+        }
+
+        return null;
+    }
+
+    public static User getUser(int id) {
+
+        try {
+            String sql = "SELECT * FROM users WHERE User_ID = ?";
+            PreparedStatement ps = JDBC.getConnection().prepareStatement(sql);
+            ps.setInt(1, id);
+            ResultSet rs = ps.executeQuery();
+
+            if (rs.next()) {
+                String name = rs.getString("User_Name");
+                String password = rs.getString("Password");
+                LocalDateTime createDate = rs.getTimestamp("Create_Date").toLocalDateTime();
+                String createdBy = rs.getString("Created_By");
+                LocalDateTime lastUpdate = rs.getTimestamp("Last_Update").toLocalDateTime();
+                String lastUpdatedBy = rs.getString("Last_Updated_By");
+
+                User u = new User(id, name, password, createDate, createdBy,lastUpdate, lastUpdatedBy);
+
+                System.out.println(id + " | " + name);
+
+                return u;
+            }
         }
         catch(SQLException ex) {
             ex.printStackTrace();
@@ -64,7 +94,7 @@ public abstract class UserQuery {
 
                 currentUser = new User(userId, enteredUsername, password, createDate, createdBy, lastUpdate, lastUpdatedBy);
 
-//                System.out.println(currentUser);
+                System.out.println(currentUser);
 //                System.out.println("User: " + userId + " | " + enteredUsername + " | " + password + " | " + createDate + " | "
 //                    + createdBy + " | " + lastUpdate + " | " + lastUpdatedBy
 //                );

@@ -138,7 +138,7 @@ public abstract class AppointmentQuery {
 
                 // LocalDateTime ldt = LocalDateTime.parse(<string>, dtf);
 
-                System.out.println(appointmentId + " | " + title + " | " + description + " | " + location + " | " + type
+                System.out.println("Appts for " + customerId + ": \n" + appointmentId + " | " + title + " | " + description + " | " + location + " | " + type
                         + " | " + dtf.format(start) + " | " + dtf.format(end) + " | " + dtf.format(createDate) + " | "
                         + createdBy + " | " + dtf.format(lastUpdate) + " | " + lastUpdatedBy + " | " + customerId
                         + " | " + userId + " | " + contactId

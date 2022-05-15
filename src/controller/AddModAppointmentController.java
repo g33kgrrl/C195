@@ -56,6 +56,8 @@ public class AddModAppointmentController implements Initializable {
     private LocalDateTime lastUpdate;
     private String lastUpdatedBy;
 
+    User currentUser = UserQuery.getCurrentUser();
+    String currentUserName = currentUser.getUserName();
 
 //  When adding and updating an appointment, record the following data: Appointment_ID, title, description, location,
 //  contact, type, start date and time, end date and time, Customer_ID, and User_ID.
@@ -73,11 +75,6 @@ public class AddModAppointmentController implements Initializable {
      */
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        customerCombo.setItems(CustomerQuery.getAll());
-        contactCombo.setItems(ContactQuery.selectAll());
-//        userCombo.setItems(UserQuery.getAll());
-        userCombo.setItems(UserQuery.getAll());
-
         ObservableList<String> hours = FXCollections.observableArrayList();
         ObservableList<String> minutes = FXCollections.observableArrayList();
 
@@ -95,6 +92,11 @@ public class AddModAppointmentController implements Initializable {
         startMinuteCombo.setItems(minutes);
         endHourCombo.setItems(hours);
         endMinuteCombo.setItems(minutes);
+
+        customerCombo.setItems(CustomerQuery.getAll());
+        contactCombo.setItems(ContactQuery.getAll());
+        userCombo.setItems(UserQuery.getAll());
+        userCombo.setValue(currentUserName);
     }
 
     /**
@@ -122,7 +124,7 @@ public class AddModAppointmentController implements Initializable {
         endHourCombo.setValue(String.format("%02d",end.getHour()));
         endMinuteCombo.setValue(String.format("%02d",end.getMinute()));
         customerCombo.setValue(CustomerQuery.getCustomer(appointment.getCustomerId()));
-        userIdLabel.setText("UserId: " + appointment.getUserId());
+        userCombo.setValue(UserQuery.getUser(appointment.getUserId()));
     }
 //
 //    /**
@@ -201,7 +203,7 @@ public class AddModAppointmentController implements Initializable {
 //    }
 //
     /**
-     * Handles save product request.
+     * Handles save appointment request.
      * Gets values from textfields, ensures input is valid, gets the list of associated parts, and then
      * calls Inventory.updateProduct() to replace the current product object with a new product using the
      * given data. Tracks next unique product ID to be used, and returns user to main screen. If input is
@@ -213,8 +215,6 @@ public class AddModAppointmentController implements Initializable {
     public void onSaveButtonAction(ActionEvent saveEvent) throws IOException {
         try {
             int rowsAffected;
-            User currentUser = UserQuery.getCurrentUser();
-            String currentUserName = currentUser.getUserName();
 
             String title = titleText.getText();
             String description = descriptionText.getText();
@@ -247,7 +247,7 @@ public class AddModAppointmentController implements Initializable {
             lastUpdatedBy = currentUserName;
 
             int customerId = ((Customer) customerCombo.getValue()).getId();
-            int userId = currentUser.getUserId();
+            int userId = ((User) userCombo.getValue()).getUserId();
             int contactId = ((Contact) contactCombo.getValue()).getId();
 
 //            public static int insert(String title, String description, String location, String type, LocalDateTime start,

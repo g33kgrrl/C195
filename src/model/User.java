@@ -12,7 +12,6 @@ public class User {
     private LocalDateTime lastUpdate;
     private String lastUpdatedBy;
 
-
     public User(int userId, String userName, String password, LocalDateTime createDate, String createdBy, LocalDateTime lastUpdate, String lastUpdatedBy) {
         this.userId = userId;
         this.userName = userName;
@@ -21,6 +20,11 @@ public class User {
         this.createdBy = createdBy;
         this.lastUpdate = lastUpdate;
         this.lastUpdatedBy = lastUpdatedBy;
+    }
+
+    @Override
+    public String toString() {
+        return(userName);
     }
 
     public int getUserId() {

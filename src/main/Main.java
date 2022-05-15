@@ -64,6 +64,8 @@ public class Main extends Application {
 
 //        AppointmentQuery.deleteAllForCustomerId(17);
 
+//        UserQuery.getAll();
+
         launch(args);
 
         JDBC.closeConnection();

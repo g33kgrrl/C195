@@ -11,7 +11,7 @@ import java.sql.SQLException;
 
 public abstract class ContactQuery {
 
-    public static ObservableList<Contact> selectAll() {
+    public static ObservableList<Contact> getAll() {
         ObservableList<Contact> allContacts = FXCollections.observableArrayList();
 
         try {
