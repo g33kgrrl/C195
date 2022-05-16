@@ -42,6 +42,11 @@ public class Appointment {
         this.contactId = contactId;
     }
 
+    @Override
+    public String toString() {
+        return(title);
+    }
+
     // TODO: Fix later
 //    public static ObservableList<Appointment> getAllAppointments() {
 //

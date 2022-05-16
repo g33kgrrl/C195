@@ -12,6 +12,7 @@ import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
 import java.net.URL;
+import java.time.format.DateTimeFormatter;
 import java.util.Optional;
 import java.util.ResourceBundle;
 import java.io.IOException;
@@ -158,26 +159,50 @@ public class MainController implements Initializable {
         try {
             Customer selectedCustomer = (Customer) CustomersTable.getSelectionModel().getSelectedItem();
             int selectedCustomerId = selectedCustomer.getId();
+            ObservableList<Appointment> customerAppointments = AppointmentQuery.getAllForCustomerId(selectedCustomerId);
+            DateTimeFormatter dtf = DateTimeFormatter.ofPattern("MM-dd-yyyy HH:mm");
 
-            String deleteConfirm = "Permanently delete this customer and all associated appointments?\n\n" +
-                    "\tId: " + selectedCustomerId + "\n\n" +
-                    "\tName: " + selectedCustomer.getName() + "\n\n" +
-                    "\tAddress: " + selectedCustomer.getAddress() + "\n\n" +
-                    "\tPostal Code: " + selectedCustomer.getPostalCode() + "\n\n" +
-                    "\tPhone: " + selectedCustomer.getPhone() + "\n\n" +
-                    "\tDivision ID: " + selectedCustomer.getDivisionId() + "\n\n" +
-                    "\tAssociated appointments: " + AppointmentQuery.getAllForCustomerId(selectedCustomerId).size();
+            if(customerAppointments.size() > 0) {
+                Alert alert = new Alert(Alert.AlertType.ERROR);
+                alert.setTitle("Cannot delete customer with appointments");
 
-            Alert alert = new Alert(Alert.AlertType.CONFIRMATION, deleteConfirm);
+                String customerAppointmentsList = "";
 
-            Optional<ButtonType> result = alert.showAndWait();
+                for (Appointment appointment : customerAppointments) {
+                    customerAppointmentsList += appointment.getId() + " | " + appointment.getTitle() + " | " +
+                            appointment.getDescription() + " | " + appointment.getLocation() + " | " + appointment.getType() +
+                            " | " + dtf.format(appointment.getStart()) + " | " + dtf.format(appointment.getEnd()) + " | " +
+                            dtf.format(appointment.getCreateDate()) + " | " + appointment.getCreatedBy() + " | " +
+                            dtf.format(appointment.getLastUpdate()) + " | " + appointment.getLastUpdatedBy() + " | " +
+                            appointment.getCustomerId() + " | " + appointment.getUserId() + " | " + appointment.getContactId() + "\n\n";
+                }
 
-            // Must delete all associated Appointments first, then Customer can be deleted.
-            if (result.isPresent() && result.get() == ButtonType.OK) {
-                AppointmentQuery.deleteAllForCustomerId(selectedCustomerId);
-                CustomerQuery.delete(selectedCustomerId);
-                CustomersTable.setItems(CustomerQuery.getAll());
-                AppointmentsTable.setItems(AppointmentQuery.getAll());
+                alert.setContentText("Cannot delete a customer with existing appointments.\nPlease delete " +
+                                customerAppointments.size() + " appointments first:\n\n" + customerAppointmentsList
+                );
+                alert.showAndWait();
+            }
+            else {
+                String deleteConfirm = "Permanently delete this customer and all associated appointments?\n\n" +
+                        "\tId: " + selectedCustomerId + "\n\n" +
+                        "\tName: " + selectedCustomer.getName() + "\n\n" +
+                        "\tAddress: " + selectedCustomer.getAddress() + "\n\n" +
+                        "\tPostal Code: " + selectedCustomer.getPostalCode() + "\n\n" +
+                        "\tPhone: " + selectedCustomer.getPhone() + "\n\n" +
+                        "\tDivision ID: " + selectedCustomer.getDivisionId() + "\n\n" +
+                        "\tAssociated appointments: " + AppointmentQuery.getAllForCustomerId(selectedCustomerId).size();
+
+                Alert alert = new Alert(Alert.AlertType.CONFIRMATION, deleteConfirm);
+
+                Optional<ButtonType> result = alert.showAndWait();
+
+                // Must delete all associated Appointments first, then Customer can be deleted.
+                if (result.isPresent() && result.get() == ButtonType.OK) {
+//                AppointmentQuery.deleteAllForCustomerId(selectedCustomerId);
+                    CustomerQuery.delete(selectedCustomerId);
+                    CustomersTable.setItems(CustomerQuery.getAll());
+//                AppointmentsTable.setItems(AppointmentQuery.getAll());
+                }
             }
         } catch (NullPointerException e) {
             Alert alert = new Alert(Alert.AlertType.ERROR);

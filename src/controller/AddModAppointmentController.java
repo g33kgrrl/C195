@@ -257,7 +257,6 @@ public class AddModAppointmentController implements Initializable {
 //                             LocalDateTime end, LocalDateTime createDate, String createdBy, LocalDateTime lastUpdate,
 //                             String lastUpdatedBy, int customerId, int userId, int contactId)
 
-
             System.out.println("Title: " + title + " | Description: " + description + " | Location: " +
                     location + " | Type: " + type + " | Start: " + start.toString() +
                     " | End: " + end.toString() + " | CreateDate: " + createDate.toString() + " | CreatedBy: " +
