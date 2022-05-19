@@ -38,7 +38,8 @@ public class AddModAppointmentController implements Initializable {
     public TextField locationText;
     public ComboBox customerCombo;
     public ComboBox contactCombo;
-    public ComboBox userCombo;
+    // TODO
+    public ComboBox<User> userCombo;
     public TextField typeText;
     public DatePicker startDatePicker;
     public ComboBox startHourCombo;
@@ -57,7 +58,7 @@ public class AddModAppointmentController implements Initializable {
     private String lastUpdatedBy;
 
     User currentUser = UserQuery.getCurrentUser();
-    String currentUserName = currentUser.getUserName();
+    //User currentUser = currentUser.getUserName();
 
 //  When adding and updating an appointment, record the following data: Appointment_ID, title, description, location,
 //  contact, type, start date and time, end date and time, Customer_ID, and User_ID.
@@ -78,10 +79,12 @@ public class AddModAppointmentController implements Initializable {
         ObservableList<String> hours = FXCollections.observableArrayList();
         ObservableList<String> minutes = FXCollections.observableArrayList();
 
+        // TODO: restrict list according to local time zone
         hours.setAll("00", "01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "11", "12", "13", "14", "15",
                 "16", "17", "18", "19", "20", "21", "22", "23"
         );
 
+        // TODO 15m intervals
         minutes.setAll("00", "01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "11", "12", "13", "14", "15",
                 "16", "17", "18", "19", "20", "21", "22", "23", "24", "25", "26", "27", "28", "29", "30", "31", "32",
                 "33", "34", "35", "36", "37", "38", "39", "40", "41", "42", "43", "44", "45", "46", "47", "48", "49",
@@ -96,7 +99,7 @@ public class AddModAppointmentController implements Initializable {
         customerCombo.setItems(CustomerQuery.getAll());
         contactCombo.setItems(ContactQuery.getAll());
         userCombo.setItems(UserQuery.getAll());
-        userCombo.setValue(currentUserName);
+        userCombo.setValue(currentUser);
     }
 
     /**
@@ -124,7 +127,7 @@ public class AddModAppointmentController implements Initializable {
         endHourCombo.setValue(String.format("%02d",end.getHour()));
         endMinuteCombo.setValue(String.format("%02d",end.getMinute()));
         customerCombo.setValue(CustomerQuery.getCustomer(appointment.getCustomerId()));
-        userCombo.setValue(UserQuery.getUser(appointment.getUserId()).getUserName());
+        userCombo.setValue(UserQuery.getUser(appointment.getUserId()));
 //        userCombo.setValue(appointment.getUserId());
         System.out.println("EXISTING USER: " + UserQuery.getUser(appointment.getUserId()).getUserName());
     }
@@ -222,13 +225,11 @@ public class AddModAppointmentController implements Initializable {
             String description = descriptionText.getText();
             String location = locationText.getText();
             String type = typeText.getText();
-            LocalDateTime start =
-                    LocalDateTime.of(startDatePicker.getValue(),
-                    LocalTime.of(
-                            Integer.parseInt(startHourCombo.getValue().toString()),
-                            Integer.parseInt(startMinuteCombo.getValue().toString())
-                    )
-            );
+            int startHour = Integer.parseInt(startHourCombo.getValue().toString());
+            int startMinute = Integer.parseInt(startMinuteCombo.getValue().toString());
+
+            //TODO
+            LocalDateTime start = LocalDateTime.of(startDatePicker.getValue(), LocalTime.of(startHour, startMinute));
             LocalDateTime end =
                     LocalDateTime.of(endDatePicker.getValue(),
                     LocalTime.of(
@@ -239,19 +240,33 @@ public class AddModAppointmentController implements Initializable {
 
             if(this.appointment == null) {
                 createDate = LocalDateTime.now();
-                createdBy = currentUserName;
+                createdBy = currentUser.getUserName();
             } else {
                 createDate = appointment.getCreateDate();
                 createdBy = appointment.getCreatedBy();
             }
 
             lastUpdate = LocalDateTime.now();
-            lastUpdatedBy = currentUserName;
+            lastUpdatedBy = currentUser.getUserName();
 
-            int customerId = ((Customer) customerCombo.getValue()).getId();
-            int userId = ((User) userCombo.getValue()).getUserId();
-            System.out.println("USER ID: " + String.valueOf(userId));
-            int contactId = ((Contact) contactCombo.getValue()).getId();
+//            int customerId = ((Customer) customerCombo.getValue()).getId();
+//            int customerId = ((Customer) customerCombo.getSelectionModel().getSelectedItem()).getId();
+            //int customerId = 2;
+            System.out.println("Customer ID selected: " + ((Customer) customerCombo.getSelectionModel().getSelectedItem()).getId());
+            int customerId = ((Customer) customerCombo.getSelectionModel().getSelectedItem()).getId();
+
+//            int userId = ((User) userCombo.getValue()).getUserId();
+            int userId = 1;
+            //System.out.println("User selected: " + ((User) userCombo.getSelectionModel().getSelectedItem()).getUserId());
+            System.out.println("User selected: " + userCombo.getValue().getUserId());
+
+
+//            System.out.println("USER ID: " + String.valueOf(userId));
+//            int contactId = ((Contact) contactCombo.getValue()).getId();
+//            int contactId = ((Contact) contactCombo.getSelectionModel().getSelectedItem()).getId();
+            //int contactId = 3;
+            System.out.println("Contact ID selected: " + ((Contact) contactCombo.getSelectionModel().getSelectedItem()).getId());
+            int contactId = ((Contact) contactCombo.getSelectionModel().getSelectedItem()).getId();
 
 //            public static int insert(String title, String description, String location, String type, LocalDateTime start,
 //                             LocalDateTime end, LocalDateTime createDate, String createdBy, LocalDateTime lastUpdate,
