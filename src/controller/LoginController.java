@@ -7,7 +7,7 @@ import javafx.scene.control.*;
 import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
-import java.time.ZoneId;
+import java.time.*;
 import java.util.ResourceBundle;
 
 import dao.UserQuery;
@@ -33,7 +33,20 @@ public class LoginController implements Initializable {
      */
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-            zoneIdLabel.setText(ZoneId.systemDefault().toString());
+            zoneIdLabel.setText(ZoneId.systemDefault().toString()); // ORIG - OK
+//            zoneIdLabel.setText(String.valueOf(ZoneOffset.systemDefault().getRules().getOffset(Instant.now())));
+//            zoneIdLabel.setText("FOO!!!!!");
+//        ZoneOffset o = OffsetDateTime.now().getOffset();
+//        System.out.println("Zone Offset: " + o);
+//        LocalDateTime ldtMidnight = LocalDateTime.of(2022, 05, 19, 0, 0);
+//        zoneIdLabel.setText(String.valueOf(ldtMidnight.atOffset(o)));
+//
+//
+//        ZonedDateTime zdt = LocalDateTime.parse( "2018-01-23T01:23:45.123456789" )  // Parse string, lacking an offset-from-UTC and lacking a time zone, as a `LocalDateTime`.
+//                .atZone(ZoneId.systemDefault());              // Assign the time zone for which you are certain this date-time was intended. Instantiates a `ZonedDateTime` object.
+//
+//        System.out.println(zdt);
+
     }
 
     /***

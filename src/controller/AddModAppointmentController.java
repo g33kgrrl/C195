@@ -60,9 +60,15 @@ public class AddModAppointmentController implements Initializable {
         ObservableList<String> minutes = FXCollections.observableArrayList();
 
         // TODO: restrict list according to local time zone
-        hours.setAll("00", "01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "11", "12", "13", "14", "15",
-                "16", "17", "18", "19", "20", "21", "22", "23"
-        );
+        // Business hours 8:00 - 22:00 EST
+        // Create array using "for" loop and (UTC + timeZoneOffset)
+//        hours.setAll("00", "01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "11", "12", "13", "14", "15",
+//                "16", "17", "18", "19", "20", "21", "22", "23"
+//        );
+
+        for (int i = 0; i < 24; i++) {
+
+        }
 
         minutes.setAll("00", "15", "30", "45");
 
