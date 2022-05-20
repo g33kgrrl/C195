@@ -100,7 +100,6 @@ public abstract class CustomerQuery {
         return allCustomers;
     }
 
-    // TODO: PICK ONE, DIVISION ID OR CUSTOMER ID
     public static Customer getCustomer(int customerId) {
         try {
             String sql = "SELECT * FROM customers WHERE Customer_ID = ?";

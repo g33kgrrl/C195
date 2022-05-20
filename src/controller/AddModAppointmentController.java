@@ -16,30 +16,13 @@ import java.util.ResourceBundle;
 import model.*;
 
 public class AddModAppointmentController implements Initializable {
-    public TableView AssociatedPartsTable;
-    public TableView AllPartsTable;
-    public TextField SearchParts;
     public TextField idText;
-    public TextField nameText;
-    public TextField inventoryText;
-    public TextField priceText;
-    public TextField maxText;
-    public TextField minText;
-    public TableColumn partIdCol;
-    public TableColumn partNameCol;
-    public TableColumn partInvCol;
-    public TableColumn partPriceCol;
-    public TableColumn assocPartIdCol;
-    public TableColumn assocPartNameCol;
-    public TableColumn assocPartInvCol;
-    public TableColumn assocPartPriceCol;
     public TextField titleText;
     public TextField descriptionText;
     public TextField locationText;
-    public ComboBox customerCombo;
-    public ComboBox contactCombo;
-    // TODO
+    public ComboBox<Customer> customerCombo;
     public ComboBox<User> userCombo;
+    public ComboBox<Contact> contactCombo;
     public TextField typeText;
     public DatePicker startDatePicker;
     public ComboBox startHourCombo;
@@ -49,16 +32,13 @@ public class AddModAppointmentController implements Initializable {
     public ComboBox endMinuteCombo;
     public Label userIdLabel;
 
-    private Contact appointmentContact;
     private Appointment appointment;
-
     private LocalDateTime createDate;
     private String createdBy;
     private LocalDateTime lastUpdate;
     private String lastUpdatedBy;
 
     User currentUser = UserQuery.getCurrentUser();
-    //User currentUser = currentUser.getUserName();
 
 //  When adding and updating an appointment, record the following data: Appointment_ID, title, description, location,
 //  contact, type, start date and time, end date and time, Customer_ID, and User_ID.
@@ -84,12 +64,7 @@ public class AddModAppointmentController implements Initializable {
                 "16", "17", "18", "19", "20", "21", "22", "23"
         );
 
-        // TODO 15m intervals
-        minutes.setAll("00", "01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "11", "12", "13", "14", "15",
-                "16", "17", "18", "19", "20", "21", "22", "23", "24", "25", "26", "27", "28", "29", "30", "31", "32",
-                "33", "34", "35", "36", "37", "38", "39", "40", "41", "42", "43", "44", "45", "46", "47", "48", "49",
-                "50", "51", "52", "53", "54", "55", "56", "57", "58", "59"
-        );
+        minutes.setAll("00", "15", "30", "45");
 
         startHourCombo.setItems(hours);
         startMinuteCombo.setItems(minutes);
@@ -118,7 +93,6 @@ public class AddModAppointmentController implements Initializable {
         titleText.setText(appointment.getTitle());
         descriptionText.setText(String.valueOf(appointment.getDescription()));
         locationText.setText(String.valueOf(appointment.getLocation()));
-        contactCombo.setValue(ContactQuery.getContact(appointment.getContactId()));
         typeText.setText(String.valueOf(appointment.getType()));
         startDatePicker.setValue(start.toLocalDate());
         startHourCombo.setValue(String.format("%02d",start.getHour()));
@@ -128,8 +102,7 @@ public class AddModAppointmentController implements Initializable {
         endMinuteCombo.setValue(String.format("%02d",end.getMinute()));
         customerCombo.setValue(CustomerQuery.getCustomer(appointment.getCustomerId()));
         userCombo.setValue(UserQuery.getUser(appointment.getUserId()));
-//        userCombo.setValue(appointment.getUserId());
-        System.out.println("EXISTING USER: " + UserQuery.getUser(appointment.getUserId()).getUserName());
+        contactCombo.setValue(ContactQuery.getContact(appointment.getContactId()));
     }
 //
 //    /**
@@ -215,7 +188,6 @@ public class AddModAppointmentController implements Initializable {
      * invalid, an error message is displayed instead.
      * @param saveEvent the save product button clidk event
      * @throws IOException for input/output exceptions
-     * //        // Appointment_ID, title, description, location, contact, type, start date and time, end date and time, Customer_ID, and User_ID
      */
     public void onSaveButtonAction(ActionEvent saveEvent) throws IOException {
         try {
@@ -227,16 +199,11 @@ public class AddModAppointmentController implements Initializable {
             String type = typeText.getText();
             int startHour = Integer.parseInt(startHourCombo.getValue().toString());
             int startMinute = Integer.parseInt(startMinuteCombo.getValue().toString());
+            int endHour = Integer.parseInt(endHourCombo.getValue().toString());
+            int endMinute = Integer.parseInt(endMinuteCombo.getValue().toString());
 
-            //TODO
             LocalDateTime start = LocalDateTime.of(startDatePicker.getValue(), LocalTime.of(startHour, startMinute));
-            LocalDateTime end =
-                    LocalDateTime.of(endDatePicker.getValue(),
-                    LocalTime.of(
-                            Integer.parseInt(endHourCombo.getValue().toString()),
-                            Integer.parseInt(endMinuteCombo.getValue().toString())
-                    )
-            );
+            LocalDateTime end = LocalDateTime.of(endDatePicker.getValue(), LocalTime.of(endHour, endMinute));
 
             if(this.appointment == null) {
                 createDate = LocalDateTime.now();
@@ -249,32 +216,13 @@ public class AddModAppointmentController implements Initializable {
             lastUpdate = LocalDateTime.now();
             lastUpdatedBy = currentUser.getUserName();
 
-//            int customerId = ((Customer) customerCombo.getValue()).getId();
-//            int customerId = ((Customer) customerCombo.getSelectionModel().getSelectedItem()).getId();
-            //int customerId = 2;
-            System.out.println("Customer ID selected: " + ((Customer) customerCombo.getSelectionModel().getSelectedItem()).getId());
             int customerId = ((Customer) customerCombo.getSelectionModel().getSelectedItem()).getId();
-
-//            int userId = ((User) userCombo.getValue()).getUserId();
-            int userId = 1;
-            //System.out.println("User selected: " + ((User) userCombo.getSelectionModel().getSelectedItem()).getUserId());
-            System.out.println("User selected: " + userCombo.getValue().getUserId());
-
-
-//            System.out.println("USER ID: " + String.valueOf(userId));
-//            int contactId = ((Contact) contactCombo.getValue()).getId();
-//            int contactId = ((Contact) contactCombo.getSelectionModel().getSelectedItem()).getId();
-            //int contactId = 3;
-            System.out.println("Contact ID selected: " + ((Contact) contactCombo.getSelectionModel().getSelectedItem()).getId());
+            int userId = ((User) userCombo.getValue()).getUserId();
             int contactId = ((Contact) contactCombo.getSelectionModel().getSelectedItem()).getId();
 
-//            public static int insert(String title, String description, String location, String type, LocalDateTime start,
-//                             LocalDateTime end, LocalDateTime createDate, String createdBy, LocalDateTime lastUpdate,
-//                             String lastUpdatedBy, int customerId, int userId, int contactId)
-
             System.out.println("Title: " + title + " | Description: " + description + " | Location: " +
-                    location + " | Type: " + type + " | Start: " + start.toString() +
-                    " | End: " + end.toString() + " | CreateDate: " + createDate.toString() + " | CreatedBy: " +
+                    location + " | Type: " + type + "\n | Start: " + start.toString() +
+                    " | End: " + end.toString() + "\n | CreateDate: " + createDate.toString() + " | CreatedBy: " +
                     createdBy + " | LastUpdate : " + lastUpdate + " | LastUpdatedBy: " +
                     lastUpdatedBy + " | CustomerID: " + customerId + " | UserID: " + userId + " | ContactID: " + contactId
             );
