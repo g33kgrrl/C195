@@ -81,16 +81,16 @@ public class MainController implements Initializable {
         apptTitleCol.setCellValueFactory(new PropertyValueFactory<>("title"));
         apptDescriptionCol.setCellValueFactory(new PropertyValueFactory<>("description"));
         apptLocationCol.setCellValueFactory(new PropertyValueFactory<>("location"));
+        apptContactIdCol.setCellValueFactory(new PropertyValueFactory<>("contactId"));
         apptTypeCol.setCellValueFactory(new PropertyValueFactory<>("type"));
         apptStartCol.setCellValueFactory(new PropertyValueFactory<>("start"));
         apptEndCol.setCellValueFactory(new PropertyValueFactory<>("end"));
-        apptCreateDateCol.setCellValueFactory(new PropertyValueFactory<>("createDate"));
-        apptCreatedByCol.setCellValueFactory(new PropertyValueFactory<>("createdBy"));
-        apptLastUpdateCol.setCellValueFactory(new PropertyValueFactory<>("lastUpdate"));
-        apptLastUpdatedByCol.setCellValueFactory(new PropertyValueFactory<>("lastUpdatedBy"));
+//        apptCreateDateCol.setCellValueFactory(new PropertyValueFactory<>("createDate"));
+//        apptCreatedByCol.setCellValueFactory(new PropertyValueFactory<>("createdBy"));
+//        apptLastUpdateCol.setCellValueFactory(new PropertyValueFactory<>("lastUpdate"));
+//        apptLastUpdatedByCol.setCellValueFactory(new PropertyValueFactory<>("lastUpdatedBy"));
         apptCustomerIdCol.setCellValueFactory(new PropertyValueFactory<>("customerId"));
         apptUserIdCol.setCellValueFactory(new PropertyValueFactory<>("userId"));
-        apptContactIdCol.setCellValueFactory(new PropertyValueFactory<>("contactId"));
 
         AppointmentsTable.setItems(AppointmentQuery.getAll());
     }

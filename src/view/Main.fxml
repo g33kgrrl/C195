@@ -39,29 +39,29 @@
                 <Insets bottom="6.0" right="12.0" />
             </padding>
         </Pane>
-        <Pane layoutX="20.0" layoutY="305.0" prefHeight="272.0" style="-fx-border-style: solid; -fx-border-radius: 10px;" AnchorPane.bottomAnchor="10.0" AnchorPane.topAnchor="305.0">
+        <Pane layoutX="20.0" layoutY="310.0" prefHeight="272.0" style="-fx-border-style: solid; -fx-border-radius: 10px;" AnchorPane.bottomAnchor="42.0" AnchorPane.topAnchor="305.0">
             <children>
-                <TableView fx:id="AppointmentsTable" layoutX="14.0" layoutY="50.0" prefHeight="172.0">
+                <TableView fx:id="AppointmentsTable" layoutX="14.0" layoutY="50.0" prefHeight="172.0" prefWidth="841.0">
                     <columns>
                         <TableColumn fx:id="apptIdCol" text="ID" />
                         <TableColumn fx:id="apptTitleCol" text="Title" />
                         <TableColumn fx:id="apptDescriptionCol" text="Description" />
                         <TableColumn fx:id="apptLocationCol" text="Location" />
-                        <TableColumn fx:id="apptTypeCol" text="Type" />
-                        <TableColumn fx:id="apptStartCol" text="Start" />
-                        <TableColumn fx:id="apptEndCol" text="End" />
-                        <TableColumn fx:id="apptCreateDateCol" text="Created" />
-                        <TableColumn fx:id="apptCreatedByCol" text="By" />
-                        <TableColumn fx:id="apptLastUpdateCol" text="Updated" />
-                        <TableColumn fx:id="apptLastUpdatedByCol" text="By" />
-                        <TableColumn fx:id="apptCustomerIdCol" text="Cust ID" />
-                        <TableColumn fx:id="apptUserIdCol" text="User ID" />
-                        <TableColumn fx:id="apptContactIdCol" text="Contact ID" />
+                        <TableColumn fx:id="apptContactIdCol" prefWidth="109.0" text="Contact" />
+                        <TableColumn fx:id="apptTypeCol" prefWidth="106.0" text="Type" />
+                        <TableColumn fx:id="apptStartCol" prefWidth="98.0" text="Start" />
+                        <TableColumn fx:id="apptEndCol" prefWidth="95.0" text="End" />
+<!--                        <TableColumn fx:id="apptCreateDateCol" text="Created" />-->
+<!--                        <TableColumn fx:id="apptCreatedByCol" text="By" />-->
+<!--                        <TableColumn fx:id="apptLastUpdateCol" text="Updated" />-->
+<!--                        <TableColumn fx:id="apptLastUpdatedByCol" text="By" />-->
+                        <TableColumn fx:id="apptCustomerIdCol" prefWidth="57.0" text="Cust ID" />
+                        <TableColumn fx:id="apptUserIdCol" prefWidth="65.0" text="User ID" />
                     </columns>
                 </TableView>
-                <Button fx:id="AddAppointmentButton" layoutX="752.0" layoutY="229.0" mnemonicParsing="false" onAction="#onAddAppointmentButtonAction" prefHeight="33.0" prefWidth="62.0" text="Add" />
-                <Button fx:id="ModifyAppointmentButton" layoutX="828.0" layoutY="229.0" mnemonicParsing="false" onAction="#onModifyAppointmentButtonAction" prefHeight="33.0" prefWidth="62.0" text="Modify" />
-                <Button fx:id="DeleteAppointmentButton" layoutX="902.0" layoutY="229.0" mnemonicParsing="false" onAction="#onDeleteAppointmentButtonAction" prefHeight="33.0" prefWidth="62.0" text="Delete" />
+                <Button fx:id="AddAppointmentButton" layoutX="642.0" layoutY="230.0" mnemonicParsing="false" onAction="#onAddAppointmentButtonAction" prefHeight="33.0" prefWidth="62.0" text="Add" />
+                <Button fx:id="ModifyAppointmentButton" layoutX="718.0" layoutY="230.0" mnemonicParsing="false" onAction="#onModifyAppointmentButtonAction" prefHeight="33.0" prefWidth="62.0" text="Modify" />
+                <Button fx:id="DeleteAppointmentButton" layoutX="792.0" layoutY="230.0" mnemonicParsing="false" onAction="#onDeleteAppointmentButtonAction" prefHeight="33.0" prefWidth="62.0" text="Delete" />
                 <TextField fx:id="SearchProducts" layoutX="294.0" layoutY="20.0" onAction="#onSearchApptsHandler" prefHeight="24.0" prefWidth="213.0" promptText="Search by Appointment ID or Name" />
                 <Label layoutX="25.0" layoutY="22.0" text="Appointments">
                     <font>
@@ -69,9 +69,9 @@
                     </font>
                 </Label>
             </children>
-            <padding>
-                <Insets right="12.0" />
-            </padding>
+         <padding>
+            <Insets right="12.0" />
+         </padding>
         </Pane>
     </children>
     <padding>
