@@ -45,21 +45,23 @@ public abstract class ContactQuery {
             ps.setInt(1, id);
             ResultSet rs = ps.executeQuery();
 
-            while(rs.next()) {
+            if(rs.next()) {
                 int contactId = rs.getInt("Contact_ID");
                 String contactName = rs.getString("Contact_Name");
                 String contactEmail = rs.getString("Email");
 
                 Contact c = new Contact(contactId, contactName, contactEmail);
-                selectedContact.add(c);
+//                selectedContact.add(c);
 
 //                System.out.println(contactId + " | " + contactName);
+                return c;
             }
         }
         catch(SQLException ex) {
             ex.printStackTrace();
         }
 
-        return selectedContact.get(0);
+//        return selectedContact.get(0);
+        return null;
     }
 }

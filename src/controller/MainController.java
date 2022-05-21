@@ -81,14 +81,10 @@ public class MainController implements Initializable {
         apptTitleCol.setCellValueFactory(new PropertyValueFactory<>("title"));
         apptDescriptionCol.setCellValueFactory(new PropertyValueFactory<>("description"));
         apptLocationCol.setCellValueFactory(new PropertyValueFactory<>("location"));
-        apptContactIdCol.setCellValueFactory(new PropertyValueFactory<>("contactId"));
         apptTypeCol.setCellValueFactory(new PropertyValueFactory<>("type"));
         apptStartCol.setCellValueFactory(new PropertyValueFactory<>("start"));
         apptEndCol.setCellValueFactory(new PropertyValueFactory<>("end"));
-//        apptCreateDateCol.setCellValueFactory(new PropertyValueFactory<>("createDate"));
-//        apptCreatedByCol.setCellValueFactory(new PropertyValueFactory<>("createdBy"));
-//        apptLastUpdateCol.setCellValueFactory(new PropertyValueFactory<>("lastUpdate"));
-//        apptLastUpdatedByCol.setCellValueFactory(new PropertyValueFactory<>("lastUpdatedBy"));
+        apptContactIdCol.setCellValueFactory(new PropertyValueFactory<>("contactId"));
         apptCustomerIdCol.setCellValueFactory(new PropertyValueFactory<>("customerId"));
         apptUserIdCol.setCellValueFactory(new PropertyValueFactory<>("userId"));
 
@@ -134,6 +130,7 @@ public class MainController implements Initializable {
      */
     public void onModifyCustomerButtonAction(ActionEvent modifyCustomerEvent) throws IOException {
         try {
+            // TODO: Fix; on 5/21 you can modify without selecting
             Customer selectedItem = (Customer) CustomersTable.getSelectionModel().getSelectedItem();
 
             FXMLLoader loader = new FXMLLoader();
@@ -162,28 +159,28 @@ public class MainController implements Initializable {
             ObservableList<Appointment> customerAppointments = AppointmentQuery.getAllForCustomerId(selectedCustomerId);
             DateTimeFormatter dtf = DateTimeFormatter.ofPattern("MM-dd-yyyy HH:mm");
 
-            if(customerAppointments.size() > 0) {
-                Alert alert = new Alert(Alert.AlertType.ERROR);
-                alert.setTitle("Cannot delete customer with appointments");
-
-                String customerAppointmentsList = "";
-
-                for (Appointment appointment : customerAppointments) {
-                    customerAppointmentsList += appointment.getId() + " | " + appointment.getTitle() + " | " +
-                            appointment.getDescription() + " | " + appointment.getLocation() + " | " + appointment.getType() +
-                            " | " + dtf.format(appointment.getStart()) + " | " + dtf.format(appointment.getEnd()) + " | " +
-                            dtf.format(appointment.getCreateDate()) + " | " + appointment.getCreatedBy() + " | " +
-                            dtf.format(appointment.getLastUpdate()) + " | " + appointment.getLastUpdatedBy() + " | " +
-                            appointment.getCustomerId() + " | " + appointment.getUserId() + " | " + appointment.getContactId() + "\n\n";
-                }
-
-                alert.setContentText("Cannot delete a customer with existing appointments.\nPlease delete " +
-                                customerAppointments.size() + " appointments first:\n\n" + customerAppointmentsList
-                );
-                alert.showAndWait();
-            }
-            else {
-                String deleteConfirm = "Permanently delete this customer and all associated appointments?\n\n" +
+//            if(customerAppointments.size() > 0) {
+//                Alert alert = new Alert(Alert.AlertType.ERROR);
+//                alert.setTitle("Cannot delete customer with appointments");
+//
+//                String customerAppointmentsList = "";
+//
+//                for (Appointment appointment : customerAppointments) {
+//                    customerAppointmentsList += appointment.getId() + " | " + appointment.getTitle() + " | " +
+//                            appointment.getDescription() + " | " + appointment.getLocation() + " | " + appointment.getType() +
+//                            " | " + dtf.format(appointment.getStart()) + " | " + dtf.format(appointment.getEnd()) + " | " +
+//                            dtf.format(appointment.getCreateDate()) + " | " + appointment.getCreatedBy() + " | " +
+//                            dtf.format(appointment.getLastUpdate()) + " | " + appointment.getLastUpdatedBy() + " | " +
+//                            appointment.getCustomerId() + " | " + appointment.getUserId() + " | " + appointment.getContactId() + "\n\n";
+//                }
+//
+//                alert.setContentText("Cannot delete a customer with existing appointments.\nPlease delete " +
+//                                customerAppointments.size() + " appointments first:\n\n" + customerAppointmentsList
+//                );
+//                alert.showAndWait();
+//            }
+//            else {
+                String deleteConfirm = "Are you sure you want to delete this customer and any associated appointments?\n\n" +
                         "\tId: " + selectedCustomerId + "\n\n" +
                         "\tName: " + selectedCustomer.getName() + "\n\n" +
                         "\tAddress: " + selectedCustomer.getAddress() + "\n\n" +
@@ -198,12 +195,12 @@ public class MainController implements Initializable {
 
                 // Must delete all associated Appointments first, then Customer can be deleted.
                 if (result.isPresent() && result.get() == ButtonType.OK) {
-//                AppointmentQuery.deleteAllForCustomerId(selectedCustomerId);
+                    AppointmentQuery.deleteAllForCustomerId(selectedCustomerId);
                     CustomerQuery.delete(selectedCustomerId);
                     CustomersTable.setItems(CustomerQuery.getAll());
-//                AppointmentsTable.setItems(AppointmentQuery.getAll());
+                    AppointmentsTable.setItems(AppointmentQuery.getAll());
                 }
-            }
+//            }
         } catch (NullPointerException e) {
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle("Delete customer");
@@ -312,5 +309,17 @@ public class MainController implements Initializable {
 //        if (result.isPresent() && result.get() == ButtonType.OK) {
 //            System.exit(0);
 //        }
+    }
+
+    public void onAllRadioAction(ActionEvent onAllEvent) {
+        AppointmentsTable.setItems(AppointmentQuery.getAll());
+    }
+
+    public void onWeekRadioAction(ActionEvent onWeekEvent) {
+        AppointmentsTable.setItems(AppointmentQuery.getWeek());
+    }
+
+    public void onMonthRadioAction(ActionEvent onMonthEvent) {
+        AppointmentsTable.setItems(AppointmentQuery.getMonth());
     }
 }

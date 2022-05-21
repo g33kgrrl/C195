@@ -65,6 +65,7 @@ public class Main extends Application {
 //        AppointmentQuery.deleteAllForCustomerId(17);
 
 //        UserQuery.getAll();
+//        AppointmentQuery.getMonth();
 
         launch(args);
 

@@ -75,7 +75,7 @@ public class AddModCustomerController implements Initializable {
      * that data. Customer ID textfield is disabled to prevent creation of duplicate customer IDs.
      * @param customer1 the selected customer to modify
      */
-    public void displayCustomer(Customer customer1) {
+    public void displayCustomer (Customer customer1) {
         this.customer = customer1;
         int divisionId = customer.getDivisionId();
         int countryId = DivisionQuery.getCountryId(divisionId);
@@ -87,7 +87,6 @@ public class AddModCustomerController implements Initializable {
         phoneText.setText(String.valueOf(customer.getPhone()));
         countryCombo.setItems(CountryQuery.selectAll());
         countryCombo.setValue(CountryQuery.getCountry(countryId));
-
         divisionCombo.setItems(DivisionQuery.selectAllForCountry(countryId));
         divisionCombo.setValue(DivisionQuery.getDivision(divisionId));
     }
@@ -101,7 +100,7 @@ public class AddModCustomerController implements Initializable {
 
             divisionCombo.setItems(DivisionQuery.selectAllForCountry(countryIdFK));
 //            divisionCombo.getSelectionModel().clearSelection();
-//            divisionCombo.setValue(null);
+            divisionCombo.setValue(null);
             divisionCombo.setPromptText("Select division");
 //            System.out.println("Division (after): " + divisionCombo.getSelectionModel().getSelectedItem().getName());
         }
@@ -112,29 +111,68 @@ public class AddModCustomerController implements Initializable {
         divisionCombo.setPromptText("Select division");
     }
 
+    public void showValidateError(String formName) {
+        Alert alert = new Alert(Alert.AlertType.ERROR);
+        alert.setTitle(formName + " add/modify form");
+        alert.setContentText("Please complete all fields.");
+        alert.showAndWait();
+    }
+
     public void onSaveButtonAction(ActionEvent saveEvent) throws IOException {
-        int id = this.customer.getId();
-        String name = nameText.getText();
-        String address = addressText.getText();
-        String postalCode = postalCodeText.getText();
-        String phone = phoneText.getText();
-        int divId = divisionCombo.getSelectionModel().getSelectedItem().getId();
+        int id, divId, rowsAffected;
+        String name, address, postalCode, phone;
 
-        int rowsAffected;
+        try {
+            name = nameText.getText();
+            address = addressText.getText();
+            postalCode = postalCodeText.getText();
+            phone = phoneText.getText();
+            divId = divisionCombo.getSelectionModel().getSelectedItem().getId();
 
-        if (this.customer == null) {
-            rowsAffected = CustomerQuery.insert(name, address, postalCode, phone, divId);
-        } else {
-            rowsAffected = CustomerQuery.update(id, name, address, postalCode, phone, divId);
+            if(name.isEmpty() || address.isEmpty() || postalCode.isEmpty() || phone.isEmpty() || Integer.valueOf(divId) == null) {
+                showValidateError("Customer");
+            }
+            else {
+
+                if (customer == null) {
+                    rowsAffected = CustomerQuery.insert(name, address, postalCode, phone, divId);
+                } else {
+                    id = this.customer.getId();
+
+                    rowsAffected = CustomerQuery.update(id, name, address, postalCode, phone, divId);
+                }
+
+                if (rowsAffected > 0) {
+                    System.out.println("Customer added.");
+                } else {
+                    System.out.println("Failed to add customer!");
+                }
+
+                MainController.toMain(saveEvent);
+            }
+        }
+        catch (NullPointerException e) {
+            showValidateError("Customer");
         }
 
-        if (rowsAffected > 0) {
-            System.out.println("Customer added.");
-        } else {
-            System.out.println("Failed to add customer!");
-        }
 
-        MainController.toMain(saveEvent);
+
+//        if(Integer.valueOf(id) == null || name == null || address == null || postalCode == null || phone == null || Integer.valueOf(divId) == null) {
+//
+//        }
+
+//        int rowsAffected;
+
+//        try {
+
+
+//        }
+//        catch (NullPointerException e) {
+//            Alert alert = new Alert(Alert.AlertType.ERROR);
+//            alert.setTitle("Customer add/modify form");
+//            alert.setContentText("Please complete all fields.");
+//            alert.showAndWait();
+//        }
     }
 
     /**

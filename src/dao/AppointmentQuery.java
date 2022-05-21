@@ -113,7 +113,7 @@ public abstract class AppointmentQuery {
     }
 
     public static ObservableList<Appointment> getAllForCustomerId(int customerId) {
-        ObservableList<Appointment> allAppointments = FXCollections.observableArrayList();
+        ObservableList<Appointment> customerAppointments = FXCollections.observableArrayList();
 
         try {
             String sql = "SELECT * FROM appointments WHERE Customer_ID = ?";
@@ -147,14 +147,109 @@ public abstract class AppointmentQuery {
                 Appointment a = new Appointment(appointmentId, title, description, location, type, start, end, createDate,
                         createdBy, lastUpdate, lastUpdatedBy, customerId, userId, contactId);
 
-                allAppointments.add(a);
+                customerAppointments.add(a);
             }
         }
         catch (SQLException ex) {
             ex.printStackTrace();
         }
 
-        return allAppointments;
+        return customerAppointments;
+    }
+
+    public static ObservableList<Appointment> getWeek() {
+        ObservableList<Appointment> weekAppointments = FXCollections.observableArrayList();
+
+        try {
+            String sql = "SELECT * FROM appointments WHERE yearweek(start) = yearweek(now())";
+            PreparedStatement ps = JDBC.getConnection().prepareStatement(sql);
+//            ps.setInt(1, customerId);
+            ResultSet rs = ps.executeQuery();
+
+            while (rs.next()) {
+                int appointmentId = rs.getInt("Appointment_ID");
+                String title = rs.getString("Title");
+                String description = rs.getString("Description");
+                String location = rs.getString("Location");
+                String type = rs.getString("Type");
+                LocalDateTime start = rs.getTimestamp("Start").toLocalDateTime();
+                LocalDateTime end = rs.getTimestamp("End").toLocalDateTime();
+                LocalDateTime createDate = rs.getTimestamp("Create_Date").toLocalDateTime();
+                String createdBy = rs.getString("Created_By");
+                LocalDateTime lastUpdate = rs.getTimestamp("Last_Update").toLocalDateTime();
+                String lastUpdatedBy = rs.getString("Last_Updated_By");
+                int customerId = rs.getInt("Customer_ID");
+                int userId = rs.getInt("User_ID");
+                int contactId = rs.getInt("Contact_ID");
+
+                // LocalDateTime ldt = LocalDateTime.parse(<string>, dtf);
+
+                System.out.println("Appts for week: " + customerId + ": \n" + appointmentId + " | " + title + " | " + description + " | " + location + " | " + type
+                        + " | " + dtf.format(start) + " | " + dtf.format(end) + " | " + dtf.format(createDate) + " | "
+                        + createdBy + " | " + dtf.format(lastUpdate) + " | " + lastUpdatedBy + " | " + customerId
+                        + " | " + userId + " | " + contactId
+                );
+
+                Appointment a = new Appointment(appointmentId, title, description, location, type, start, end, createDate,
+                        createdBy, lastUpdate, lastUpdatedBy, customerId, userId, contactId);
+
+                weekAppointments.add(a);
+            }
+
+            return weekAppointments;
+        }
+        catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+
+        return null;
+    }
+
+    public static ObservableList<Appointment> getMonth() {
+        ObservableList<Appointment> monthAppointments = FXCollections.observableArrayList();
+
+        try {
+            String sql = "SELECT * FROM appointments WHERE month(start) = month(now()) AND year(start) = year(now());";
+            PreparedStatement ps = JDBC.getConnection().prepareStatement(sql);
+            ResultSet rs = ps.executeQuery();
+
+            while (rs.next()) {
+                int appointmentId = rs.getInt("Appointment_ID");
+                String title = rs.getString("Title");
+                String description = rs.getString("Description");
+                String location = rs.getString("Location");
+                String type = rs.getString("Type");
+                LocalDateTime start = rs.getTimestamp("Start").toLocalDateTime();
+                LocalDateTime end = rs.getTimestamp("End").toLocalDateTime();
+                LocalDateTime createDate = rs.getTimestamp("Create_Date").toLocalDateTime();
+                String createdBy = rs.getString("Created_By");
+                LocalDateTime lastUpdate = rs.getTimestamp("Last_Update").toLocalDateTime();
+                String lastUpdatedBy = rs.getString("Last_Updated_By");
+                int customerId = rs.getInt("Contact_ID");
+                int userId = rs.getInt("User_ID");
+                int contactId = rs.getInt("Contact_ID");
+
+                // LocalDateTime ldt = LocalDateTime.parse(<string>, dtf);
+
+                System.out.println(appointmentId + " | " + title + " | " + description + " | " + location + " | " + type
+                        + " | " + dtf.format(start) + " | " + dtf.format(end) + " | " + dtf.format(createDate) + " | "
+                        + createdBy + " | " + dtf.format(lastUpdate) + " | " + lastUpdatedBy + " | " + customerId
+                        + " | " + userId + " | " + contactId
+                );
+
+                Appointment a = new Appointment(appointmentId, title, description, location, type, start, end, createDate,
+                        createdBy, lastUpdate, lastUpdatedBy, customerId, userId, contactId);
+
+                monthAppointments.add(a);
+            }
+
+            return monthAppointments;
+        }
+        catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+
+        return null;
     }
 
     public static ObservableList<Appointment> getAll() {
@@ -194,12 +289,14 @@ public abstract class AppointmentQuery {
 
                 allAppointments.add(a);
             }
+
+            return allAppointments;
         }
         catch (SQLException ex) {
             ex.printStackTrace();
         }
 
-        return allAppointments;
+        return null;
     }
 
     public static void select(int appointmentId) throws SQLException {
