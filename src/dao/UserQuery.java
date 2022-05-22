@@ -64,7 +64,7 @@ public abstract class UserQuery {
 
                 User u = new User(id, name, password, createDate, createdBy,lastUpdate, lastUpdatedBy);
 
-                System.out.println(id + " | " + name);
+//                System.out.println(id + " | " + name);
 
                 return u;
             }
@@ -94,7 +94,7 @@ public abstract class UserQuery {
 
                 currentUser = new User(userId, enteredUsername, password, createDate, createdBy, lastUpdate, lastUpdatedBy);
 
-                System.out.println(currentUser);
+//                System.out.println(currentUser);
 //                System.out.println("User: " + userId + " | " + enteredUsername + " | " + password + " | " + createDate + " | "
 //                    + createdBy + " | " + lastUpdate + " | " + lastUpdatedBy
 //                );

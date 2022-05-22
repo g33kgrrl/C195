@@ -33,7 +33,7 @@ public class LoginController implements Initializable {
      */
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-            zoneIdLabel.setText(ZoneId.systemDefault().toString()); // ORIG - OK
+        zoneIdLabel.setText(ZoneId.systemDefault().toString());
 //            zoneIdLabel.setText(String.valueOf(ZoneOffset.systemDefault().getRules().getOffset(Instant.now())));
 //            zoneIdLabel.setText("FOO!!!!!");
 //        ZoneOffset o = OffsetDateTime.now().getOffset();
@@ -65,8 +65,7 @@ public class LoginController implements Initializable {
             alert.setContentText("Please check your username and password and try again.");
             alert.showAndWait();
         } else {
-            System.out.println("Authenticated!");
-
+//            System.out.println("Authenticated!");
             MainController.toMain(submitEvent);
         }
     }

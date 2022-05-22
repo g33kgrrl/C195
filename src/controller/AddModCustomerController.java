@@ -140,10 +140,11 @@ public class AddModCustomerController implements Initializable {
                     rowsAffected = CustomerQuery.update(id, name, address, postalCode, phone, divId);
                 }
 
-                if (rowsAffected > 0) {
-                    System.out.println("Customer added.");
-                } else {
-                    System.out.println("Failed to add customer!");
+                if(rowsAffected != 1) {
+                    Alert alert = new Alert(Alert.AlertType.ERROR);
+                    alert.setTitle("Customer add/modify error");
+                    alert.setContentText("Unable to add/modify customer.");
+                    alert.showAndWait();
                 }
 
                 MainController.toMain(saveEvent);
