@@ -51,8 +51,6 @@ public abstract class ContactQuery {
                 String contactEmail = rs.getString("Email");
 
                 Contact c = new Contact(contactId, contactName, contactEmail);
-//                selectedContact.add(c);
-
 //                System.out.println(contactId + " | " + contactName);
                 return c;
             }
@@ -61,7 +59,6 @@ public abstract class ContactQuery {
             ex.printStackTrace();
         }
 
-//        return selectedContact.get(0);
         return null;
     }
 }

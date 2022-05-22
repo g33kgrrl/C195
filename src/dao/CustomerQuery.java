@@ -128,4 +128,32 @@ public abstract class CustomerQuery {
 
         return null;
     }
+
+    public static int getCustomerCount() {
+//        ObservableList<Contact> selectedContact = FXCollections.observableArrayList();
+        int customerCount;
+
+        try {
+            String sql = "SELECT COUNT(*) FROM customers";
+            PreparedStatement ps = JDBC.getConnection().prepareStatement(sql);
+            ResultSet rs = ps.executeQuery();
+
+            if(rs.next()) {
+                customerCount = rs.getInt("COUNT(*)");
+//                int contactId = rs.getInt("Contact_ID");
+//                String contactName = rs.getString("Contact_Name");
+//                String contactEmail = rs.getString("Email");
+
+//                Contact c = new Contact(contactId, contactName, contactEmail);
+//                System.out.println(contactId + " | " + contactName);
+//                return c;
+                return customerCount;
+            }
+        }
+        catch(SQLException ex) {
+            ex.printStackTrace();
+        }
+
+        return 0;
+    }
 }

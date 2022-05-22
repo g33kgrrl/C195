@@ -1,5 +1,6 @@
 package controller;
 
+import dao.ContactQuery;
 import dao.DivisionQuery;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -12,6 +13,7 @@ import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
 import java.net.URL;
+import java.sql.SQLException;
 import java.time.format.DateTimeFormatter;
 import java.util.Optional;
 import java.util.ResourceBundle;
@@ -274,9 +276,6 @@ public class MainController implements Initializable {
         }
     }
 
-    public void onSearchApptsHandler(ActionEvent actionEvent) {
-    }
-
     /**
      * Handles exit program request.
      * Displays a confirmation dialog asking the user if they really want to exit. If confirmed, the program
@@ -305,5 +304,32 @@ public class MainController implements Initializable {
 
     public void onMonthRadioAction(ActionEvent onMonthEvent) {
         AppointmentsTable.setItems(AppointmentQuery.getMonth());
+    }
+
+    public String onContactReportButtonAction(ActionEvent actionEvent) {
+//        try {
+////            int totalContacts = ContactQuery.getAll().
+//
+//        }
+//        catch (SQLException ex) {
+//            ex.printStackTrace();
+//        }
+        return "Foo";
+    }
+
+    public void onTypeMonthReportButtonAction(ActionEvent actionEvent) {
+    }
+
+    public void onCustomerCountReportButtonAction(ActionEvent actionEvent) {
+        int customerCount = CustomerQuery.getCustomerCount();
+
+        showReport("Customer Count Report", "Total customer count is " + customerCount + ".");
+    }
+
+    public void showReport(String title, String report) {
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setTitle(title);
+        alert.setContentText(report);
+        alert.showAndWait();
     }
 }

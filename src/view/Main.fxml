@@ -47,7 +47,7 @@
                         <TableColumn fx:id="apptTitleCol" text="Title" />
                         <TableColumn fx:id="apptDescriptionCol" prefWidth="127.0" text="Description" />
                         <TableColumn fx:id="apptLocationCol" prefWidth="97.0" text="Location" />
-                        <TableColumn fx:id="apptTypeCol" prefWidth="90.0" text="Type" />
+                        <TableColumn fx:id="apptTypeCol" text="Type" />
                         <TableColumn fx:id="apptStartCol" text="Start" />
                         <TableColumn fx:id="apptEndCol" text="End" />
                         <TableColumn fx:id="apptCustomerIdCol" prefWidth="56.0" text="Cust ID" />
@@ -77,6 +77,28 @@
             <Insets bottom="6.0" right="12.0" />
          </padding>
         </Pane>
+      <Pane layoutX="818.0" layoutY="20.0" prefHeight="271.0" prefWidth="127.0" style="-fx-border-style: solid; -fx-border-radius: 10px;">
+         <children>
+             <Label layoutX="34.0" layoutY="26.0" text="Reports">
+                 <font>
+                     <Font name="System Bold" size="16.0" />
+                 </font>
+             </Label>
+            <Button fx:id="ContactReportButton" layoutX="26.0" layoutY="136.0" mnemonicParsing="false" onAction="#onContactReportButtonAction" text="By Contact" />
+            <Button fx:id="TypeMonthReportButton" layoutX="14.0" layoutY="100.0" mnemonicParsing="false" onAction="#onTypeMonthReportButtonAction" prefWidth="98.0" text="By Type/Month" />
+            <Button fx:id="CustomerCountReportButton" layoutX="11.0" layoutY="214.0" mnemonicParsing="false" onAction="#onCustomerCountReportButtonAction" text="Customer Count" />
+            <Label layoutX="20.0" layoutY="67.0" text="Appointments">
+               <font>
+                  <Font name="System Bold" size="13.0" />
+               </font>
+            </Label>
+            <Label layoutX="45.0" layoutY="187.0" text="Other">
+               <font>
+                  <Font name="System Bold" size="13.0" />
+               </font>
+            </Label>
+         </children>
+      </Pane>
     </children>
     <padding>
         <Insets bottom="19.0" right="20.0" />

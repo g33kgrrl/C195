@@ -11,7 +11,6 @@ import java.time.*;
 import java.time.format.DateTimeFormatter;
 
 public abstract class AppointmentQuery {
-
     private static ZoneId localZoneId = ZoneId.systemDefault();
     private static DateTimeFormatter dtf = DateTimeFormatter.ofPattern("MM-dd-yyyy HH:mm");
 
@@ -260,6 +259,53 @@ public abstract class AppointmentQuery {
 
         try {
             String sql = "SELECT * FROM appointments";
+            PreparedStatement ps = JDBC.getConnection().prepareStatement(sql);
+            ResultSet rs = ps.executeQuery();
+
+            while (rs.next()) {
+                int appointmentId = rs.getInt("Appointment_ID");
+                String title = rs.getString("Title");
+                String description = rs.getString("Description");
+                String location = rs.getString("Location");
+                String type = rs.getString("Type");
+                LocalDateTime start = rs.getTimestamp("Start").toLocalDateTime();
+                LocalDateTime end = rs.getTimestamp("End").toLocalDateTime();
+                LocalDateTime createDate = rs.getTimestamp("Create_Date").toLocalDateTime();
+                String createdBy = rs.getString("Created_By");
+                LocalDateTime lastUpdate = rs.getTimestamp("Last_Update").toLocalDateTime();
+                String lastUpdatedBy = rs.getString("Last_Updated_By");
+                int customerId = rs.getInt("Customer_ID");
+                int userId = rs.getInt("User_ID");
+                int contactId = rs.getInt("Contact_ID");
+
+                // LocalDateTime ldt = LocalDateTime.parse(<string>, dtf);
+
+//                System.out.println(appointmentId + " | " + title + " | " + description + " | " + location + " | " + type
+//                        + " | " + dtf.format(start) + " | " + dtf.format(end) + " | " + dtf.format(createDate) + " | "
+//                        + createdBy + " | " + dtf.format(lastUpdate) + " | " + lastUpdatedBy + " | " + customerId
+//                        + " | " + userId + " | " + contactId
+//                );
+
+                Appointment a = new Appointment(appointmentId, title, description, location, type, start, end, createDate,
+                        createdBy, lastUpdate, lastUpdatedBy, customerId, userId, contactId);
+
+                allAppointments.add(a);
+            }
+
+            return allAppointments;
+        }
+        catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+
+        return null;
+    }
+
+    public static ObservableList<Appointment> getAllByTypeMonth() {
+        ObservableList<Appointment> allAppointments = FXCollections.observableArrayList();
+
+        try {
+            String sql = "SELECT Start, COUNT(*) FROM appointments GROUP BY Type";
             PreparedStatement ps = JDBC.getConnection().prepareStatement(sql);
             ResultSet rs = ps.executeQuery();
 

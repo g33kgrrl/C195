@@ -67,6 +67,8 @@ public class Main extends Application {
 //        UserQuery.getAll();
 //        AppointmentQuery.getMonth();
 
+//        System.out.println(CustomerQuery.getCustomerCount());
+
         launch(args);
 
         JDBC.closeConnection();
