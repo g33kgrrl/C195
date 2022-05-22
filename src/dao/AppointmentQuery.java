@@ -138,7 +138,7 @@ public abstract class AppointmentQuery {
 
                 // LocalDateTime ldt = LocalDateTime.parse(<string>, dtf);
 
-                System.out.println("Appts for " + customerId + ": \n" + appointmentId + " | " + title + " | " + description + " | " + location + " | " + type
+                System.out.println("Appts for cust " + customerId + ": \n" + appointmentId + " | " + title + " | " + description + " | " + location + " | " + type
                         + " | " + dtf.format(start) + " | " + dtf.format(end) + " | " + dtf.format(createDate) + " | "
                         + createdBy + " | " + dtf.format(lastUpdate) + " | " + lastUpdatedBy + " | " + customerId
                         + " | " + userId + " | " + contactId
@@ -163,8 +163,9 @@ public abstract class AppointmentQuery {
         try {
             String sql = "SELECT * FROM appointments WHERE yearweek(start) = yearweek(now())";
             PreparedStatement ps = JDBC.getConnection().prepareStatement(sql);
-//            ps.setInt(1, customerId);
             ResultSet rs = ps.executeQuery();
+
+            System.out.println("\nAppts for week:");
 
             while (rs.next()) {
                 int appointmentId = rs.getInt("Appointment_ID");
@@ -184,7 +185,7 @@ public abstract class AppointmentQuery {
 
                 // LocalDateTime ldt = LocalDateTime.parse(<string>, dtf);
 
-                System.out.println("Appts for week: " + customerId + ": \n" + appointmentId + " | " + title + " | " + description + " | " + location + " | " + type
+                System.out.println(appointmentId + " | " + title + " | " + description + " | " + location + " | " + type
                         + " | " + dtf.format(start) + " | " + dtf.format(end) + " | " + dtf.format(createDate) + " | "
                         + createdBy + " | " + dtf.format(lastUpdate) + " | " + lastUpdatedBy + " | " + customerId
                         + " | " + userId + " | " + contactId
@@ -212,6 +213,8 @@ public abstract class AppointmentQuery {
             String sql = "SELECT * FROM appointments WHERE month(start) = month(now()) AND year(start) = year(now());";
             PreparedStatement ps = JDBC.getConnection().prepareStatement(sql);
             ResultSet rs = ps.executeQuery();
+
+            System.out.println("\nAppts for month:");
 
             while (rs.next()) {
                 int appointmentId = rs.getInt("Appointment_ID");
@@ -310,15 +313,6 @@ public abstract class AppointmentQuery {
             String description = rs.getString("Description");
             String location = rs.getString("Location");
             String type = rs.getString("Type");
-
-            /*
-            LocalDateTime start = LocalDateTime.now(); //Local date time
-            ZoneId zoneId = ZoneId.of( "Asia/Kolkata" );  //Zone information
-            ZonedDateTime zdtAtAsia = start.atZone( zoneId );	//Local time in Asia timezone
-            ZonedDateTime zdtAtET = zdtAtAsia
-                    .withZoneSameInstant( ZoneId.of( "America/New_York" ) ); //Same time in ET timezone
-             */
-
             LocalDateTime start = rs.getTimestamp("Start").toLocalDateTime(); // atZone(localZoneId).withZoneSameInstant(ZoneOffset.UTC).toLocalDateTime();
             LocalDateTime end = rs.getTimestamp("End").toLocalDateTime(); // .atZone(ZoneOffset.UTC).withZoneSameInstant(localZoneId).toLocalDateTime();
             LocalDateTime createDate = rs.getTimestamp("Create_Date").toLocalDateTime(); // .atZone(ZoneOffset.UTC).withZoneSameInstant(localZoneId).toLocalDateTime();

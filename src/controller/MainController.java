@@ -130,7 +130,6 @@ public class MainController implements Initializable {
      */
     public void onModifyCustomerButtonAction(ActionEvent modifyCustomerEvent) throws IOException {
         try {
-            // TODO: Fix; on 5/21 you can modify without selecting
             Customer selectedItem = (Customer) CustomersTable.getSelectionModel().getSelectedItem();
 
             FXMLLoader loader = new FXMLLoader();
@@ -159,48 +158,25 @@ public class MainController implements Initializable {
             ObservableList<Appointment> customerAppointments = AppointmentQuery.getAllForCustomerId(selectedCustomerId);
             DateTimeFormatter dtf = DateTimeFormatter.ofPattern("MM-dd-yyyy HH:mm");
 
-//            if(customerAppointments.size() > 0) {
-//                Alert alert = new Alert(Alert.AlertType.ERROR);
-//                alert.setTitle("Cannot delete customer with appointments");
-//
-//                String customerAppointmentsList = "";
-//
-//                for (Appointment appointment : customerAppointments) {
-//                    customerAppointmentsList += appointment.getId() + " | " + appointment.getTitle() + " | " +
-//                            appointment.getDescription() + " | " + appointment.getLocation() + " | " + appointment.getType() +
-//                            " | " + dtf.format(appointment.getStart()) + " | " + dtf.format(appointment.getEnd()) + " | " +
-//                            dtf.format(appointment.getCreateDate()) + " | " + appointment.getCreatedBy() + " | " +
-//                            dtf.format(appointment.getLastUpdate()) + " | " + appointment.getLastUpdatedBy() + " | " +
-//                            appointment.getCustomerId() + " | " + appointment.getUserId() + " | " + appointment.getContactId() + "\n\n";
-//                }
-//
-//                alert.setContentText("Cannot delete a customer with existing appointments.\nPlease delete " +
-//                                customerAppointments.size() + " appointments first:\n\n" + customerAppointmentsList
-//                );
-//                alert.showAndWait();
-//            }
-//            else {
-                String deleteConfirm = "Are you sure you want to delete this customer and any associated appointments?\n\n" +
-                        "\tId: " + selectedCustomerId + "\n\n" +
-                        "\tName: " + selectedCustomer.getName() + "\n\n" +
-                        "\tAddress: " + selectedCustomer.getAddress() + "\n\n" +
-                        "\tPostal Code: " + selectedCustomer.getPostalCode() + "\n\n" +
-                        "\tPhone: " + selectedCustomer.getPhone() + "\n\n" +
-                        "\tDivision ID: " + selectedCustomer.getDivisionId() + "\n\n" +
-                        "\tAssociated appointments: " + AppointmentQuery.getAllForCustomerId(selectedCustomerId).size();
+            String deleteConfirm = "Are you sure you want to delete this customer and any associated appointments?\n\n" +
+                    "\tId: " + selectedCustomerId + "\n\n" +
+                    "\tName: " + selectedCustomer.getName() + "\n\n" +
+                    "\tAddress: " + selectedCustomer.getAddress() + "\n\n" +
+                    "\tPostal Code: " + selectedCustomer.getPostalCode() + "\n\n" +
+                    "\tPhone: " + selectedCustomer.getPhone() + "\n\n" +
+                    "\tDivision ID: " + selectedCustomer.getDivisionId() + "\n\n" +
+                    "\tAssociated appointments: " + AppointmentQuery.getAllForCustomerId(selectedCustomerId).size();
 
-                Alert alert = new Alert(Alert.AlertType.CONFIRMATION, deleteConfirm);
+            Alert alert = new Alert(Alert.AlertType.CONFIRMATION, deleteConfirm);
 
-                Optional<ButtonType> result = alert.showAndWait();
+            Optional<ButtonType> result = alert.showAndWait();
 
-                // Must delete all associated Appointments first, then Customer can be deleted.
-                if (result.isPresent() && result.get() == ButtonType.OK) {
-                    AppointmentQuery.deleteAllForCustomerId(selectedCustomerId);
-                    CustomerQuery.delete(selectedCustomerId);
-                    CustomersTable.setItems(CustomerQuery.getAll());
-                    AppointmentsTable.setItems(AppointmentQuery.getAll());
-                }
-//            }
+            if (result.isPresent() && result.get() == ButtonType.OK) {
+                AppointmentQuery.deleteAllForCustomerId(selectedCustomerId);
+                CustomerQuery.delete(selectedCustomerId);
+                CustomersTable.setItems(CustomerQuery.getAll());
+                AppointmentsTable.setItems(AppointmentQuery.getAll());
+            }
         } catch (NullPointerException e) {
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle("Delete customer");
@@ -221,7 +197,15 @@ public class MainController implements Initializable {
         stage.show();
     }
 
-    public void onModifyAppointmentButtonAction(ActionEvent addModApptEvent) throws IOException {
+    /**
+     * Handles modify customer request.
+     * Checks that a customer has been selected. If so, it fetches that product's information, launches
+     * the modify customer dialog, and pre-populates the TextFields with that information. If no customer
+     * has been selected, displays an error message instead prompting user to select a customer.
+     * @param modifyApptEvent the modify customer button click event
+     * @throws IOException for input/output exceptions
+     */
+    public void onModifyAppointmentButtonAction(ActionEvent modifyApptEvent) throws IOException {
         try {
             Appointment selectedItem = (Appointment) AppointmentsTable.getSelectionModel().getSelectedItem();
 
@@ -232,7 +216,7 @@ public class MainController implements Initializable {
             AddModAppointmentController addModAppointmentController = loader.getController();
             addModAppointmentController.displayAppointment(selectedItem);
 
-            Stage stage = (Stage) ((Node) addModApptEvent.getSource()).getScene().getWindow();
+            Stage stage = (Stage) ((Node) modifyApptEvent.getSource()).getScene().getWindow();
             Parent root = loader.getRoot();
             stage.setScene(new Scene(root));
             stage.show();

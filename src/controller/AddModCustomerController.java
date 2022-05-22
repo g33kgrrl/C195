@@ -111,33 +111,31 @@ public class AddModCustomerController implements Initializable {
         divisionCombo.setPromptText("Select division");
     }
 
-    public void showValidateError(String formName) {
+    public void showValidateError() {
         Alert alert = new Alert(Alert.AlertType.ERROR);
-        alert.setTitle(formName + " add/modify form");
+        alert.setTitle("Customer add/modify form");
         alert.setContentText("Please complete all fields.");
         alert.showAndWait();
     }
 
     public void onSaveButtonAction(ActionEvent saveEvent) throws IOException {
-        int id, divId, rowsAffected;
-        String name, address, postalCode, phone;
-
         try {
-            name = nameText.getText();
-            address = addressText.getText();
-            postalCode = postalCodeText.getText();
-            phone = phoneText.getText();
-            divId = divisionCombo.getSelectionModel().getSelectedItem().getId();
+            String name = nameText.getText();
+            String address = addressText.getText();
+            String postalCode = postalCodeText.getText();
+            String phone = phoneText.getText();
+            int divId = divisionCombo.getSelectionModel().getSelectedItem().getId();
+            int rowsAffected;
 
+            // Validation: Ensure all fields are set
             if(name.isEmpty() || address.isEmpty() || postalCode.isEmpty() || phone.isEmpty() || Integer.valueOf(divId) == null) {
-                showValidateError("Customer");
+                showValidateError();
             }
             else {
-
                 if (customer == null) {
                     rowsAffected = CustomerQuery.insert(name, address, postalCode, phone, divId);
                 } else {
-                    id = this.customer.getId();
+                    int id = customer.getId();
 
                     rowsAffected = CustomerQuery.update(id, name, address, postalCode, phone, divId);
                 }
@@ -152,7 +150,7 @@ public class AddModCustomerController implements Initializable {
             }
         }
         catch (NullPointerException e) {
-            showValidateError("Customer");
+            showValidateError();
         }
 
 

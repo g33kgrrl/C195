@@ -33,10 +33,6 @@ public class AddModAppointmentController implements Initializable {
     public Label userIdLabel;
 
     private Appointment appointment;
-    private LocalDateTime createDate;
-    private String createdBy;
-    private LocalDateTime lastUpdate;
-    private String lastUpdatedBy;
 
     User currentUser = UserQuery.getCurrentUser();
 
@@ -70,6 +66,8 @@ public class AddModAppointmentController implements Initializable {
         for (int i = 0; i < 24; i++) {
 
         }
+
+        hours.setAll("10", "11", "12");
 
         minutes.setAll("00", "15", "30", "45");
 
@@ -198,8 +196,6 @@ public class AddModAppointmentController implements Initializable {
      */
     public void onSaveButtonAction(ActionEvent saveEvent) throws IOException {
         try {
-            int rowsAffected;
-
             String title = titleText.getText();
             String description = descriptionText.getText();
             String location = locationText.getText();
@@ -208,11 +204,20 @@ public class AddModAppointmentController implements Initializable {
             int startMinute = Integer.parseInt(startMinuteCombo.getValue().toString());
             int endHour = Integer.parseInt(endHourCombo.getValue().toString());
             int endMinute = Integer.parseInt(endMinuteCombo.getValue().toString());
-
             LocalDateTime start = LocalDateTime.of(startDatePicker.getValue(), LocalTime.of(startHour, startMinute));
             LocalDateTime end = LocalDateTime.of(endDatePicker.getValue(), LocalTime.of(endHour, endMinute));
+            LocalDateTime lastUpdate = LocalDateTime.now();
+            String lastUpdatedBy = currentUser.getUserName();
+            int customerId = ((Customer) customerCombo.getSelectionModel().getSelectedItem()).getId();
+            int userId = ((User) userCombo.getValue()).getUserId();
+            int contactId = ((Contact) contactCombo.getSelectionModel().getSelectedItem()).getId();
+            int rowsAffected;
 
-            if(this.appointment == null) {
+            // If adding, create info is now; if modding, fetch create info
+            LocalDateTime createDate;
+            String createdBy;
+
+            if(appointment == null) {
                 createDate = LocalDateTime.now();
                 createdBy = currentUser.getUserName();
             } else {
@@ -220,56 +225,49 @@ public class AddModAppointmentController implements Initializable {
                 createdBy = appointment.getCreatedBy();
             }
 
-            lastUpdate = LocalDateTime.now();
-            lastUpdatedBy = currentUser.getUserName();
-
-            int customerId = ((Customer) customerCombo.getSelectionModel().getSelectedItem()).getId();
-            int userId = ((User) userCombo.getValue()).getUserId();
-            int contactId = ((Contact) contactCombo.getSelectionModel().getSelectedItem()).getId();
-
-            System.out.println("Title: " + title + " | Description: " + description + " | Location: " +
-                    location + " | Type: " + type + "\n | Start: " + start.toString() +
-                    " | End: " + end.toString() + "\n | CreateDate: " + createDate.toString() + " | CreatedBy: " +
-                    createdBy + " | LastUpdate : " + lastUpdate + " | LastUpdatedBy: " +
-                    lastUpdatedBy + " | CustomerID: " + customerId + " | UserID: " + userId + " | ContactID: " + contactId
-            );
-
-            if(this.appointment == null) {
-                rowsAffected = AppointmentQuery.insert(
-                        title, description, location, type, start, end, createDate, createdBy, lastUpdate, lastUpdatedBy,
-                        customerId, userId, contactId
-                );
-            } else {
-                rowsAffected = AppointmentQuery.update(
-                        appointment.getId(), title, description, location, type, start, end, createDate, createdBy,
-                        lastUpdate, lastUpdatedBy, customerId, userId, contactId
-                );
+            // Validation: Ensure all fields are set
+            if(title.isEmpty() || description.isEmpty() || location.isEmpty() || type.isEmpty() ||
+                    Integer.valueOf(startHour) == null || Integer.valueOf(startMinute) == null ||
+                    Integer.valueOf(endHour) == null || Integer.valueOf(endMinute) == null ||
+                    startDatePicker.getValue() == null || endDatePicker.getValue() == null ||
+                    lastUpdate == null || lastUpdatedBy.isEmpty() ||
+                    Integer.valueOf(customerId) == null || Integer.valueOf(userId) == null ||
+                    Integer.valueOf(contactId) == null || createDate == null || createdBy.isEmpty()
+            ) {
+                showValidateError();
             }
+            else {
+//                System.out.println("Title: " + title + " | Description: " + description + " | Location: " +
+//                        location + " | Type: " + type + "\n | Start: " + start.toString() +
+//                        " | End: " + end.toString() + "\n | CreateDate: " + createDate.toString() + " | CreatedBy: " +
+//                        createdBy + " | LastUpdate : " + lastUpdate + " | LastUpdatedBy: " +
+//                        lastUpdatedBy + " | CustomerID: " + customerId + " | UserID: " + userId + " | ContactID: " + contactId
+//                );
 
-//            insert(id, title, description, location, contactId, type, startdate, startTime, endDate, endTime)
-
-//            if (min < 0 || min >= max || stock < min || stock > max) {
-//                Alert alert = new Alert(Alert.AlertType.ERROR);
-//                alert.setTitle("Invalid inventory settings");
-//                alert.setContentText("Must set 0 < Min < Inv < Max.");
-//                alert.showAndWait();
-//            } else {
-//                Product product1 = new Product(id, name, price, stock, min, max);
-//
-//                for (Part p : associatedParts) {
-//                    product1.addAssociatedPart(p);
-//                }
-//
-//                Inventory.updateProduct(index, product1);
+                if(appointment == null) {
+                    rowsAffected = AppointmentQuery.insert(
+                            title, description, location, type, start, end, createDate, createdBy, lastUpdate, lastUpdatedBy,
+                            customerId, userId, contactId
+                    );
+                } else {
+                    rowsAffected = AppointmentQuery.update(
+                            appointment.getId(), title, description, location, type, start, end, createDate, createdBy,
+                            lastUpdate, lastUpdatedBy, customerId, userId, contactId
+                    );
+                }
 
                 MainController.toMain(saveEvent);
-//            }
-        } catch (NumberFormatException e) {
-            Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setTitle("Modify appointment form");
-            alert.setContentText("Please enter valid values in text fields.");
-            alert.showAndWait();
+            }
+        } catch (NullPointerException e) {
+            showValidateError();
         }
+    }
+
+    public void showValidateError() {
+        Alert alert = new Alert(Alert.AlertType.ERROR);
+        alert.setTitle("Appointment add/modify form");
+        alert.setContentText("Please complete all fields.");
+        alert.showAndWait();
     }
 
     /**

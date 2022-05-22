@@ -34,7 +34,7 @@ public abstract class UserQuery {
 
                 allUsers.add(u);
 
-                System.out.println(id + " | " + name);
+//                System.out.println(id + " | " + name);
             }
 
             return allUsers;
