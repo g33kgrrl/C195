@@ -23,7 +23,7 @@ public class AddModAppointmentController implements Initializable {
     public ComboBox<Customer> customerCombo;
     public ComboBox<User> userCombo;
     public ComboBox<Contact> contactCombo;
-    public TextField typeText;
+    public ComboBox<String> typeCombo;
     public DatePicker startDatePicker;
     public ComboBox startHourCombo;
     public ComboBox startMinuteCombo;
@@ -54,6 +54,8 @@ public class AddModAppointmentController implements Initializable {
     public void initialize(URL url, ResourceBundle resourceBundle) {
         ObservableList<String> hours = FXCollections.observableArrayList();
         ObservableList<String> minutes = FXCollections.observableArrayList();
+        ObservableList<String> types = FXCollections.observableArrayList();
+
 
         // TODO: restrict list according to local time zone
         // Business hours 8:00 - 22:00 EST
@@ -68,7 +70,6 @@ public class AddModAppointmentController implements Initializable {
         }
 
         hours.setAll("10", "11", "12");
-
         minutes.setAll("00", "15", "30", "45");
 
         startHourCombo.setItems(hours);
@@ -80,6 +81,9 @@ public class AddModAppointmentController implements Initializable {
         contactCombo.setItems(ContactQuery.getAll());
         userCombo.setItems(UserQuery.getAll());
         userCombo.setValue(currentUser);
+
+        types.setAll("Planning Session", "De-Briefing", "Training");
+        typeCombo.setItems(types);
     }
 
     /**
@@ -98,7 +102,7 @@ public class AddModAppointmentController implements Initializable {
         titleText.setText(appointment.getTitle());
         descriptionText.setText(String.valueOf(appointment.getDescription()));
         locationText.setText(String.valueOf(appointment.getLocation()));
-        typeText.setText(String.valueOf(appointment.getType()));
+        typeCombo.setValue(String.valueOf(appointment.getType()));
         startDatePicker.setValue(start.toLocalDate());
         startHourCombo.setValue(String.format("%02d",start.getHour()));
         startMinuteCombo.setValue(String.format("%02d",start.getMinute()));
@@ -199,7 +203,7 @@ public class AddModAppointmentController implements Initializable {
             String title = titleText.getText();
             String description = descriptionText.getText();
             String location = locationText.getText();
-            String type = typeText.getText();
+            String type = typeCombo.getValue();
             int startHour = Integer.parseInt(startHourCombo.getValue().toString());
             int startMinute = Integer.parseInt(startMinuteCombo.getValue().toString());
             int endHour = Integer.parseInt(endHourCombo.getValue().toString());
