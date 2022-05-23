@@ -306,30 +306,36 @@ public class MainController implements Initializable {
         AppointmentsTable.setItems(AppointmentQuery.getMonth());
     }
 
-    public String onContactReportButtonAction(ActionEvent actionEvent) {
-//        try {
-////            int totalContacts = ContactQuery.getAll().
-//
-//        }
-//        catch (SQLException ex) {
-//            ex.printStackTrace();
-//        }
-        return "Foo";
-    }
-
-    public void onTypeMonthReportButtonAction(ActionEvent actionEvent) {
-    }
-
-    public void onCustomerCountReportButtonAction(ActionEvent actionEvent) {
-        int customerCount = CustomerQuery.getCustomerCount();
-
-        showReport("Customer Count Report", "Total customer count is " + customerCount + ".");
-    }
-
     public void showReport(String title, String report) {
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
         alert.setTitle(title);
         alert.setContentText(report);
         alert.showAndWait();
+    }
+
+    public void onReportCustomerCountButtonAction(ActionEvent actionEvent) {
+        // an additional report of your choice that is different from the two other required reports in this prompt
+        // and from the user log-in date and time stamp that will be tracked in part C
+        int customerCount = CustomerQuery.getCustomerCount();
+
+        showReport("Report: Customer Count", "Total customer count is " + customerCount + ".");
+    }
+
+    public void onReportByTypeMonthButtonAction(ActionEvent actionEvent) {
+        // the total number of customer appointments by type and month
+        showReport("Report: Appointments by type and month", AppointmentQuery.getAllByTypeMonthReport());
+    }
+
+    public void onReportByContactButtonAction(ActionEvent reportByContactButtonEvent) throws IOException {
+        // a schedule for each contact in your organization that includes appointment ID, title, type and description,
+        // start date and time, end date and time, and customer ID
+//        showReport("Report: Appointments by contact", "Foo bar baz qux");
+        // NO. Instead, go to report by contact view
+        Parent root = FXMLLoader.load(getClass().getResource("/view/ReportByContact.fxml"));
+        Stage stage = (Stage)((Node)reportByContactButtonEvent.getSource()).getScene().getWindow();
+        Scene scene = new Scene(root);
+        stage.setTitle("Report: Appointments by contact");
+        stage.setScene(scene);
+        stage.show();
     }
 }
