@@ -12,7 +12,7 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefWidth="933.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.MainController">
+<AnchorPane prefHeight="595.0" prefWidth="899.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.MainController">
     <children>
         <Pane layoutX="19.0" layoutY="20.0" prefHeight="271.0" prefWidth="617.0" style="-fx-border-style: solid; -fx-border-radius: 10px;" AnchorPane.topAnchor="20.0">
             <children>
@@ -40,25 +40,25 @@
                 <Insets bottom="6.0" right="12.0" />
             </padding>
         </Pane>
-        <Pane layoutX="20.0" layoutY="310.0" style="-fx-border-style: solid; -fx-border-radius: 10px;" AnchorPane.topAnchor="305.0">
+        <Pane layoutX="20.0" layoutY="310.0" prefHeight="271.0" prefWidth="874.0" style="-fx-border-style: solid; -fx-border-radius: 10px;" AnchorPane.topAnchor="305.0">
             <children>
-                <TableView fx:id="AppointmentsTable" layoutX="14.0" layoutY="50.0" prefHeight="172.0" prefWidth="897.0">
+                <TableView fx:id="AppointmentsTable" layoutX="14.0" layoutY="50.0" prefHeight="172.0" prefWidth="846.0">
                     <columns>
                         <TableColumn fx:id="apptIdCol" text="ID" />
                         <TableColumn fx:id="apptTitleCol" text="Title" />
                         <TableColumn fx:id="apptDescriptionCol" prefWidth="127.0" text="Description" />
                         <TableColumn fx:id="apptLocationCol" prefWidth="97.0" text="Location" />
-                        <TableColumn fx:id="apptTypeCol" text="Type" />
+                        <TableColumn fx:id="apptContactIdCol" prefWidth="69.0" text="Contact ID" />
+                        <TableColumn fx:id="apptTypeCol" prefWidth="85.0" text="Type" />
                         <TableColumn fx:id="apptStartCol" text="Start" />
                         <TableColumn fx:id="apptEndCol" text="End" />
-                        <TableColumn fx:id="apptCustomerIdCol" prefWidth="56.0" text="Cust ID" />
+                        <TableColumn fx:id="apptCustomerIdCol" prefWidth="51.0" text="Cust ID" />
                         <TableColumn fx:id="apptUserIdCol" prefWidth="59.0" text="User ID" />
-                        <TableColumn fx:id="apptContactIdCol" prefWidth="74.0" text="Contact ID" />
                     </columns>
                 </TableView>
-                <Button fx:id="AddAppointmentButton" layoutX="642.0" layoutY="230.0" mnemonicParsing="false" onAction="#onAddAppointmentButtonAction" prefHeight="33.0" prefWidth="62.0" text="Add" />
-                <Button fx:id="ModifyAppointmentButton" layoutX="718.0" layoutY="230.0" mnemonicParsing="false" onAction="#onModifyAppointmentButtonAction" prefHeight="33.0" prefWidth="62.0" text="Modify" />
-                <Button fx:id="DeleteAppointmentButton" layoutX="792.0" layoutY="230.0" mnemonicParsing="false" onAction="#onDeleteAppointmentButtonAction" prefHeight="33.0" prefWidth="62.0" text="Delete" />
+                <Button fx:id="AddAppointmentButton" layoutX="609.0" layoutY="230.0" mnemonicParsing="false" onAction="#onAddAppointmentButtonAction" prefHeight="33.0" prefWidth="62.0" text="Add" />
+                <Button fx:id="ModifyAppointmentButton" layoutX="685.0" layoutY="230.0" mnemonicParsing="false" onAction="#onModifyAppointmentButtonAction" prefHeight="33.0" prefWidth="62.0" text="Modify" />
+                <Button fx:id="DeleteAppointmentButton" layoutX="759.0" layoutY="230.0" mnemonicParsing="false" onAction="#onDeleteAppointmentButtonAction" prefHeight="33.0" prefWidth="62.0" text="Delete" />
                 <Label layoutX="25.0" layoutY="22.0" text="Appointments">
                     <font>
                         <Font name="System Bold" size="16.0" />
@@ -75,8 +75,8 @@
             <Insets bottom="6.0" right="12.0" />
          </padding>
         </Pane>
-      <Button fx:id="SignOutButton" layoutX="866.0" layoutY="31.0" mnemonicParsing="false" onAction="#onSignOutButtonAction" prefHeight="33.0" prefWidth="79.0" text="Sign Out" />
-      <Button fx:id="ViewReportsButton" layoutX="846.0" layoutY="83.0" mnemonicParsing="false" onAction="#onViewReportsButtonAction" prefHeight="33.0" prefWidth="99.0" text="View Reports" />
+      <Button fx:id="SignOutButton" layoutX="815.0" layoutY="20.0" mnemonicParsing="false" onAction="#onSignOutButtonAction" prefHeight="33.0" prefWidth="79.0" text="Sign Out" />
+      <Button fx:id="ViewReportsButton" layoutX="795.0" layoutY="72.0" mnemonicParsing="false" onAction="#onViewReportsButtonAction" prefHeight="33.0" prefWidth="99.0" text="View Reports" />
     </children>
     <padding>
         <Insets bottom="19.0" right="20.0" />

@@ -116,4 +116,6 @@ public abstract class UserQuery {
     public static User getCurrentUser() {
         return currentUser;
     }
+
+    public static User resetUser() { currentUser = null; return currentUser; }
 }

@@ -1,7 +1,6 @@
 package controller;
 
-import dao.ContactQuery;
-import dao.DivisionQuery;
+import dao.*;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
@@ -21,8 +20,7 @@ import java.io.IOException;
 
 import model.Appointment;
 import model.Customer;
-import dao.AppointmentQuery;
-import dao.CustomerQuery;
+import model.User;
 
 
 public class MainController implements Initializable {
@@ -276,21 +274,27 @@ public class MainController implements Initializable {
     }
 
     /**
-     * Handles exit program request.
-     * Displays a confirmation dialog asking the user if they really want to exit. If confirmed, the program
-     * exits. Otherwise the user is returned to the main screen.
-     * @param exitEvent the exit program button click event
+     * Handles sign out request.
+     * Displays a confirmation dialog asking the user if they really want to sign out. If confirmed, the current (i.e.,
+     * authenticated) user is reset to null and the login screen is shown. Otherwise the user is returned to the main screen.
+     * @param actionEvent the exit program button click event
      */
-    public void onSignOutButtonAction(ActionEvent exitEvent) {
-        System.exit(0);
-        // TODO: add this back in later
-//        Alert alert = new Alert(Alert.AlertType.CONFIRMATION, "Are you sure you want to exit the program?");
-//
-//        Optional<ButtonType> result = alert.showAndWait();
-//
-//        if (result.isPresent() && result.get() == ButtonType.OK) {
-//            System.exit(0);
-//        }
+    public void onSignOutButtonAction(ActionEvent actionEvent) throws IOException {
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION, "Are you sure you want to sign out?");
+        alert.setTitle("Sign Out");
+
+        Optional<ButtonType> result = alert.showAndWait();
+
+        if (result.isPresent() && result.get() == ButtonType.OK) {
+            UserQuery.resetUser();
+
+            Parent root = FXMLLoader.load(getClass().getResource("/view/Login.fxml"));
+            Stage stage = (Stage)((Node) actionEvent.getSource()).getScene().getWindow();
+            Scene scene = new Scene(root);
+            stage.setTitle("Log In");
+            stage.setScene(scene);
+            stage.show();
+        }
     }
 
     public void onAllRadioAction() {
