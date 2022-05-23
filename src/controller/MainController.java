@@ -93,16 +93,32 @@ public class MainController implements Initializable {
 
     /**
      * Navigates user back to the main screen.
-     * @param mainEvent an event requiring redirect to main screen
+     * @param actionEvent an event requiring redirect to main screen
      * @throws IOException for input/output exceptions
      */
-    public static void toMain(ActionEvent mainEvent) throws IOException {
+    public static void toMain(ActionEvent actionEvent) throws IOException {
         Parent root = FXMLLoader.load(MainController.class.getResource("/view/Main.fxml"));
-        Stage stage = (Stage)((Node)mainEvent.getSource()).getScene().getWindow();
+        Stage stage = (Stage)((Node)actionEvent.getSource()).getScene().getWindow();
         Scene scene = new Scene(root);
         stage.setTitle("Schedule Management System");
         stage.setScene(scene);
         stage.show();
+    }
+
+    public static void toReports(ActionEvent actionEvent) throws IOException {
+        Parent root = FXMLLoader.load(MainController.class.getResource("/view/Reports.fxml"));
+        Stage stage = (Stage)((Node)actionEvent.getSource()).getScene().getWindow();
+        Scene scene = new Scene(root);
+        stage.setTitle("Reports");
+        stage.setScene(scene);
+        stage.show();
+    }
+
+    public static void showError(String title, String content) {
+        Alert alert = new Alert(Alert.AlertType.ERROR);
+        alert.setTitle(title);
+        alert.setContentText(content);
+        alert.showAndWait();
     }
 
     /**
@@ -144,10 +160,7 @@ public class MainController implements Initializable {
             stage.setScene(new Scene(root));
             stage.show();
         } catch (NullPointerException e) {
-            Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setTitle("Modify customer");
-            alert.setContentText("Please select a customer to modify.");
-            alert.showAndWait();
+            showError("Modify customer", "Please select a customer to modify.");
         }
     }
 
@@ -178,14 +191,8 @@ public class MainController implements Initializable {
                 AppointmentsTable.setItems(AppointmentQuery.getAll());
             }
         } catch (NullPointerException e) {
-            Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setTitle("Delete customer");
-            alert.setContentText("Please select a customer to delete.");
-            alert.showAndWait();
+            showError("Delete customer", "Please select a customer to delete.");
         }
-    }
-
-    public void onSearchCustomerHandler(ActionEvent actionEvent) {
     }
 
     public void onAddAppointmentButtonAction(ActionEvent addAppointmentEvent) throws IOException {
@@ -221,10 +228,7 @@ public class MainController implements Initializable {
             stage.setScene(new Scene(root));
             stage.show();
         } catch (NullPointerException e) {
-            Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setTitle("Modify appointment");
-            alert.setContentText("Please select an appointment to modify.");
-            alert.showAndWait();
+            showError("Modify appointment", "Please select an appointment to modify.");
         }
     }
 
@@ -267,10 +271,7 @@ public class MainController implements Initializable {
                 Optional<ButtonType> deletedPrompt = deletedAlert.showAndWait();
             }
         } catch (NullPointerException e) {
-            Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setTitle("Delete customer");
-            alert.setContentText("Please select an appointment to delete.");
-            alert.showAndWait();
+            showError("Delete appointment", "Please select an appointment to delete.");
         }
     }
 
@@ -280,7 +281,7 @@ public class MainController implements Initializable {
      * exits. Otherwise the user is returned to the main screen.
      * @param exitEvent the exit program button click event
      */
-    public void onExitButtonAction(ActionEvent exitEvent) {
+    public void onSignOutButtonAction(ActionEvent exitEvent) {
         System.exit(0);
         // TODO: add this back in later
 //        Alert alert = new Alert(Alert.AlertType.CONFIRMATION, "Are you sure you want to exit the program?");
@@ -292,49 +293,15 @@ public class MainController implements Initializable {
 //        }
     }
 
-    public void onAllRadioAction(ActionEvent onAllEvent) {
+    public void onAllRadioAction() {
         AppointmentsTable.setItems(AppointmentQuery.getAll());
     }
 
-    public void onWeekRadioAction(ActionEvent onWeekEvent) {
+    public void onWeekRadioAction() {
         AppointmentsTable.setItems(AppointmentQuery.getWeek());
     }
 
-    public void onMonthRadioAction(ActionEvent onMonthEvent) {
-        AppointmentsTable.setItems(AppointmentQuery.getMonth());
-    }
+    public void onMonthRadioAction() { AppointmentsTable.setItems(AppointmentQuery.getMonth()); }
 
-    public void showReport(String title, String report) {
-        Alert alert = new Alert(Alert.AlertType.INFORMATION);
-        alert.setTitle(title);
-        alert.setContentText(report);
-        alert.showAndWait();
-    }
-
-    public void onReportCustomerCountButtonAction(ActionEvent actionEvent) {
-        // an additional report of your choice that is different from the two other required reports in this prompt
-        // and from the user log-in date and time stamp that will be tracked in part C
-        int customerCount = CustomerQuery.getCustomerCount();
-
-        showReport("Report: Customer Count", "Total customer count is " + customerCount + ".");
-    }
-
-    public void onReportByTypeMonthButtonAction(ActionEvent actionEvent) {
-        // the total number of customer appointments by type and month
-        showReport("Report: Appointments by type and month", AppointmentQuery.getAllByTypeMonthReport());
-    }
-
-    public void onReportByContactButtonAction(ActionEvent reportByContactButtonEvent) throws IOException {
-        // a schedule for each contact in your organization that includes appointment ID, title, type and description,
-        // start date and time, end date and time, and customer ID
-        // go to report by contact view
-        Parent root = FXMLLoader.load(getClass().getResource("/view/ReportByContact.fxml"));
-        Stage stage = (Stage)((Node)reportByContactButtonEvent.getSource()).getScene().getWindow();
-//        Stage stage = (Stage)AppointmentsTable.getScene().getWindow(); // ((Node)reportByContactButtonEvent.getSource()).getScene().getWindow();
-
-        Scene scene = new Scene(root);
-        stage.setTitle("Report: Appointments by contact");
-        stage.setScene(scene);
-        stage.show();
-    }
+    public void onViewReportsButtonAction(ActionEvent actionEvent) throws IOException { toReports(actionEvent); }
 }

@@ -1,7 +1,9 @@
 package controller;
 
 import dao.AppointmentQuery;
+import dao.ContactQuery;
 import dao.CustomerQuery;
+import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
@@ -13,6 +15,7 @@ import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
 import model.Appointment;
+import model.Contact;
 import model.Customer;
 
 import java.io.IOException;
@@ -26,18 +29,12 @@ public class ReportByContactController implements Initializable {
     public TableView AppointmentsTable;
     public TableColumn apptIdCol;
     public TableColumn apptTitleCol;
-    public TableColumn apptLocationCol;
     public TableColumn apptDescriptionCol;
     public TableColumn apptTypeCol;
     public TableColumn apptStartCol;
     public TableColumn apptEndCol;
-    public TableColumn apptCreateDateCol;
-    public TableColumn apptCreatedByCol;
-    public TableColumn apptLastUpdateCol;
-    public TableColumn apptLastUpdatedByCol;
     public TableColumn apptCustomerIdCol;
-    public TableColumn apptUserIdCol;
-    public TableColumn apptContactIdCol;
+    public ComboBox contactCombo;
 
 
     /**
@@ -48,60 +45,32 @@ public class ReportByContactController implements Initializable {
      */
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-//        apptIdCol.setCellValueFactory(new PropertyValueFactory<>("id"));
-//        apptTitleCol.setCellValueFactory(new PropertyValueFactory<>("title"));
-//        apptDescriptionCol.setCellValueFactory(new PropertyValueFactory<>("description"));
-//        apptLocationCol.setCellValueFactory(new PropertyValueFactory<>("location"));
-//        apptTypeCol.setCellValueFactory(new PropertyValueFactory<>("type"));
-//        apptStartCol.setCellValueFactory(new PropertyValueFactory<>("start"));
-//        apptEndCol.setCellValueFactory(new PropertyValueFactory<>("end"));
-//        apptContactIdCol.setCellValueFactory(new PropertyValueFactory<>("contactId"));
-//        apptCustomerIdCol.setCellValueFactory(new PropertyValueFactory<>("customerId"));
-//        apptUserIdCol.setCellValueFactory(new PropertyValueFactory<>("userId"));
-//
-//        AppointmentsTable.setItems(AppointmentQuery.getAll());
+        contactCombo.setItems(ContactQuery.getAll());
     }
 
-    public void onAllRadioAction(ActionEvent onAllEvent) {
-        AppointmentsTable.setItems(AppointmentQuery.getAll());
+    public void onContactComboAction(ActionEvent actionEvent) {
+        Contact selectedContact = (Contact) contactCombo.getSelectionModel().getSelectedItem();
+        ObservableList<Appointment> contactAppointments = AppointmentQuery.getAllByContact(selectedContact.getId());
+
+        apptIdCol.setCellValueFactory(new PropertyValueFactory<>("id"));
+        apptTitleCol.setCellValueFactory(new PropertyValueFactory<>("title"));
+        apptTypeCol.setCellValueFactory(new PropertyValueFactory<>("type"));
+        apptDescriptionCol.setCellValueFactory(new PropertyValueFactory<>("description"));
+        apptStartCol.setCellValueFactory(new PropertyValueFactory<>("start"));
+        apptEndCol.setCellValueFactory(new PropertyValueFactory<>("end"));
+        apptCustomerIdCol.setCellValueFactory(new PropertyValueFactory<>("customerId"));
+
+        if(contactAppointments.size() == 0) {
+            MainController.showError("Search Appointments by Contact", "No appointments found for contact " +
+                    selectedContact.getName() + "."
+            );
+        }
+        else {
+            AppointmentsTable.setItems(contactAppointments);
+        }
     }
 
-    public void onWeekRadioAction(ActionEvent onWeekEvent) {
-        AppointmentsTable.setItems(AppointmentQuery.getWeek());
+    public void onOkButtonAction(ActionEvent actionEvent) throws IOException {
+        MainController.toReports(actionEvent);
     }
-
-    public void onMonthRadioAction(ActionEvent onMonthEvent) {
-        AppointmentsTable.setItems(AppointmentQuery.getMonth());
-    }
-
-    public String onContactReportButtonAction(ActionEvent actionEvent) {
-//        try {
-////            int totalContacts = ContactQuery.getAll().
-//
-//        }
-//        catch (SQLException ex) {
-//            ex.printStackTrace();
-//        }
-        return "Foo";
-    }
-
-    public void onTypeMonthReportButtonAction(ActionEvent actionEvent) {
-    }
-
-    public void onOK(ActionEvent actionEvent) throws IOException {
-        MainController.toMain(actionEvent);
-    }
-
-//    public void onCustomerCountReportButtonAction(ActionEvent actionEvent) {
-//        int customerCount = CustomerQuery.getCustomerCount();
-//
-//        showReport("Customer Count Report", "Total customer count is " + customerCount + ".");
-//    }
-//
-//    public void showReport(String title, String report) {
-//        Alert alert = new Alert(Alert.AlertType.INFORMATION);
-//        alert.setTitle(title);
-//        alert.setContentText(report);
-//        alert.showAndWait();
-//    }
 }
