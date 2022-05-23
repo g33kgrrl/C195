@@ -11,7 +11,6 @@ import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
-import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
 
 import java.io.IOException;
@@ -54,19 +53,26 @@ public class ReportsController implements Initializable {
         alert.showAndWait();
     }
 
-    public void onReportByTypeMonthButtonAction(ActionEvent actionEvent) {
+    public void onReportByTypeMonthButtonAction(ActionEvent actionEvent) throws IOException {
         // the total number of customer appointments by type and month
-        showReport("Report: Appointments by type and month", AppointmentQuery.getAllByTypeMonthReport());
+//        showReport("Report: Appointments by type and month", AppointmentQuery.getAllByTypeMonth());
+        Parent root = FXMLLoader.load(getClass().getResource("/view/ReportByTypeMonth.fxml"));
+        Stage stage = (Stage)((Node) actionEvent.getSource()).getScene().getWindow();
+
+        Scene scene = new Scene(root);
+        stage.setTitle("Report: Appt Counts");
+        stage.setScene(scene);
+        stage.show();
     }
 
-    public void onReportByContactButtonAction(ActionEvent reportByContactButtonEvent) throws IOException {
+    public void onReportByContactButtonAction(ActionEvent actionEvent) throws IOException {
         // a schedule for each contact in your organization that includes appointment ID, title, type and description,
         // start date and time, end date and time, and customer ID
         Parent root = FXMLLoader.load(getClass().getResource("/view/ReportByContact.fxml"));
-        Stage stage = (Stage)((Node)reportByContactButtonEvent.getSource()).getScene().getWindow();
+        Stage stage = (Stage)((Node) actionEvent.getSource()).getScene().getWindow();
 
         Scene scene = new Scene(root);
-        stage.setTitle("Report: Appointments by contact");
+        stage.setTitle("Report: Appts by Contact");
         stage.setScene(scene);
         stage.show();
     }

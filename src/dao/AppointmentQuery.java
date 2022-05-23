@@ -3,6 +3,7 @@ package dao;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import model.Appointment;
+import model.TypeMonthAppt;
 
 import java.sql.*;
 import java.time.*;
@@ -299,37 +300,19 @@ public abstract class AppointmentQuery {
         return null;
     }
 
-    public static String getAllByTypeMonthReport() {
-//        ObservableList<Appointment> allAppointments = FXCollections.observableArrayList();
+    public static ObservableList<TypeMonthAppt> getAllByTypeMonth() {
+        ObservableList<TypeMonthAppt> allTypeMonthAppts = FXCollections.observableArrayList();
 
         try {
-            String sql = "SELECT COUNT(*), Type, month(start), year(start) FROM appointments GROUP BY Type, month(start), year(start) ORDER BY Type;";
+            String sql = "SELECT Appointment_ID, COUNT(*), Type, monthname(start) FROM appointments GROUP BY Type, monthname(start) ORDER BY Type;";
             PreparedStatement ps = JDBC.getConnection().prepareStatement(sql);
             ResultSet rs = ps.executeQuery();
-            String report = "";
 
             while (rs.next()) {
-                String count = rs.getString("COUNT(*)");
-
-//                int appointmentId = rs.getInt("Appointment_ID");
-//                String title = rs.getString("Title");
-//                String description = rs.getString("Description");
-//                String location = rs.getString("Location");
+                int id = rs.getInt("Appointment_ID");
+                int count = rs.getInt("COUNT(*)");
                 String type = rs.getString("Type");
-//                LocalDateTime start = rs.getTimestamp("Start").toLocalDateTime();
-//                LocalDateTime end = rs.getTimestamp("End").toLocalDateTime();
-//                LocalDateTime createDate = rs.getTimestamp("Create_Date").toLocalDateTime();
-//                String createdBy = rs.getString("Created_By");
-//                LocalDateTime lastUpdate = rs.getTimestamp("Last_Update").toLocalDateTime();
-//                String lastUpdatedBy = rs.getString("Last_Updated_By");
-//                int customerId = rs.getInt("Customer_ID");
-//                int userId = rs.getInt("User_ID");
-//                int contactId = rs.getInt("Contact_ID");
-                String month = rs.getString("month(start)");
-                String year = rs.getString("year(start)");
-
-                report += count + " - " + type + " " + month + "/" + year + "\n";
-                // LocalDateTime ldt = LocalDateTime.parse(<string>, dtf);
+                String monthName = rs.getString("monthname(start)");
 
 //                System.out.println(appointmentId + " | " + title + " | " + description + " | " + location + " | " + type
 //                        + " | " + dtf.format(start) + " | " + dtf.format(end) + " | " + dtf.format(createDate) + " | "
@@ -337,14 +320,12 @@ public abstract class AppointmentQuery {
 //                        + " | " + userId + " | " + contactId
 //                );
 
-//                Appointment a = new Appointment(appointmentId, title, description, location, type, start, end, createDate,
-//                        createdBy, lastUpdate, lastUpdatedBy, customerId, userId, contactId);
+                TypeMonthAppt t = new TypeMonthAppt(id, count, type, monthName);
 
-//                allAppointments.add(a);
+                allTypeMonthAppts.add(t);
             }
 
-//            return allAppointments;
-            return report;
+            return allTypeMonthAppts;
         }
         catch (SQLException ex) {
             ex.printStackTrace();
@@ -352,7 +333,6 @@ public abstract class AppointmentQuery {
 
         return null;
     }
-
 
     public static ObservableList<Appointment> getAllByContact(int contactId) {
         ObservableList<Appointment> contactAppointments = FXCollections.observableArrayList();
@@ -362,14 +342,8 @@ public abstract class AppointmentQuery {
             PreparedStatement ps = JDBC.getConnection().prepareStatement(sql);
             ps.setInt(1, contactId);
             ResultSet rs = ps.executeQuery();
-//            String report = "";
 
             while (rs.next()) {
-//                String count = rs.getString("COUNT(*)");
-
-                // a schedule for each contact in your organization that includes:
-                // appointment ID, title, type and description, start date and time, end date and time, and customer ID
-
                 int appointmentId = rs.getInt("Appointment_ID");
                 String title = rs.getString("Title");
                 String description = rs.getString("Description");
@@ -377,18 +351,8 @@ public abstract class AppointmentQuery {
                 String type = rs.getString("Type");
                 LocalDateTime start = rs.getTimestamp("Start").toLocalDateTime();
                 LocalDateTime end = rs.getTimestamp("End").toLocalDateTime();
-//                LocalDateTime createDate = rs.getTimestamp("Create_Date").toLocalDateTime();
-//                String createdBy = rs.getString("Created_By");
-//                LocalDateTime lastUpdate = rs.getTimestamp("Last_Update").toLocalDateTime();
-//                String lastUpdatedBy = rs.getString("Last_Updated_By");
                 int customerId = rs.getInt("Customer_ID");
                 int userId = rs.getInt("User_ID");
-//                int contactId = rs.getInt("Contact_ID");
-//                String month = rs.getString("month(start)");
-//                String year = rs.getString("year(start)");
-
-//                report += count + " - " + type + " " + month + "/" + year + "\n";
-                // LocalDateTime ldt = LocalDateTime.parse(<string>, dtf);
 
 //                System.out.println(appointmentId + " | " + title + " | " + description + " | " + location + " | " + type
 //                        + " | " + dtf.format(start) + " | " + dtf.format(end) + " | " + dtf.format(createDate) + " | "
@@ -403,7 +367,6 @@ public abstract class AppointmentQuery {
             }
 
             return contactAppointments;
-//            return report;
         }
         catch (SQLException ex) {
             ex.printStackTrace();

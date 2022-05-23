@@ -15,7 +15,7 @@
     <children>
         <Pane layoutX="166.0" layoutY="21.0" style="-fx-border-style: solid; -fx-border-radius: 10px;" AnchorPane.leftAnchor="12.0" AnchorPane.rightAnchor="12.0" AnchorPane.topAnchor="12.0">
             <children>
-                <TableView fx:id="AppointmentsTable" layoutX="14.0" layoutY="50.0" prefHeight="172.0">
+                <TableView fx:id="TypeMonthApptsTable" layoutX="14.0" layoutY="50.0" prefHeight="172.0">
                     <columns>
 <!-- includes appointment ID, title, type and description, start date and time, end date and time, and customer ID                       -->
                         <TableColumn fx:id="apptIdCol" text="ID" />

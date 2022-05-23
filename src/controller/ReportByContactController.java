@@ -2,31 +2,21 @@ package controller;
 
 import dao.AppointmentQuery;
 import dao.ContactQuery;
-import dao.CustomerQuery;
-import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
-import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.Node;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.stage.Stage;
 import model.Appointment;
 import model.Contact;
-import model.Customer;
 
 import java.io.IOException;
 import java.net.URL;
-import java.time.format.DateTimeFormatter;
-import java.util.Optional;
 import java.util.ResourceBundle;
 
 
 public class ReportByContactController implements Initializable {
-    public TableView AppointmentsTable;
+    public TableView TypeMonthApptsTable;
     public TableColumn apptIdCol;
     public TableColumn apptTitleCol;
     public TableColumn apptDescriptionCol;
@@ -61,12 +51,14 @@ public class ReportByContactController implements Initializable {
         apptCustomerIdCol.setCellValueFactory(new PropertyValueFactory<>("customerId"));
 
         if(contactAppointments.size() == 0) {
+            TypeMonthApptsTable.setItems(null);
+
             MainController.showError("Search Appointments by Contact", "No appointments found for contact " +
                     selectedContact.getName() + "."
             );
         }
         else {
-            AppointmentsTable.setItems(contactAppointments);
+            TypeMonthApptsTable.setItems(contactAppointments);
         }
     }
 
