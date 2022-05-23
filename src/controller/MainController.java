@@ -34,8 +34,6 @@ public class MainController implements Initializable {
     public Button DeleteAppointmentButton;
     public TableView AppointmentsTable;
     public TableView CustomersTable;
-    public TextField SearchCustomers;
-    public TextField SearchProducts;
     public TableColumn custIdCol;
     public TableColumn custNameCol;
     public TableColumn custAddressCol;
@@ -141,7 +139,7 @@ public class MainController implements Initializable {
             AddModCustomerController addModCustController = loader.getController();
             addModCustController.displayCustomer(selectedItem);
 
-            Stage stage = (Stage) ((Node) modifyCustomerEvent.getSource()).getScene().getWindow();
+            Stage stage = (Stage) ((Node)modifyCustomerEvent.getSource()).getScene().getWindow();
             Parent root = loader.getRoot();
             stage.setScene(new Scene(root));
             stage.show();
@@ -329,10 +327,11 @@ public class MainController implements Initializable {
     public void onReportByContactButtonAction(ActionEvent reportByContactButtonEvent) throws IOException {
         // a schedule for each contact in your organization that includes appointment ID, title, type and description,
         // start date and time, end date and time, and customer ID
-//        showReport("Report: Appointments by contact", "Foo bar baz qux");
-        // NO. Instead, go to report by contact view
+        // go to report by contact view
         Parent root = FXMLLoader.load(getClass().getResource("/view/ReportByContact.fxml"));
         Stage stage = (Stage)((Node)reportByContactButtonEvent.getSource()).getScene().getWindow();
+//        Stage stage = (Stage)AppointmentsTable.getScene().getWindow(); // ((Node)reportByContactButtonEvent.getSource()).getScene().getWindow();
+
         Scene scene = new Scene(root);
         stage.setTitle("Report: Appointments by contact");
         stage.setScene(scene);

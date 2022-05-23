@@ -10,7 +10,7 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefWidth="933.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.MainController">
+<AnchorPane prefWidth="933.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.ReportByContactController">
     <children>
         <Pane layoutX="20.0" layoutY="22.0" style="-fx-border-style: solid; -fx-border-radius: 10px;" AnchorPane.topAnchor="22.0">
             <children>
@@ -43,7 +43,7 @@
             <Insets bottom="6.0" right="12.0" />
          </padding>
         </Pane>
-          <Button fx:id="DeleteAppointmentButton" layoutX="848.0" layoutY="263.0" mnemonicParsing="false" onAction="#onDeleteAppointmentButtonAction" prefHeight="33.0" prefWidth="77.0" text="OK" />
+          <Button fx:id="OK" layoutX="848.0" layoutY="263.0" mnemonicParsing="false" onAction="#onOK" prefHeight="33.0" prefWidth="77.0" text="OK" />
     </children>
     <padding>
         <Insets bottom="10.0" right="20.0" />

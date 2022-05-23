@@ -88,6 +88,10 @@ public class ReportByContactController implements Initializable {
     public void onTypeMonthReportButtonAction(ActionEvent actionEvent) {
     }
 
+    public void onOK(ActionEvent actionEvent) throws IOException {
+        MainController.toMain(actionEvent);
+    }
+
 //    public void onCustomerCountReportButtonAction(ActionEvent actionEvent) {
 //        int customerCount = CustomerQuery.getCustomerCount();
 //
