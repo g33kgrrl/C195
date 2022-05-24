@@ -12,15 +12,14 @@ import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
 import java.net.URL;
-import java.sql.SQLException;
 import java.time.format.DateTimeFormatter;
+import java.util.Locale;
 import java.util.Optional;
 import java.util.ResourceBundle;
 import java.io.IOException;
 
 import model.Appointment;
 import model.Customer;
-import model.User;
 
 
 public class MainController implements Initializable {
@@ -112,8 +111,8 @@ public class MainController implements Initializable {
         stage.show();
     }
 
-    public static void showError(String title, String content) {
-        Alert alert = new Alert(Alert.AlertType.ERROR);
+    public static void showAlert(String alertType, String title, String content) {
+        Alert alert = new Alert(Alert.AlertType.valueOf(alertType.toUpperCase()));
         alert.setTitle(title);
         alert.setContentText(content);
         alert.showAndWait();
@@ -158,7 +157,7 @@ public class MainController implements Initializable {
             stage.setScene(new Scene(root));
             stage.show();
         } catch (NullPointerException e) {
-            showError("Modify customer", "Please select a customer to modify.");
+            showAlert("error", "Modify customer", "Please select a customer to modify.");
         }
     }
 
@@ -189,7 +188,7 @@ public class MainController implements Initializable {
                 AppointmentsTable.setItems(AppointmentQuery.getAll());
             }
         } catch (NullPointerException e) {
-            showError("Delete customer", "Please select a customer to delete.");
+            showAlert("error", "Delete customer", "Please select a customer to delete.");
         }
     }
 
@@ -226,7 +225,7 @@ public class MainController implements Initializable {
             stage.setScene(new Scene(root));
             stage.show();
         } catch (NullPointerException e) {
-            showError("Modify appointment", "Please select an appointment to modify.");
+            showAlert("error", "Modify appointment", "Please select an appointment to modify.");
         }
     }
 
@@ -269,7 +268,7 @@ public class MainController implements Initializable {
                 Optional<ButtonType> deletedPrompt = deletedAlert.showAndWait();
             }
         } catch (NullPointerException e) {
-            showError("Delete appointment", "Please select an appointment to delete.");
+            showAlert("error", "Delete appointment", "Please select an appointment to delete.");
         }
     }
 

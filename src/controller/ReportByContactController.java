@@ -53,9 +53,9 @@ public class ReportByContactController implements Initializable {
         if(contactAppointments.size() == 0) {
             TypeMonthApptsTable.setItems(null);
 
-            MainController.showError("Search Appointments by Contact", "No appointments found for contact " +
-                    selectedContact.getName() + "."
-            );
+            MainController.showAlert("information", "Search Appointments by Contact",
+                    "No appointments found for contact " +
+                            selectedContact.getName() + ".");
         }
         else {
             TypeMonthApptsTable.setItems(contactAppointments);

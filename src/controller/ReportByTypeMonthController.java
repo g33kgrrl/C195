@@ -4,7 +4,6 @@ import dao.AppointmentQuery;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.Initializable;
-import javafx.scene.control.ComboBox;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
@@ -39,8 +38,8 @@ public class ReportByTypeMonthController implements Initializable {
         if(typeMonthAppts.size() == 0) {
             TypeMonthApptsTable.setItems(null);
 
-            MainController.showError("Count Appointments by Type and Month", "No appointments found."
-            );
+            MainController.showAlert("information", "Count Appointments by Type and Month",
+                    "No appointments found.");
         }
         else {
             TypeMonthApptsTable.setItems(typeMonthAppts);
