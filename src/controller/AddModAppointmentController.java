@@ -65,6 +65,9 @@ public class AddModAppointmentController implements Initializable {
 //        );
 
         // TODO: use LocalDateTime and convert it via a ZonedDateTime
+        // I would not recommend using ZoneOffSet.
+
+
         for (int i = 0; i < 24; i++) {
 
         }

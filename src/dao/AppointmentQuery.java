@@ -403,4 +403,31 @@ public abstract class AppointmentQuery {
             );
         }
     }
+
+    public static ObservableList<Integer> getValidApptHours(LocalDateTime openLdt, LocalDateTime closeLdt) {
+        LocalDateTime localOpenLdt = getConvertedLtd(openLdt);
+        LocalDateTime localCloseLdt = getConvertedLtd(closeLdt);
+
+//        System.out.println("Open local: " + localOpenLdt.toLocalTime().toString());
+//        System.out.println("Close local: " + localCloseLdt.toLocalTime().toString());
+
+        ObservableList<LocalTime> validTimes = FXCollections.observableArrayList();
+
+        for (int i = localOpenLdt.getHour(); i < localCloseLdt.getHour(); i++) {
+            validTimes.add(); // TODO proper object
+        }
+
+        // TODO: fix allowable times; use ONE combobox
+
+        return validTimes;
+    }
+
+    public static LocalDateTime getConvertedLtd(LocalDateTime ldt) {
+        ZoneId hqZoneId = ZoneId.of("US/Eastern"); // TODO: Make nicey
+
+        ZoneId systemZoneId = ZoneId.systemDefault();
+        LocalDateTime systemLdt = ldt.atZone(hqZoneId).withZoneSameInstant(systemZoneId).toLocalDateTime();
+
+        return systemLdt;
+    }
 }

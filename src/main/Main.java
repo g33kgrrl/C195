@@ -2,16 +2,14 @@ package main;
 
 import dao.*;
 import javafx.application.Application;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
-import model.Customer;
-import model.User;
 
 import java.sql.SQLException;
 import java.time.LocalDateTime;
-import java.util.Locale;
 import java.util.Objects;
 
 public class Main extends Application {
@@ -68,6 +66,12 @@ public class Main extends Application {
 //        AppointmentQuery.getMonth();
 
 //        System.out.println(CustomerQuery.getCustomerCount());
+
+//        ObservableList<Integer> validApptHours = AppointmentQuery.getValidApptHours();
+        ObservableList<Integer> validApptHours =
+                AppointmentQuery.getValidApptHours(LocalDateTime.parse("2015-10-10T08:00"), LocalDateTime.parse("2015-10-10T22:00"));
+
+        System.out.println(validApptHours);
 
         launch(args);
 
