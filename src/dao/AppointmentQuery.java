@@ -411,15 +411,16 @@ public abstract class AppointmentQuery {
 //        System.out.println("Open local: " + localOpenLdt.toLocalTime().toString());
 //        System.out.println("Close local: " + localCloseLdt.toLocalTime().toString());
 
-        ObservableList<LocalTime> validTimes = FXCollections.observableArrayList();
+        ObservableList<LocalDateTime> validLocalDateTimes = FXCollections.observableArrayList();
 
-        for (int i = localOpenLdt.getHour(); i < localCloseLdt.getHour(); i++) {
-            validTimes.add(); // TODO proper object
+        for (int i = localOpenLdt.getHour(); i <= localCloseLdt.getHour(); i++) {
+            validLocalDateTimes.add(LocalDateTime.of(LocalDate.now(), LocalTime.now())); // TODO parse hour -> converted LocalTime
         }
+        // TODO: Change to one combobox for appt times in one-hour increments and drop minutes. Solves problem of 22:15 etc.
 
         // TODO: fix allowable times; use ONE combobox
 
-        return validTimes;
+        return validLocalDateTimes;
     }
 
     public static LocalDateTime getConvertedLtd(LocalDateTime ldt) {
