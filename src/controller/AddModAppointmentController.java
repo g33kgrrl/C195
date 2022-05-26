@@ -9,6 +9,7 @@ import javafx.scene.control.*;
 
 import java.io.IOException;
 import java.net.URL;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.ResourceBundle;
@@ -26,15 +27,15 @@ public class AddModAppointmentController implements Initializable {
     public ComboBox<String> typeCombo;
     public DatePicker startDatePicker;
     public ComboBox startHourCombo;
-    public ComboBox startMinuteCombo;
     public DatePicker endDatePicker;
     public ComboBox endHourCombo;
-    public ComboBox endMinuteCombo;
     public Label userIdLabel;
 
     private Appointment appointment;
 
     User currentUser = UserQuery.getCurrentUser();
+    LocalTime openLt = LocalTime.of(8, 0);
+    LocalTime closeLt = LocalTime.of(22, 0);
 
 //  When adding and updating an appointment, record the following data: Appointment_ID, title, description, location,
 //  contact, type, start date and time, end date and time, Customer_ID, and User_ID.
@@ -52,41 +53,21 @@ public class AddModAppointmentController implements Initializable {
      */
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        ObservableList<String> hours = FXCollections.observableArrayList();
-        ObservableList<String> minutes = FXCollections.observableArrayList();
+        LocalDate localDate = LocalDate.now();
+        ObservableList<String> validApptHours =
+                AppointmentQuery.getValidApptHours(LocalDateTime.of(localDate, openLt), LocalDateTime.of(localDate, closeLt));
+        System.out.println(validApptHours);
+        startHourCombo.setItems(validApptHours);
+        endHourCombo.setItems(validApptHours);
+
         ObservableList<String> types = FXCollections.observableArrayList();
-
-
-        // TODO: restrict list according to local time zone
-        // Business hours 8:00 - 22:00 EST
-        // Create array using "for" loop and (UTC + timeZoneOffset)
-//        hours.setAll("00", "01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "11", "12", "13", "14", "15",
-//                "16", "17", "18", "19", "20", "21", "22", "23"
-//        );
-
-        // TODO: use LocalDateTime and convert it via a ZonedDateTime
-        // I would not recommend using ZoneOffSet.
-
-
-        for (int i = 0; i < 24; i++) {
-
-        }
-
-        hours.setAll("10", "11", "12");
-        minutes.setAll("00", "15", "30", "45");
-
-        startHourCombo.setItems(hours);
-        startMinuteCombo.setItems(minutes);
-        endHourCombo.setItems(hours);
-        endMinuteCombo.setItems(minutes);
+        types.setAll("Planning Session", "De-Briefing", "Training");
+        typeCombo.setItems(types);
 
         customerCombo.setItems(CustomerQuery.getAll());
         contactCombo.setItems(ContactQuery.getAll());
         userCombo.setItems(UserQuery.getAll());
         userCombo.setValue(currentUser);
-
-        types.setAll("Planning Session", "De-Briefing", "Training");
-        typeCombo.setItems(types);
     }
 
     /**
@@ -107,91 +88,14 @@ public class AddModAppointmentController implements Initializable {
         locationText.setText(String.valueOf(appointment.getLocation()));
         typeCombo.setValue(String.valueOf(appointment.getType()));
         startDatePicker.setValue(start.toLocalDate());
-        startHourCombo.setValue(String.format("%02d",start.getHour()));
-        startMinuteCombo.setValue(String.format("%02d",start.getMinute()));
+        startHourCombo.setValue(String.format("%02d", start.getHour()) + ":00");
         endDatePicker.setValue(end.toLocalDate());
-        endHourCombo.setValue(String.format("%02d",end.getHour()));
-        endMinuteCombo.setValue(String.format("%02d",end.getMinute()));
+        endHourCombo.setValue(String.format("%02d", end.getHour()) + ":00");
         customerCombo.setValue(CustomerQuery.getCustomer(appointment.getCustomerId()));
         userCombo.setValue(UserQuery.getUser(appointment.getUserId()));
         contactCombo.setValue(ContactQuery.getContact(appointment.getContactId()));
     }
-//
-//    /**
-//     * Handles search parts request.
-//     * Fetches text input, and calls Inventory.lookupPart() to find matching parts. If any matches are
-//     * found, display them in the parts table and then clear the TextField to prepare for the next
-//     * search. If no matching parts are found, display an error popup instead.
-//     * @param searchPartsEvent the search parts text entry event
-//     */
-//    public void onSearchPartsHandler(ActionEvent searchPartsEvent) {
-//        String q = SearchParts.getText();
-//
-//        ObservableList<Part> matchingParts = Inventory.lookupPart(q);
-//
-//        if (matchingParts.size() == 0) {
-//            Alert alert = new Alert(Alert.AlertType.ERROR);
-//            alert.setTitle("Search parts");
-//            alert.setContentText("No matching parts found.");
-//            alert.showAndWait();
-//        } else {
-//            AllPartsTable.setItems(matchingParts);
-//            SearchParts.setText("");
-//        }
-//    }
-//
-//    /**
-//     * Handles add associated part request.
-//     * Adds selected part to associated parts list for the new product to be added. If no part is selected,
-//     * prompts user to select a part to add to associated parts.
-//     * @param addPartEvent the add associated part button click event
-//     */
-//    public void onAddButtonAction(ActionEvent addPartEvent) {
-//        Part selectedItem = (Part) AllPartsTable.getSelectionModel().getSelectedItem();
-//
-//        associatedParts.add(selectedItem);
-//    }
-//
-//    /**
-//     * Handles remove associated part request.
-//     * First checks if there are any associated parts, and if not, displays an error that there are no
-//     * associated parts to remove. Otherwise, verifies that a part has been selected for removal, prompts
-//     * the user with the part's information and asks for confirmation to remove. If no part has been
-//     * selected, prompt the user to select a part for removal.
-//     * @param removePartEvent the remove associated part button click event
-//     */
-//    public void onRemoveButtonAction(ActionEvent removePartEvent) {
-//        if (associatedParts.size() == 0) {
-//            Alert alert = new Alert(Alert.AlertType.ERROR);
-//            alert.setTitle("Remove part");
-//            alert.setContentText("No associated parts to remove.");
-//            alert.showAndWait();
-//        } else {
-//            try {
-//                Part selectedItem = (Part) AssociatedPartsTable.getSelectionModel().getSelectedItem();
-//
-//                String removeConfirm = "Remove this part from product " + product.getName() + "?\n\n" +
-//                        "\tPart Id: " + selectedItem.getId() + "\n\n" +
-//                        "\tPart Name: " + selectedItem.getName() + "\n\n" +
-//                        "\tInventory Level: " + selectedItem.getStock() + "\n\n" +
-//                        "\tPrice/cost per unit: " + selectedItem.getPrice() + "\n";
-//
-//                Alert alert = new Alert(Alert.AlertType.CONFIRMATION, removeConfirm);
-//
-//                Optional<ButtonType> result = alert.showAndWait();
-//
-//                if (result.isPresent() && result.get() == ButtonType.OK) {
-//                    associatedParts.remove(selectedItem);
-//                }
-//            } catch (NullPointerException e) {
-//                Alert alert = new Alert(Alert.AlertType.ERROR);
-//                alert.setTitle("Remove part");
-//                alert.setContentText("Please select a part to remove.");
-//                alert.showAndWait();
-//            }
-//        }
-//    }
-//
+
     /**
      * Handles save appointment request.
      * Gets values from textfields, ensures input is valid, gets the list of associated parts, and then
@@ -207,12 +111,14 @@ public class AddModAppointmentController implements Initializable {
             String description = descriptionText.getText();
             String location = locationText.getText();
             String type = typeCombo.getValue();
-            int startHour = Integer.parseInt(startHourCombo.getValue().toString());
-            int startMinute = Integer.parseInt(startMinuteCombo.getValue().toString());
-            int endHour = Integer.parseInt(endHourCombo.getValue().toString());
-            int endMinute = Integer.parseInt(endMinuteCombo.getValue().toString());
-            LocalDateTime start = LocalDateTime.of(startDatePicker.getValue(), LocalTime.of(startHour, startMinute));
-            LocalDateTime end = LocalDateTime.of(endDatePicker.getValue(), LocalTime.of(endHour, endMinute));
+            LocalDateTime start = LocalDateTime.of(startDatePicker.getValue(), LocalTime.parse(startHourCombo.getValue().toString()));
+            LocalDateTime end = LocalDateTime.of(endDatePicker.getValue(), LocalTime.parse(endHourCombo.getValue().toString()));
+//            int startHour = Integer.parseInt(startHourCombo.getValue().toString());
+//            int endHour = Integer.parseInt(endHourCombo.getValue().toString());
+//            LocalDateTime start = LocalDateTime.of(startDatePicker.getValue(), LocalTime.of(startHour, 0));
+//            LocalDateTime end = LocalDateTime.of(endDatePicker.getValue(), LocalTime.of(endHour, 0));
+//            LocalDateTime start = LocalDateTime.of(startDatePicker.getValue(), LocalTime.of(startHour, 0));
+//            LocalDateTime end = LocalDateTime.of(endDatePicker.getValue(), LocalTime.of(endHour, 0));
             LocalDateTime lastUpdate = LocalDateTime.now();
             String lastUpdatedBy = currentUser.getUserName();
             int customerId = ((Customer) customerCombo.getSelectionModel().getSelectedItem()).getId();
@@ -234,8 +140,8 @@ public class AddModAppointmentController implements Initializable {
 
             // Validation: Ensure all fields are set
             if(title.isEmpty() || description.isEmpty() || location.isEmpty() || type.isEmpty() ||
-                    Integer.valueOf(startHour) == null || Integer.valueOf(startMinute) == null ||
-                    Integer.valueOf(endHour) == null || Integer.valueOf(endMinute) == null ||
+//                    startHourCombo.getSelectionModel().getSelectedItem() == null ||
+//                    endHourCombo.getSelectionModel().getSelectedItem() == null ||
                     startDatePicker.getValue() == null || endDatePicker.getValue() == null ||
                     lastUpdate == null || lastUpdatedBy.isEmpty() ||
                     Integer.valueOf(customerId) == null || Integer.valueOf(userId) == null ||

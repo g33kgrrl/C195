@@ -68,10 +68,7 @@ public class Main extends Application {
 //        System.out.println(CustomerQuery.getCustomerCount());
 
 //        ObservableList<Integer> validApptHours = AppointmentQuery.getValidApptHours();
-        ObservableList<Integer> validApptHours =
-                AppointmentQuery.getValidApptHours(LocalDateTime.parse("2015-10-10T08:00"), LocalDateTime.parse("2015-10-10T22:00"));
 
-        System.out.println(validApptHours);
 
         launch(args);
 

@@ -404,27 +404,26 @@ public abstract class AppointmentQuery {
         }
     }
 
-    public static ObservableList<Integer> getValidApptHours(LocalDateTime openLdt, LocalDateTime closeLdt) {
+    public static ObservableList<String> getValidApptHours(LocalDateTime openLdt, LocalDateTime closeLdt) {
         LocalDateTime localOpenLdt = getConvertedLtd(openLdt);
         LocalDateTime localCloseLdt = getConvertedLtd(closeLdt);
 
 //        System.out.println("Open local: " + localOpenLdt.toLocalTime().toString());
 //        System.out.println("Close local: " + localCloseLdt.toLocalTime().toString());
 
-        ObservableList<LocalDateTime> validLocalDateTimes = FXCollections.observableArrayList();
+        ObservableList<String> validApptHours = FXCollections.observableArrayList();
 
         for (int i = localOpenLdt.getHour(); i <= localCloseLdt.getHour(); i++) {
-            validLocalDateTimes.add(LocalDateTime.of(LocalDate.now(), LocalTime.now())); // TODO parse hour -> converted LocalTime
+//            validLocalDateTimes.add(LocalDateTime.of(localDate, LocalTime.of(i, 0))); // TODO parse hour -> converted LocalTime
+            validApptHours.add(String.format("%02d", i) + ":00");
+//            String.format("%02d",start.getHour())
         }
-        // TODO: Change to one combobox for appt times in one-hour increments and drop minutes. Solves problem of 22:15 etc.
 
-        // TODO: fix allowable times; use ONE combobox
-
-        return validLocalDateTimes;
+        return validApptHours;
     }
 
     public static LocalDateTime getConvertedLtd(LocalDateTime ldt) {
-        ZoneId hqZoneId = ZoneId.of("US/Eastern"); // TODO: Make nicey
+        final ZoneId hqZoneId = ZoneId.of("US/Eastern"); // TODO: Set this up
 
         ZoneId systemZoneId = ZoneId.systemDefault();
         LocalDateTime systemLdt = ldt.atZone(hqZoneId).withZoneSameInstant(systemZoneId).toLocalDateTime();
