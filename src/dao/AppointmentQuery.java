@@ -408,22 +408,17 @@ public abstract class AppointmentQuery {
         LocalDateTime localOpenLdt = getConvertedLtd(openLdt);
         LocalDateTime localCloseLdt = getConvertedLtd(closeLdt);
 
-//        System.out.println("Open local: " + localOpenLdt.toLocalTime().toString());
-//        System.out.println("Close local: " + localCloseLdt.toLocalTime().toString());
-
         ObservableList<String> validApptHours = FXCollections.observableArrayList();
 
         for (int i = localOpenLdt.getHour(); i <= localCloseLdt.getHour(); i++) {
-//            validLocalDateTimes.add(LocalDateTime.of(localDate, LocalTime.of(i, 0))); // TODO parse hour -> converted LocalTime
             validApptHours.add(String.format("%02d", i) + ":00");
-//            String.format("%02d",start.getHour())
         }
 
         return validApptHours;
     }
 
     public static LocalDateTime getConvertedLtd(LocalDateTime ldt) {
-        final ZoneId hqZoneId = ZoneId.of("US/Eastern"); // TODO: Set this up
+        final ZoneId hqZoneId = ZoneId.of("US/Eastern"); // TODO: Move to top somewhere
 
         ZoneId systemZoneId = ZoneId.systemDefault();
         LocalDateTime systemLdt = ldt.atZone(hqZoneId).withZoneSameInstant(systemZoneId).toLocalDateTime();

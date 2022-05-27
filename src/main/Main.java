@@ -10,6 +10,7 @@ import javafx.stage.Stage;
 
 import java.sql.SQLException;
 import java.time.LocalDateTime;
+import java.util.Locale;
 import java.util.Objects;
 
 public class Main extends Application {
@@ -68,7 +69,7 @@ public class Main extends Application {
 //        System.out.println(CustomerQuery.getCustomerCount());
 
 //        ObservableList<Integer> validApptHours = AppointmentQuery.getValidApptHours();
-
+        Locale.setDefault(new Locale("fr"));
 
         launch(args);
 

@@ -8,6 +8,7 @@ import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
 import java.time.*;
+import java.util.Locale;
 import java.util.ResourceBundle;
 
 import dao.UserQuery;
@@ -34,6 +35,10 @@ public class LoginController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         zoneIdLabel.setText(ZoneId.systemDefault().toString());
+
+        Locale currentLocale = Locale.getDefault();
+        System.out.println(currentLocale);  // outputs 'en_US'
+
 //            zoneIdLabel.setText(String.valueOf(ZoneOffset.systemDefault().getRules().getOffset(Instant.now())));
 //            zoneIdLabel.setText("FOO!!!!!");
 //        ZoneOffset o = OffsetDateTime.now().getOffset();
