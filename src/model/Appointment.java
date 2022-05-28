@@ -3,6 +3,7 @@ package model;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import java.time.LocalDateTime;
+import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
 
 
@@ -48,6 +49,28 @@ public class Appointment {
     @Override
     public String toString() {
         return(title);
+    }
+
+    public static LocalDateTime getConvertedLtd(LocalDateTime ldt) {
+        final ZoneId hqZoneId = ZoneId.of("US/Eastern"); // TODO: Move to top somewhere
+
+        ZoneId systemZoneId = ZoneId.systemDefault();
+        LocalDateTime systemLdt = ldt.atZone(hqZoneId).withZoneSameInstant(systemZoneId).toLocalDateTime();
+
+        return systemLdt;
+    }
+
+    public static ObservableList<String> getValidApptHours(LocalDateTime openLdt, LocalDateTime closeLdt) {
+        LocalDateTime localOpenLdt = getConvertedLtd(openLdt);
+        LocalDateTime localCloseLdt = getConvertedLtd(closeLdt);
+
+        ObservableList<String> validApptHours = FXCollections.observableArrayList();
+
+        for (int i = localOpenLdt.getHour(); i <= localCloseLdt.getHour(); i++) {
+            validApptHours.add(String.format("%02d", i) + ":00");
+        }
+
+        return validApptHours;
     }
 
     public String getFormattedStart() { return dtf.format(start); }

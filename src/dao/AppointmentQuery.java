@@ -11,27 +11,39 @@ import java.time.*;
 public abstract class AppointmentQuery {
     private static ZoneId localZoneId = ZoneId.systemDefault();
 
-    public static void select(int appointmentId) throws SQLException {
-        String sql = "SELECT * FROM appointments WHERE Appointment_ID = ?";
-        PreparedStatement ps = JDBC.getConnection().prepareStatement(sql);
-        ps.setInt(1, appointmentId);
-        ResultSet rs = ps.executeQuery();
+    public static Appointment select(int appointmentId) throws SQLException {
+        try {
+            String sql = "SELECT * FROM appointments WHERE Appointment_ID = ?";
+            PreparedStatement ps = JDBC.getConnection().prepareStatement(sql);
+            ps.setInt(1, appointmentId);
+            ResultSet rs = ps.executeQuery();
 
-        if(rs.next()) {
-            String title = rs.getString("Title");
-            String description = rs.getString("Description");
-            String location = rs.getString("Location");
-            String type = rs.getString("Type");
-            LocalDateTime start = rs.getTimestamp("Start").toLocalDateTime(); // atZone(localZoneId).withZoneSameInstant(ZoneOffset.UTC).toLocalDateTime();
-            LocalDateTime end = rs.getTimestamp("End").toLocalDateTime(); // .atZone(ZoneOffset.UTC).withZoneSameInstant(localZoneId).toLocalDateTime();
-            LocalDateTime createDate = rs.getTimestamp("Create_Date").toLocalDateTime(); // .atZone(ZoneOffset.UTC).withZoneSameInstant(localZoneId).toLocalDateTime();
-            String createdBy = rs.getString("Created_By");
-            LocalDateTime lastUpdate = rs.getTimestamp("Last_Update").toLocalDateTime(); //.atZone(ZoneOffset.UTC).withZoneSameInstant(localZoneId).toLocalDateTime();
-            String lastUpdatedBy = rs.getString("Last_Updated_By");
-            int customerId = rs.getInt("Customer_ID");
-            int userId = rs.getInt("User_ID");
-            int contactId = rs.getInt("Contact_ID");
+            if (rs.next()) {
+                String title = rs.getString("Title");
+                String description = rs.getString("Description");
+                String location = rs.getString("Location");
+                String type = rs.getString("Type");
+                LocalDateTime start = rs.getTimestamp("Start").toLocalDateTime(); // atZone(localZoneId).withZoneSameInstant(ZoneOffset.UTC).toLocalDateTime();
+                LocalDateTime end = rs.getTimestamp("End").toLocalDateTime(); // .atZone(ZoneOffset.UTC).withZoneSameInstant(localZoneId).toLocalDateTime();
+                LocalDateTime createDate = rs.getTimestamp("Create_Date").toLocalDateTime(); // .atZone(ZoneOffset.UTC).withZoneSameInstant(localZoneId).toLocalDateTime();
+                String createdBy = rs.getString("Created_By");
+                LocalDateTime lastUpdate = rs.getTimestamp("Last_Update").toLocalDateTime(); //.atZone(ZoneOffset.UTC).withZoneSameInstant(localZoneId).toLocalDateTime();
+                String lastUpdatedBy = rs.getString("Last_Updated_By");
+                int customerId = rs.getInt("Customer_ID");
+                int userId = rs.getInt("User_ID");
+                int contactId = rs.getInt("Contact_ID");
+
+                Appointment a = new Appointment(appointmentId, title, description, location, type, start, end, createDate,
+                        createdBy, lastUpdate, lastUpdatedBy, customerId, userId, contactId);
+
+                return a;
+            }
         }
+        catch(SQLException ex) {
+            ex.printStackTrace();
+        }
+
+        return null;
     }
 
     public static int insert(String title, String description, String location, String type, LocalDateTime start,
@@ -344,27 +356,5 @@ public abstract class AppointmentQuery {
         }
 
         return null;
-    }
-
-    public static ObservableList<String> getValidApptHours(LocalDateTime openLdt, LocalDateTime closeLdt) {
-        LocalDateTime localOpenLdt = getConvertedLtd(openLdt);
-        LocalDateTime localCloseLdt = getConvertedLtd(closeLdt);
-
-        ObservableList<String> validApptHours = FXCollections.observableArrayList();
-
-        for (int i = localOpenLdt.getHour(); i <= localCloseLdt.getHour(); i++) {
-            validApptHours.add(String.format("%02d", i) + ":00");
-        }
-
-        return validApptHours;
-    }
-
-    public static LocalDateTime getConvertedLtd(LocalDateTime ldt) {
-        final ZoneId hqZoneId = ZoneId.of("US/Eastern"); // TODO: Move to top somewhere
-
-        ZoneId systemZoneId = ZoneId.systemDefault();
-        LocalDateTime systemLdt = ldt.atZone(hqZoneId).withZoneSameInstant(systemZoneId).toLocalDateTime();
-
-        return systemLdt;
     }
 }

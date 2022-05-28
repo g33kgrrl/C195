@@ -82,6 +82,8 @@ public class LoginController implements Initializable {
             logLine += "Successful login by user '" + userName + "'";
             User.trackLoginActivity(logLine);
 
+
+
             MainController.toMain(actionEvent);
         }
     }
