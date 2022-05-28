@@ -8,10 +8,12 @@ import javafx.scene.control.*;
 import java.io.IOException;
 import java.net.URL;
 import java.time.*;
+import java.time.format.DateTimeFormatter;
 import java.util.Locale;
 import java.util.ResourceBundle;
 
 import dao.UserQuery;
+import model.User;
 
 public class LoginController implements Initializable {
     @FXML
@@ -45,10 +47,10 @@ public class LoginController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         messageLabel.setText(rb.getString("message"));
-        userNameText.setPromptText(rb.getString("usernamePromptText"));
         userNameLabel.setText(rb.getString("usernameLabel"));
-        passwordText.setPromptText(rb.getString("passwordPromptText"));
         passwordLabel.setText(rb.getString("passwordLabel"));
+        userNameText.setPromptText(rb.getString("usernamePromptText"));
+        passwordText.setPromptText(rb.getString("passwordPromptText"));
         zoneIdLabel.setText(ZoneId.systemDefault().toString());
         submitButton.setText(rb.getString("submit"));
 
@@ -79,19 +81,26 @@ public class LoginController implements Initializable {
      * Check that user has entered a valid username/password pair, and if so, launches
      * the main screen. If not, displays an error message prompting user to try again.
      *
-     * @param submitEvent
+     * @param actionEvent
      */
-    public void onSubmitButtonAction(ActionEvent submitEvent) throws IOException {
-        boolean authorized = UserQuery.checkIfAuthorized(userNameText.getText(), passwordText.getText());
+    public void onSubmitButtonAction(ActionEvent actionEvent) throws IOException {
+        String logLine = LocalDateTime.now() + " - ";
+        String userName = userNameText.getText();
+        boolean authorized = UserQuery.checkIfAuthorized(userName, passwordText.getText());
 
         if (authorized == false) {
+            logLine += "FAILED login attempt by username '" + userName + "'";
+            User.trackLoginActivity(logLine);
+
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle("Login failed");
             alert.setContentText("Please check your username and password and try again.");
             alert.showAndWait();
         } else {
-//            System.out.println("Authenticated!");
-            MainController.toMain(submitEvent);
+            logLine += "Successful login by user '" + userName + "'";
+            User.trackLoginActivity(logLine);
+
+            MainController.toMain(actionEvent);
         }
     }
 }

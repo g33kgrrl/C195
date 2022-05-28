@@ -9,6 +9,8 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 
+import java.io.FileNotFoundException;
+import java.io.PrintWriter;
 import java.sql.SQLException;
 import java.time.LocalDateTime;
 import java.util.Locale;
@@ -33,7 +35,7 @@ public class Main extends Application {
      * @param args
      * @throws SQLException
      */
-    public static void main(String[] args) throws SQLException {
+    public static void main(String[] args) throws SQLException, FileNotFoundException {
         JDBC.makeConnection();
 
         // UNCOMMENT AND RUN FIRST - THEN QUIT, RE-COMMENT
@@ -57,6 +59,9 @@ public class Main extends Application {
 //        "888-333-4444", 103);
 
 //        Locale.setDefault(new Locale("fr"));
+
+//        runFileWriteTest();
+
 
         launch(args);
 

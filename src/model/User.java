@@ -1,5 +1,9 @@
 package model;
 
+import java.io.FileNotFoundException;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.PrintWriter;
 import java.sql.Date;
 import java.time.LocalDateTime;
 
@@ -25,6 +29,19 @@ public class User {
     @Override
     public String toString() {
         return(userName);
+    }
+
+    public static void trackLoginActivity(String activityToLog) {
+        String fileName = "src/login_activity.txt";
+
+        try(FileWriter fileWriter = new FileWriter(fileName, true);
+            PrintWriter printWriter = new PrintWriter(fileWriter);) {
+
+            printWriter.println(activityToLog);
+            System.out.println(activityToLog);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     public int getUserId() {

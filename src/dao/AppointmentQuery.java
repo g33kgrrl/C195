@@ -1,5 +1,6 @@
 package dao;
 
+import controller.MainController;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import model.Appointment;
@@ -11,7 +12,6 @@ import java.time.format.DateTimeFormatter;
 
 public abstract class AppointmentQuery {
     private static ZoneId localZoneId = ZoneId.systemDefault();
-    private static DateTimeFormatter dtf = DateTimeFormatter.ofPattern("MM-dd-yyyy HH:mm");
 
     public static int insert(String title, String description, String location, String type, LocalDateTime start,
                              LocalDateTime end, LocalDateTime createDate, String createdBy, LocalDateTime lastUpdate,
@@ -134,14 +134,6 @@ public abstract class AppointmentQuery {
                 int userId = rs.getInt("User_ID");
                 int contactId = rs.getInt("Contact_ID");
 
-                // LocalDateTime ldt = LocalDateTime.parse(<string>, dtf);
-
-//                System.out.println("Appts for cust " + customerId + ": \n" + appointmentId + " | " + title + " | " + description + " | " + location + " | " + type
-//                        + " | " + dtf.format(start) + " | " + dtf.format(end) + " | " + dtf.format(createDate) + " | "
-//                        + createdBy + " | " + dtf.format(lastUpdate) + " | " + lastUpdatedBy + " | " + customerId
-//                        + " | " + userId + " | " + contactId
-//                );
-
                 Appointment a = new Appointment(appointmentId, title, description, location, type, start, end, createDate,
                         createdBy, lastUpdate, lastUpdatedBy, customerId, userId, contactId);
 
@@ -163,8 +155,6 @@ public abstract class AppointmentQuery {
             PreparedStatement ps = JDBC.getConnection().prepareStatement(sql);
             ResultSet rs = ps.executeQuery();
 
-//            System.out.println("\nAppts for week:");
-
             while (rs.next()) {
                 int appointmentId = rs.getInt("Appointment_ID");
                 String title = rs.getString("Title");
@@ -180,14 +170,6 @@ public abstract class AppointmentQuery {
                 int customerId = rs.getInt("Customer_ID");
                 int userId = rs.getInt("User_ID");
                 int contactId = rs.getInt("Contact_ID");
-
-                // LocalDateTime ldt = LocalDateTime.parse(<string>, dtf);
-
-//                System.out.println(appointmentId + " | " + title + " | " + description + " | " + location + " | " + type
-//                        + " | " + dtf.format(start) + " | " + dtf.format(end) + " | " + dtf.format(createDate) + " | "
-//                        + createdBy + " | " + dtf.format(lastUpdate) + " | " + lastUpdatedBy + " | " + customerId
-//                        + " | " + userId + " | " + contactId
-//                );
 
                 Appointment a = new Appointment(appointmentId, title, description, location, type, start, end, createDate,
                         createdBy, lastUpdate, lastUpdatedBy, customerId, userId, contactId);
@@ -212,8 +194,6 @@ public abstract class AppointmentQuery {
             PreparedStatement ps = JDBC.getConnection().prepareStatement(sql);
             ResultSet rs = ps.executeQuery();
 
-//            System.out.println("\nAppts for month:");
-
             while (rs.next()) {
                 int appointmentId = rs.getInt("Appointment_ID");
                 String title = rs.getString("Title");
@@ -229,14 +209,6 @@ public abstract class AppointmentQuery {
                 int customerId = rs.getInt("Contact_ID");
                 int userId = rs.getInt("User_ID");
                 int contactId = rs.getInt("Contact_ID");
-
-                // LocalDateTime ldt = LocalDateTime.parse(<string>, dtf);
-
-//                System.out.println(appointmentId + " | " + title + " | " + description + " | " + location + " | " + type
-//                        + " | " + dtf.format(start) + " | " + dtf.format(end) + " | " + dtf.format(createDate) + " | "
-//                        + createdBy + " | " + dtf.format(lastUpdate) + " | " + lastUpdatedBy + " | " + customerId
-//                        + " | " + userId + " | " + contactId
-//                );
 
                 Appointment a = new Appointment(appointmentId, title, description, location, type, start, end, createDate,
                         createdBy, lastUpdate, lastUpdatedBy, customerId, userId, contactId);
@@ -277,14 +249,6 @@ public abstract class AppointmentQuery {
                 int userId = rs.getInt("User_ID");
                 int contactId = rs.getInt("Contact_ID");
 
-                // LocalDateTime ldt = LocalDateTime.parse(<string>, dtf);
-
-//                System.out.println(appointmentId + " | " + title + " | " + description + " | " + location + " | " + type
-//                        + " | " + dtf.format(start) + " | " + dtf.format(end) + " | " + dtf.format(createDate) + " | "
-//                        + createdBy + " | " + dtf.format(lastUpdate) + " | " + lastUpdatedBy + " | " + customerId
-//                        + " | " + userId + " | " + contactId
-//                );
-
                 Appointment a = new Appointment(appointmentId, title, description, location, type, start, end, createDate,
                         createdBy, lastUpdate, lastUpdatedBy, customerId, userId, contactId);
 
@@ -313,12 +277,6 @@ public abstract class AppointmentQuery {
                 int count = rs.getInt("COUNT(*)");
                 String type = rs.getString("Type");
                 String monthName = rs.getString("monthname(start)");
-
-//                System.out.println(appointmentId + " | " + title + " | " + description + " | " + location + " | " + type
-//                        + " | " + dtf.format(start) + " | " + dtf.format(end) + " | " + dtf.format(createDate) + " | "
-//                        + createdBy + " | " + dtf.format(lastUpdate) + " | " + lastUpdatedBy + " | " + customerId
-//                        + " | " + userId + " | " + contactId
-//                );
 
                 TypeMonthAppt t = new TypeMonthAppt(id, count, type, monthName);
 
@@ -353,12 +311,6 @@ public abstract class AppointmentQuery {
                 LocalDateTime end = rs.getTimestamp("End").toLocalDateTime();
                 int customerId = rs.getInt("Customer_ID");
                 int userId = rs.getInt("User_ID");
-
-//                System.out.println(appointmentId + " | " + title + " | " + description + " | " + location + " | " + type
-//                        + " | " + dtf.format(start) + " | " + dtf.format(end) + " | " + dtf.format(createDate) + " | "
-//                        + createdBy + " | " + dtf.format(lastUpdate) + " | " + lastUpdatedBy + " | " + customerId
-//                        + " | " + userId + " | " + contactId
-//                );
 
                 Appointment a = new Appointment(appointmentId, title, description, location, type, start, end, null,
                         null, null, null, customerId, userId, contactId);
@@ -395,12 +347,6 @@ public abstract class AppointmentQuery {
             int customerId = rs.getInt("Customer_ID");
             int userId = rs.getInt("User_ID");
             int contactId = rs.getInt("Contact_ID");
-
-            System.out.println(appointmentId + " | " + title + " | " + description + " | " + location + " | " + type
-                    + " | " + dtf.format(start) + " | " + dtf.format(end) + " | " + dtf.format(createDate) + " | "
-                    + createdBy + " | " + dtf.format(lastUpdate) + " | " + lastUpdatedBy + " | " + customerId
-                    + " | " + userId + " | " + contactId
-            );
         }
     }
 

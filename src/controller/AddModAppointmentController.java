@@ -56,7 +56,6 @@ public class AddModAppointmentController implements Initializable {
         LocalDate localDate = LocalDate.now();
         ObservableList<String> validApptHours =
                 AppointmentQuery.getValidApptHours(LocalDateTime.of(localDate, openLt), LocalDateTime.of(localDate, closeLt));
-        System.out.println(validApptHours);
         startHourCombo.setItems(validApptHours);
         endHourCombo.setItems(validApptHours);
 

@@ -104,7 +104,7 @@ public class MainController implements Initializable {
 
     public static void toReports(ActionEvent actionEvent) throws IOException {
         Parent root = FXMLLoader.load(MainController.class.getResource("/view/Reports.fxml"));
-        Stage stage = (Stage)((Node)actionEvent.getSource()).getScene().getWindow();
+        Stage stage = (Stage)((Node) actionEvent.getSource()).getScene().getWindow();
         Scene scene = new Scene(root);
         stage.setTitle("Reports");
         stage.setScene(scene);
@@ -121,12 +121,12 @@ public class MainController implements Initializable {
     /**
      * Handles add customer request.
      * Launches add customer dialog.
-     * @param addCustomerEvent the add part button click event
+     * @param actionEvent the add part button click event
      * @throws IOException for input/output exceptions
      */
-    public void onAddCustomerButtonAction(ActionEvent addCustomerEvent) throws IOException {
+    public void onAddCustomerButtonAction(ActionEvent actionEvent) throws IOException {
         Parent root = FXMLLoader.load(getClass().getResource("/view/AddModCustomer.fxml"));
-        Stage stage = (Stage)((Node)addCustomerEvent.getSource()).getScene().getWindow();
+        Stage stage = (Stage)((Node) actionEvent.getSource()).getScene().getWindow();
         Scene scene = new Scene(root);
         stage.setTitle("Add Customer");
         stage.setScene(scene);
@@ -138,10 +138,10 @@ public class MainController implements Initializable {
      * Checks that a customer has been selected. If so, it fetches that product's information, launches
      * the modify customer dialog, and pre-populates the TextFields with that information. If no customer
      * has been selected, displays an error message instead prompting user to select a customer.
-     * @param modifyCustomerEvent the modify customer button click event
+     * @param actionEvent the modify customer button click event
      * @throws IOException for input/output exceptions
      */
-    public void onModifyCustomerButtonAction(ActionEvent modifyCustomerEvent) throws IOException {
+    public void onModifyCustomerButtonAction(ActionEvent actionEvent) throws IOException {
         try {
             Customer selectedItem = (Customer) CustomersTable.getSelectionModel().getSelectedItem();
 
@@ -152,7 +152,7 @@ public class MainController implements Initializable {
             AddModCustomerController addModCustController = loader.getController();
             addModCustController.displayCustomer(selectedItem);
 
-            Stage stage = (Stage) ((Node)modifyCustomerEvent.getSource()).getScene().getWindow();
+            Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
             Parent root = loader.getRoot();
             stage.setScene(new Scene(root));
             stage.show();
@@ -161,12 +161,11 @@ public class MainController implements Initializable {
         }
     }
 
-    public void onDeleteCustomerButtonAction(ActionEvent deleteCustomerEvent) {
+    public void onDeleteCustomerButtonAction(ActionEvent actionEvent) {
         try {
             Customer selectedCustomer = (Customer) CustomersTable.getSelectionModel().getSelectedItem();
             int selectedCustomerId = selectedCustomer.getId();
             ObservableList<Appointment> customerAppointments = AppointmentQuery.getAllForCustomerId(selectedCustomerId);
-            DateTimeFormatter dtf = DateTimeFormatter.ofPattern("MM-dd-yyyy HH:mm");
 
             String deleteConfirm = "Are you sure you want to delete this customer and any associated appointments?\n\n" +
                     "\tId: " + selectedCustomerId + "\n\n" +
@@ -192,9 +191,9 @@ public class MainController implements Initializable {
         }
     }
 
-    public void onAddAppointmentButtonAction(ActionEvent addAppointmentEvent) throws IOException {
+    public void onAddAppointmentButtonAction(ActionEvent actionEvent) throws IOException {
         Parent root = FXMLLoader.load(getClass().getResource("/view/AddModAppointment.fxml"));
-        Stage stage = (Stage)((Node)addAppointmentEvent.getSource()).getScene().getWindow();
+        Stage stage = (Stage)((Node) actionEvent.getSource()).getScene().getWindow();
         Scene scene = new Scene(root);
         stage.setTitle("Add Appointment");
         stage.setScene(scene);
@@ -206,10 +205,10 @@ public class MainController implements Initializable {
      * Checks that a customer has been selected. If so, it fetches that product's information, launches
      * the modify customer dialog, and pre-populates the TextFields with that information. If no customer
      * has been selected, displays an error message instead prompting user to select a customer.
-     * @param modifyApptEvent the modify customer button click event
+     * @param actionEvent the modify customer button click event
      * @throws IOException for input/output exceptions
      */
-    public void onModifyAppointmentButtonAction(ActionEvent modifyApptEvent) throws IOException {
+    public void onModifyAppointmentButtonAction(ActionEvent actionEvent) throws IOException {
         try {
             Appointment selectedItem = (Appointment) AppointmentsTable.getSelectionModel().getSelectedItem();
 
@@ -220,7 +219,7 @@ public class MainController implements Initializable {
             AddModAppointmentController addModAppointmentController = loader.getController();
             addModAppointmentController.displayAppointment(selectedItem);
 
-            Stage stage = (Stage) ((Node) modifyApptEvent.getSource()).getScene().getWindow();
+            Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
             Parent root = loader.getRoot();
             stage.setScene(new Scene(root));
             stage.show();
@@ -229,7 +228,7 @@ public class MainController implements Initializable {
         }
     }
 
-    public void onDeleteAppointmentButtonAction(ActionEvent deleteAppointmentEvent) {
+    public void onDeleteAppointmentButtonAction(ActionEvent actionEvent) {
         try {
             Appointment selectedAppointment = (Appointment) AppointmentsTable.getSelectionModel().getSelectedItem();
             int selectedAppointmentId = selectedAppointment.getId();
