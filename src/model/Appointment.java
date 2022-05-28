@@ -5,6 +5,7 @@ import javafx.collections.ObservableList;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
+
 public class Appointment {
     private static ObservableList<Appointment> allAppointments = FXCollections.observableArrayList();
     private DateTimeFormatter dtf = DateTimeFormatter.ofPattern("MM-dd-yyyy HH:mm");
@@ -49,9 +50,9 @@ public class Appointment {
         return(title);
     }
 
-    public String getStartString() { return dtf.format(start); }
+    public String getFormattedStart() { return dtf.format(start); }
 
-    public String getEndString() { return dtf.format(end); }
+    public String getFormattedEnd() { return dtf.format(end); }
 
     public int getId() {
         return id;

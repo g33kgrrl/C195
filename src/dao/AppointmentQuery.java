@@ -7,6 +7,7 @@ import model.TypeMonthAppt;
 import java.sql.*;
 import java.time.*;
 
+
 public abstract class AppointmentQuery {
     private static ZoneId localZoneId = ZoneId.systemDefault();
 

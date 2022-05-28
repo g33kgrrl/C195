@@ -5,11 +5,10 @@ import javafx.collections.ObservableList;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-
 import model.Contact;
 
-public abstract class ContactQuery {
 
+public abstract class ContactQuery {
     public static ObservableList<Contact> getAll() {
         ObservableList<Contact> allContacts = FXCollections.observableArrayList();
 

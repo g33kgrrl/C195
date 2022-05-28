@@ -1,6 +1,5 @@
 package controller;
 
-import dao.AppointmentQuery;
 import dao.CustomerQuery;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
@@ -37,7 +36,7 @@ public class ReportsController implements Initializable {
 
 
     /**
-     * Sets up and displays main screen.
+     * Sets up and displays reports screen.
      * Initializes part and product tables, and populates them with current inventory items.
      * @param url the url
      * @param resourceBundle the resource bundle
@@ -55,7 +54,6 @@ public class ReportsController implements Initializable {
 
     public void onReportByTypeMonthButtonAction(ActionEvent actionEvent) throws IOException {
         // the total number of customer appointments by type and month
-//        showReport("Report: Appointments by type and month", AppointmentQuery.getAllByTypeMonth());
         Parent root = FXMLLoader.load(getClass().getResource("/view/ReportByTypeMonth.fxml"));
         Stage stage = (Stage)((Node) actionEvent.getSource()).getScene().getWindow();
 
@@ -88,17 +86,4 @@ public class ReportsController implements Initializable {
     public void onBackButtonAction(ActionEvent actionEvent) throws IOException {
         MainController.toMain(actionEvent);
     }
-
-//    public void onCustomerCountReportButtonAction(ActionEvent actionEvent) {
-//        int customerCount = CustomerQuery.getCustomerCount();
-//
-//        showReport("Customer Count Report", "Total customer count is " + customerCount + ".");
-//    }
-//
-//    public void showReport(String title, String report) {
-//        Alert alert = new Alert(Alert.AlertType.INFORMATION);
-//        alert.setTitle(title);
-//        alert.setContentText(report);
-//        alert.showAndWait();
-//    }
 }

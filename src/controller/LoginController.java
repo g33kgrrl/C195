@@ -1,19 +1,17 @@
 package controller;
 
+import dao.UserQuery;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
-
 import java.io.IOException;
 import java.net.URL;
 import java.time.*;
-import java.time.format.DateTimeFormatter;
 import java.util.Locale;
 import java.util.ResourceBundle;
-
-import dao.UserQuery;
 import model.User;
+
 
 public class LoginController implements Initializable {
     @FXML
@@ -32,6 +30,7 @@ public class LoginController implements Initializable {
     private Button submitButton;
 
     private static ResourceBundle rb = ResourceBundle.getBundle("languages/Lang", Locale.getDefault());
+
 
     /***
      * Initializes login screen.
@@ -53,23 +52,6 @@ public class LoginController implements Initializable {
         passwordText.setPromptText(rb.getString("passwordPromptText"));
         zoneIdLabel.setText(ZoneId.systemDefault().toString());
         submitButton.setText(rb.getString("submit"));
-
-//        Locale currentLocale = Locale.getDefault();
-//        System.out.println(currentLocale);  // outputs 'en_US'
-
-//            zoneIdLabel.setText(String.valueOf(ZoneOffset.systemDefault().getRules().getOffset(Instant.now())));
-//            zoneIdLabel.setText("FOO!!!!!");
-//        ZoneOffset o = OffsetDateTime.now().getOffset();
-//        System.out.println("Zone Offset: " + o);
-//        LocalDateTime ldtMidnight = LocalDateTime.of(2022, 05, 19, 0, 0);
-//        zoneIdLabel.setText(String.valueOf(ldtMidnight.atOffset(o)));
-//
-//
-//        ZonedDateTime zdt = LocalDateTime.parse( "2018-01-23T01:23:45.123456789" )  // Parse string, lacking an offset-from-UTC and lacking a time zone, as a `LocalDateTime`.
-//                .atZone(ZoneId.systemDefault());              // Assign the time zone for which you are certain this date-time was intended. Instantiates a `ZonedDateTime` object.
-//
-//        System.out.println(zdt);
-
     }
 
     public static ResourceBundle getResourceBundle() {
@@ -88,7 +70,7 @@ public class LoginController implements Initializable {
         String userName = userNameText.getText();
         boolean authorized = UserQuery.checkIfAuthorized(userName, passwordText.getText());
 
-        if (authorized == false) {
+        if (!authorized) {
             logLine += "FAILED login attempt by username '" + userName + "'";
             User.trackLoginActivity(logLine);
 

@@ -6,15 +6,14 @@ import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
-
 import java.io.IOException;
 import java.net.URL;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.ResourceBundle;
-
 import model.*;
+
 
 public class AddModAppointmentController implements Initializable {
     public TextField idText;
@@ -31,16 +30,10 @@ public class AddModAppointmentController implements Initializable {
     public ComboBox endHourCombo;
     public Label userIdLabel;
 
+    private final LocalTime openLt = LocalTime.of(8, 0);
+    private final LocalTime closeLt = LocalTime.of(22, 0);
+    private User currentUser = UserQuery.getCurrentUser();
     private Appointment appointment;
-
-    User currentUser = UserQuery.getCurrentUser();
-    LocalTime openLt = LocalTime.of(8, 0);
-    LocalTime closeLt = LocalTime.of(22, 0);
-
-//  When adding and updating an appointment, record the following data: Appointment_ID, title, description, location,
-//  contact, type, start date and time, end date and time, Customer_ID, and User_ID.
-//
-//  All of the original appointment information is displayed on the update form in local time zone.
 
     /**
      * Initializes add product dialog.
@@ -101,10 +94,10 @@ public class AddModAppointmentController implements Initializable {
      * calls Inventory.updateProduct() to replace the current product object with a new product using the
      * given data. Tracks next unique product ID to be used, and returns user to main screen. If input is
      * invalid, an error message is displayed instead.
-     * @param saveEvent the save product button clidk event
+     * @param actionEvent the save product button clidk event
      * @throws IOException for input/output exceptions
      */
-    public void onSaveButtonAction(ActionEvent saveEvent) throws IOException {
+    public void onSaveButtonAction(ActionEvent actionEvent) throws IOException {
         try {
             String title = titleText.getText();
             String description = descriptionText.getText();
@@ -112,12 +105,6 @@ public class AddModAppointmentController implements Initializable {
             String type = typeCombo.getValue();
             LocalDateTime start = LocalDateTime.of(startDatePicker.getValue(), LocalTime.parse(startHourCombo.getValue().toString()));
             LocalDateTime end = LocalDateTime.of(endDatePicker.getValue(), LocalTime.parse(endHourCombo.getValue().toString()));
-//            int startHour = Integer.parseInt(startHourCombo.getValue().toString());
-//            int endHour = Integer.parseInt(endHourCombo.getValue().toString());
-//            LocalDateTime start = LocalDateTime.of(startDatePicker.getValue(), LocalTime.of(startHour, 0));
-//            LocalDateTime end = LocalDateTime.of(endDatePicker.getValue(), LocalTime.of(endHour, 0));
-//            LocalDateTime start = LocalDateTime.of(startDatePicker.getValue(), LocalTime.of(startHour, 0));
-//            LocalDateTime end = LocalDateTime.of(endDatePicker.getValue(), LocalTime.of(endHour, 0));
             LocalDateTime lastUpdate = LocalDateTime.now();
             String lastUpdatedBy = currentUser.getUserName();
             int customerId = ((Customer) customerCombo.getSelectionModel().getSelectedItem()).getId();
@@ -125,7 +112,7 @@ public class AddModAppointmentController implements Initializable {
             int contactId = ((Contact) contactCombo.getSelectionModel().getSelectedItem()).getId();
             int rowsAffected;
 
-            // If adding, create info is now; if modding, fetch create info
+            // If adding new appointment, creation is now by current user; otherwise, fetch from database
             LocalDateTime createDate;
             String createdBy;
 
@@ -139,8 +126,8 @@ public class AddModAppointmentController implements Initializable {
 
             // Validation: Ensure all fields are set
             if(title.isEmpty() || description.isEmpty() || location.isEmpty() || type.isEmpty() ||
-//                    startHourCombo.getSelectionModel().getSelectedItem() == null ||
-//                    endHourCombo.getSelectionModel().getSelectedItem() == null ||
+                    startHourCombo.getSelectionModel().getSelectedItem() == null ||
+                    endHourCombo.getSelectionModel().getSelectedItem() == null ||
                     startDatePicker.getValue() == null || endDatePicker.getValue() == null ||
                     lastUpdate == null || lastUpdatedBy.isEmpty() ||
                     Integer.valueOf(customerId) == null || Integer.valueOf(userId) == null ||
@@ -149,13 +136,6 @@ public class AddModAppointmentController implements Initializable {
                 showValidateError();
             }
             else {
-//                System.out.println("Title: " + title + " | Description: " + description + " | Location: " +
-//                        location + " | Type: " + type + "\n | Start: " + start.toString() +
-//                        " | End: " + end.toString() + "\n | CreateDate: " + createDate.toString() + " | CreatedBy: " +
-//                        createdBy + " | LastUpdate : " + lastUpdate + " | LastUpdatedBy: " +
-//                        lastUpdatedBy + " | CustomerID: " + customerId + " | UserID: " + userId + " | ContactID: " + contactId
-//                );
-
                 if(appointment == null) {
                     rowsAffected = AppointmentQuery.insert(
                             title, description, location, type, start, end, createDate, createdBy, lastUpdate, lastUpdatedBy,
@@ -175,7 +155,7 @@ public class AddModAppointmentController implements Initializable {
                     alert.showAndWait();
                 }
 
-                MainController.toMain(saveEvent);
+                MainController.toMain(actionEvent);
             }
         } catch (NullPointerException e) {
             showValidateError();
@@ -192,10 +172,10 @@ public class AddModAppointmentController implements Initializable {
     /**
      * Handles cancel request.
      * Returns user to main screen without saving any entered textfield values.
-     * @param cancelEvent the Cancel button click event
+     * @param actionEvent the Cancel button click event
      * @throws IOException for input/output exceptions
      */
-    public void onCancelButtonAction(ActionEvent cancelEvent) throws IOException {
-        MainController.toMain(cancelEvent);
+    public void onCancelButtonAction(ActionEvent actionEvent) throws IOException {
+        MainController.toMain(actionEvent);
     }
 }

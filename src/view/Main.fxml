@@ -44,16 +44,16 @@
             <children>
                 <TableView fx:id="AppointmentsTable" layoutX="14.0" layoutY="50.0" prefHeight="172.0" prefWidth="846.0">
                     <columns>
-                        <TableColumn fx:id="apptIdCol" text="ID" />
-                        <TableColumn fx:id="apptTitleCol" text="Title" />
-                        <TableColumn fx:id="apptDescriptionCol" prefWidth="127.0" text="Description" />
-                        <TableColumn fx:id="apptLocationCol" prefWidth="97.0" text="Location" />
-                        <TableColumn fx:id="apptContactIdCol" prefWidth="69.0" text="Contact ID" />
-                        <TableColumn fx:id="apptTypeCol" prefWidth="85.0" text="Type" />
-                        <TableColumn fx:id="apptStartCol" text="Start" />
-                        <TableColumn fx:id="apptEndCol" text="End" />
-                        <TableColumn fx:id="apptCustomerIdCol" prefWidth="51.0" text="Cust ID" />
-                        <TableColumn fx:id="apptUserIdCol" prefWidth="59.0" text="User ID" />
+                        <TableColumn fx:id="apptIdCol" prefWidth="35.0" text="ID" />
+                        <TableColumn fx:id="apptTitleCol" prefWidth="103.0" text="Title" />
+                        <TableColumn fx:id="apptDescriptionCol" prefWidth="123.0" text="Description" />
+                        <TableColumn fx:id="apptLocationCol" prefWidth="89.0" text="Location" />
+                        <TableColumn fx:id="apptContactIdCol" prefWidth="58.0" text="Cont ID" />
+                        <TableColumn fx:id="apptTypeCol" prefWidth="106.0" text="Type" />
+                        <TableColumn fx:id="apptStartCol" prefWidth="106.0" text="Start" />
+                        <TableColumn fx:id="apptEndCol" prefWidth="101.0" text="End" />
+                        <TableColumn fx:id="apptCustomerIdCol" prefWidth="56.0" text="Cust ID" />
+                        <TableColumn fx:id="apptUserIdCol" prefWidth="52.0" text="User ID" />
                     </columns>
                 </TableView>
                 <Button fx:id="AddAppointmentButton" layoutX="609.0" layoutY="230.0" mnemonicParsing="false" onAction="#onAddAppointmentButtonAction" prefHeight="33.0" prefWidth="62.0" text="Add" />

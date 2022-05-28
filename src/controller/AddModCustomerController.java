@@ -3,15 +3,12 @@ package controller;
 import dao.CountryQuery;
 import dao.CustomerQuery;
 import dao.DivisionQuery;
-import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import java.io.IOException;
 import java.net.URL;
-import java.sql.SQLException;
 import java.util.ResourceBundle;
-
 import model.Country;
 import model.Customer;
 import model.Division;
@@ -25,15 +22,7 @@ public class AddModCustomerController implements Initializable {
     public TextField phoneText;
     public ComboBox<Country> countryCombo;
     public ComboBox<Division> divisionCombo;
-
     private Customer customer;
-
-
-    /***
-     *   When adding and updating a customer, text fields are used to collect the following data: customer name, address, postal code, and phone number.
-     *
-     * -  Customer IDs are auto-generated, and first-level division (i.e., states, provinces) and country data are collected using separate combo boxes.
-     */
 
     /**
      * Initializes part ID textfield.
@@ -44,9 +33,7 @@ public class AddModCustomerController implements Initializable {
      */
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        ObservableList<Country> countries = Country.getAllCountries();
-
-        countryCombo.setItems(countries);
+        countryCombo.setItems(Country.getAllCountries());
         countryCombo.setPromptText("Select country");
         divisionCombo.setPromptText("First select country");
         divisionCombo.setVisibleRowCount(5);
@@ -75,7 +62,6 @@ public class AddModCustomerController implements Initializable {
     }
 
     public void onCountryCombo(ActionEvent actionEvent) {
-
         try {
             int countryIdFK = countryCombo.getSelectionModel().getSelectedItem().getId();
 

@@ -12,12 +12,9 @@ import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
 import java.net.URL;
-import java.time.format.DateTimeFormatter;
-import java.util.Locale;
 import java.util.Optional;
 import java.util.ResourceBundle;
 import java.io.IOException;
-
 import model.Appointment;
 import model.Customer;
 
@@ -45,15 +42,9 @@ public class MainController implements Initializable {
     public TableColumn apptTypeCol;
     public TableColumn apptStartCol;
     public TableColumn apptEndCol;
-    public TableColumn apptCreateDateCol;
-    public TableColumn apptCreatedByCol;
-    public TableColumn apptLastUpdateCol;
-    public TableColumn apptLastUpdatedByCol;
     public TableColumn apptCustomerIdCol;
     public TableColumn apptUserIdCol;
     public TableColumn apptContactIdCol;
-
-    DateTimeFormatter dtf = DateTimeFormatter.ofPattern("MM-dd-yyyy HH:mm");
 
 
     /**
@@ -64,7 +55,7 @@ public class MainController implements Initializable {
      */
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        // Customer table
+        // Customers table
         custIdCol.setCellValueFactory(new PropertyValueFactory<>("id"));
         custNameCol.setCellValueFactory(new PropertyValueFactory<>("name"));
         custAddressCol.setCellValueFactory(new PropertyValueFactory<>("address"));
@@ -81,8 +72,8 @@ public class MainController implements Initializable {
         apptDescriptionCol.setCellValueFactory(new PropertyValueFactory<>("description"));
         apptLocationCol.setCellValueFactory(new PropertyValueFactory<>("location"));
         apptTypeCol.setCellValueFactory(new PropertyValueFactory<>("type"));
-        apptStartCol.setCellValueFactory(new PropertyValueFactory<>("startString"));
-        apptEndCol.setCellValueFactory(new PropertyValueFactory<>("endString"));
+        apptStartCol.setCellValueFactory(new PropertyValueFactory<>("formattedStart"));
+        apptEndCol.setCellValueFactory(new PropertyValueFactory<>("formattedEnd"));
         apptContactIdCol.setCellValueFactory(new PropertyValueFactory<>("contactId"));
         apptCustomerIdCol.setCellValueFactory(new PropertyValueFactory<>("customerId"));
         apptUserIdCol.setCellValueFactory(new PropertyValueFactory<>("userId"));
