@@ -1,25 +1,35 @@
 package controller;
 
 import javafx.event.ActionEvent;
+import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 
 import java.io.IOException;
 import java.net.URL;
-import java.sql.SQLException;
 import java.time.*;
 import java.util.Locale;
 import java.util.ResourceBundle;
 
 import dao.UserQuery;
-import model.User;
 
 public class LoginController implements Initializable {
+    @FXML
+    private Label messageLabel;
+    @FXML
+    private Label userNameLabel;
+    @FXML
+    private Label passwordLabel;
+    @FXML
+    private TextField userNameText;
+    @FXML
+    private TextField passwordText;
+    @FXML
+    private Label zoneIdLabel;
+    @FXML
+    private Button submitButton;
 
-    public TextField userName;
-    public TextField password;
-    public Label zoneIdLabel;
-//    private static User currentUser = UserQuery.getUserByName();
+    private static ResourceBundle rb = ResourceBundle.getBundle("languages/Lang", Locale.getDefault());
 
     /***
      * Initializes login screen.
@@ -34,10 +44,16 @@ public class LoginController implements Initializable {
      */
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        messageLabel.setText(rb.getString("message"));
+        userNameText.setPromptText(rb.getString("usernamePromptText"));
+        userNameLabel.setText(rb.getString("usernameLabel"));
+        passwordText.setPromptText(rb.getString("passwordPromptText"));
+        passwordLabel.setText(rb.getString("passwordLabel"));
         zoneIdLabel.setText(ZoneId.systemDefault().toString());
+        submitButton.setText(rb.getString("submit"));
 
-        Locale currentLocale = Locale.getDefault();
-        System.out.println(currentLocale);  // outputs 'en_US'
+//        Locale currentLocale = Locale.getDefault();
+//        System.out.println(currentLocale);  // outputs 'en_US'
 
 //            zoneIdLabel.setText(String.valueOf(ZoneOffset.systemDefault().getRules().getOffset(Instant.now())));
 //            zoneIdLabel.setText("FOO!!!!!");
@@ -54,6 +70,10 @@ public class LoginController implements Initializable {
 
     }
 
+    public static ResourceBundle getResourceBundle() {
+        return rb;
+    }
+
     /***
      * Handles login submit request.
      * Check that user has entered a valid username/password pair, and if so, launches
@@ -62,7 +82,7 @@ public class LoginController implements Initializable {
      * @param submitEvent
      */
     public void onSubmitButtonAction(ActionEvent submitEvent) throws IOException {
-        boolean authorized = UserQuery.checkIfAuthorized(userName.getText(), password.getText());
+        boolean authorized = UserQuery.checkIfAuthorized(userNameText.getText(), passwordText.getText());
 
         if (authorized == false) {
             Alert alert = new Alert(Alert.AlertType.ERROR);

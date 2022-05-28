@@ -290,7 +290,7 @@ public class MainController implements Initializable {
             Parent root = FXMLLoader.load(getClass().getResource("/view/Login.fxml"));
             Stage stage = (Stage)((Node) actionEvent.getSource()).getScene().getWindow();
             Scene scene = new Scene(root);
-            stage.setTitle("Log In");
+            stage.setTitle(LoginController.getResourceBundle().getString("title"));
             stage.setScene(scene);
             stage.show();
         }
