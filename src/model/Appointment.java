@@ -4,6 +4,7 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 public class Appointment {
     private static ObservableList<Appointment> allAppointments = FXCollections.observableArrayList();
@@ -22,6 +23,9 @@ public class Appointment {
     private int customerId;
     private int userId;
     private int contactId;
+
+    DateTimeFormatter dtf = DateTimeFormatter.ofPattern("MM-dd-yyyy HH:mm");
+
 
     public Appointment(int id, String title, String description, String location, String type, LocalDateTime start,
                        LocalDateTime end, LocalDateTime createDate, String createdBy, LocalDateTime lastUpdate,
@@ -46,6 +50,11 @@ public class Appointment {
     public String toString() {
         return(title);
     }
+
+    public String getStartString() { return dtf.format(start); }
+
+    public String getEndString() { return dtf.format(end); }
+
 
     // TODO: Fix later
 //    public static ObservableList<Appointment> getAllAppointments() {

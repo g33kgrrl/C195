@@ -21,8 +21,8 @@
                         <TableColumn fx:id="custIdCol" prefWidth="39.0" text="ID" />
                         <TableColumn fx:id="custNameCol" prefWidth="137.0" text="Name" />
                         <TableColumn fx:id="custAddressCol" text="Address" />
-                        <TableColumn fx:id="custPostalCodeCol" prefWidth="81.0" text="Postal" />
-                        <TableColumn fx:id="custPhoneCol" prefWidth="98.0" text="Phone" />
+                        <TableColumn fx:id="custPostalCodeCol" prefWidth="63.0" text="Postal" />
+                        <TableColumn fx:id="custPhoneCol" prefWidth="116.0" text="Phone" />
                         <TableColumn fx:id="custCountryCol" text="Country" />
                         <TableColumn fx:id="custDivIdCol" prefWidth="52.0" text="Div ID" />
                     </columns>

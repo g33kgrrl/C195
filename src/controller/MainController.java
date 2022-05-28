@@ -53,6 +53,8 @@ public class MainController implements Initializable {
     public TableColumn apptUserIdCol;
     public TableColumn apptContactIdCol;
 
+    DateTimeFormatter dtf = DateTimeFormatter.ofPattern("MM-dd-yyyy HH:mm");
+
 
     /**
      * Sets up and displays main screen.
@@ -79,8 +81,8 @@ public class MainController implements Initializable {
         apptDescriptionCol.setCellValueFactory(new PropertyValueFactory<>("description"));
         apptLocationCol.setCellValueFactory(new PropertyValueFactory<>("location"));
         apptTypeCol.setCellValueFactory(new PropertyValueFactory<>("type"));
-        apptStartCol.setCellValueFactory(new PropertyValueFactory<>("start"));
-        apptEndCol.setCellValueFactory(new PropertyValueFactory<>("end"));
+        apptStartCol.setCellValueFactory(new PropertyValueFactory<>("startString"));
+        apptEndCol.setCellValueFactory(new PropertyValueFactory<>("endString"));
         apptContactIdCol.setCellValueFactory(new PropertyValueFactory<>("contactId"));
         apptCustomerIdCol.setCellValueFactory(new PropertyValueFactory<>("customerId"));
         apptUserIdCol.setCellValueFactory(new PropertyValueFactory<>("userId"));
