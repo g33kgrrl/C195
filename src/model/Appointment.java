@@ -1,5 +1,6 @@
 package model;
 
+import dao.AppointmentQuery;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import java.time.LocalDateTime;
@@ -8,7 +9,6 @@ import java.time.format.DateTimeFormatter;
 
 
 public class Appointment {
-    private static ObservableList<Appointment> allAppointments = FXCollections.observableArrayList();
     private DateTimeFormatter dtf = DateTimeFormatter.ofPattern("MM-dd-yyyy HH:mm");
 
     private int id;
@@ -51,8 +51,30 @@ public class Appointment {
         return(title);
     }
 
+    public static Appointment checkForUpcoming() {
+        // get current localdatetime
+        LocalDateTime nowLdt = LocalDateTime.now();
+
+        // search all Appointments for start time within 15m
+        // Q: Do through db, or code? Prob code.
+        ObservableList<Appointment> allAppointments = AppointmentQuery.getAll();
+
+        for (Appointment a:allAppointments
+             ) {
+            // if a.getStart - nowLdt < 15, set alert
+            if(a.getStart().compareTo(nowLdt) < 15) {
+                // Try Period.between
+                System.out.println(a.getStart().compareTo(nowLdt));
+            } else {
+                System.out.println("None upcoming");
+            }
+        }
+
+        return null;
+    }
+
     public static LocalDateTime getConvertedLtd(LocalDateTime ldt) {
-        final ZoneId hqZoneId = ZoneId.of("US/Eastern"); // TODO: Move to top somewhere
+        final ZoneId hqZoneId = ZoneId.of("US/Eastern");
 
         ZoneId systemZoneId = ZoneId.systemDefault();
         LocalDateTime systemLdt = ldt.atZone(hqZoneId).withZoneSameInstant(systemZoneId).toLocalDateTime();
@@ -73,8 +95,10 @@ public class Appointment {
         return validApptHours;
     }
 
+    // Enables formatted start date and time in Appointments table
     public String getFormattedStart() { return dtf.format(start); }
 
+    // Enables formatted end date and time in Appointments table
     public String getFormattedEnd() { return dtf.format(end); }
 
     public int getId() {

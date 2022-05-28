@@ -10,6 +10,8 @@ import java.net.URL;
 import java.time.*;
 import java.util.Locale;
 import java.util.ResourceBundle;
+
+import model.Appointment;
 import model.User;
 
 
@@ -82,7 +84,7 @@ public class LoginController implements Initializable {
             logLine += "Successful login by user '" + userName + "'";
             User.trackLoginActivity(logLine);
 
-
+            Appointment.checkForUpcoming();
 
             MainController.toMain(actionEvent);
         }
