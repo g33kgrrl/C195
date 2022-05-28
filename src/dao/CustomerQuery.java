@@ -2,13 +2,39 @@ package dao;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import model.Customer;
-
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+import model.Customer;
+
+
 public abstract class CustomerQuery {
+    public static Customer select(int customerId) {
+        try {
+            String sql = "SELECT * FROM customers WHERE Customer_ID = ?";
+            PreparedStatement ps = JDBC.getConnection().prepareStatement(sql);
+            ps.setInt(1, customerId);
+            ResultSet rs = ps.executeQuery();
+
+            if (rs.next()) {
+                String customerName = rs.getString("Customer_Name");
+                String address = rs.getString("Address");
+                String postalCode = rs.getString("Postal_Code");
+                String phone = rs.getString("Phone");
+                int divisionIdFK = rs.getInt("Division_ID");
+
+                Customer c = new Customer(customerId, customerName, address, postalCode, phone, divisionIdFK);
+
+                return c;
+            }
+        }
+        catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+
+        return null;
+    }
 
     public static int insert(String customerName, String address, String postalCode, String phone, int divisionId) {
         try {
@@ -21,7 +47,6 @@ public abstract class CustomerQuery {
             ps.setInt(5, divisionId);
 
             int rowsAffected = ps.executeUpdate();
-            System.out.println("Rows affected: " + rowsAffected);
             return rowsAffected;
         }
         catch (SQLException ex) {
@@ -86,9 +111,6 @@ public abstract class CustomerQuery {
                 String phone = rs.getString("Phone");
                 int divisionId = rs.getInt("Division_ID");
 
-//                System.out.println(customerId + " | " + customerName + " | " + address + " | " + postalCode + " | " + phone
-//                        + " | " + divisionId);
-
                 Customer c = new Customer(customerId, customerName, address, postalCode, phone, divisionId);
                 allCustomers.add(c);
             }
@@ -100,37 +122,7 @@ public abstract class CustomerQuery {
         return allCustomers;
     }
 
-    public static Customer getCustomer(int customerId) {
-        try {
-            String sql = "SELECT * FROM customers WHERE Customer_ID = ?";
-            PreparedStatement ps = JDBC.getConnection().prepareStatement(sql);
-            ps.setInt(1, customerId);
-            ResultSet rs = ps.executeQuery();
-
-            if (rs.next()) {
-                String customerName = rs.getString("Customer_Name");
-                String address = rs.getString("Address");
-                String postalCode = rs.getString("Postal_Code");
-                String phone = rs.getString("Phone");
-                int divisionIdFK = rs.getInt("Division_ID");
-
-//                System.out.println(customerId + " | " + customerName + " | " + address + " | " + postalCode + " | " + phone
-//                        + " | " + divisionIdFK);
-
-                Customer c = new Customer(customerId, customerName, address, postalCode, phone, divisionIdFK);
-
-                return c;
-            }
-        }
-        catch (SQLException ex) {
-            ex.printStackTrace();
-        }
-
-        return null;
-    }
-
     public static int getCustomerCount() {
-//        ObservableList<Contact> selectedContact = FXCollections.observableArrayList();
         int customerCount;
 
         try {
@@ -140,13 +132,7 @@ public abstract class CustomerQuery {
 
             if(rs.next()) {
                 customerCount = rs.getInt("COUNT(*)");
-//                int contactId = rs.getInt("Contact_ID");
-//                String contactName = rs.getString("Contact_Name");
-//                String contactEmail = rs.getString("Email");
 
-//                Contact c = new Contact(contactId, contactName, contactEmail);
-//                System.out.println(contactId + " | " + contactName);
-//                return c;
                 return customerCount;
             }
         }

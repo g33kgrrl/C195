@@ -1,13 +1,8 @@
 package model;
 
 import dao.CountryQuery;
-import dao.CustomerQuery;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 
 public class Customer {
-    private static ObservableList<Customer> allCustomers = FXCollections.observableArrayList();
-
     private int id;
     private String name;
     private String address;
@@ -26,9 +21,7 @@ public class Customer {
     }
 
     @Override
-    public String toString() {
-        return(name);
-    }
+    public String toString() { return(name); }
 
     public int getId() {
         return id;
@@ -81,4 +74,9 @@ public class Customer {
     public String getCountry() {
         return String.valueOf(CountryQuery.getCountryByDivId(divisionId));
     }
+
+    public void setCountry(String country) {
+        this.country = country;
+    }
+
 }

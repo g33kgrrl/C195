@@ -1,13 +1,9 @@
 package model;
 
 import dao.CountryQuery;
-import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
-
 public class Country {
-    private static ObservableList<Country> allCountries = FXCollections.observableArrayList();
-
     private int id;
     private String name;
 
@@ -16,14 +12,11 @@ public class Country {
         this.name = name;
     }
 
+    @Override
+    public String toString() { return(name); }
+
     public static ObservableList<Country> getAllCountries() {
         return CountryQuery.selectAll();
-    }
-
-    @Override
-    public String toString() {
-//        return("#" + Integer.toString(id) + " " + name);
-        return(name);
     }
 
     public int getId() {

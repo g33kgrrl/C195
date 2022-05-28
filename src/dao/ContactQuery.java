@@ -2,12 +2,11 @@ package dao;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import model.Contact;
-import model.Country;
-
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+
+import model.Contact;
 
 public abstract class ContactQuery {
 
@@ -15,7 +14,6 @@ public abstract class ContactQuery {
         ObservableList<Contact> allContacts = FXCollections.observableArrayList();
 
         try {
-            // TODO: Add WHERE appointmentID = ?
             String sql = "SELECT * FROM contacts";
             PreparedStatement ps = JDBC.getConnection().prepareStatement(sql);
             ResultSet rs = ps.executeQuery();
@@ -26,8 +24,6 @@ public abstract class ContactQuery {
                 String email = rs.getString("Email");
                 Contact c = new Contact(id, name, email);
                 allContacts.add(c);
-
-//                System.out.println(id + " | " + name);
             }
         }
         catch(SQLException ex) {
@@ -51,7 +47,7 @@ public abstract class ContactQuery {
                 String contactEmail = rs.getString("Email");
 
                 Contact c = new Contact(contactId, contactName, contactEmail);
-//                System.out.println(contactId + " | " + contactName);
+
                 return c;
             }
         }

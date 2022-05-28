@@ -2,13 +2,12 @@ package dao;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import model.User;
-import model.User;
-
 import java.sql.*;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
+
+import model.User;
+
 
 public abstract class UserQuery {
     private static User currentUser;
@@ -33,8 +32,6 @@ public abstract class UserQuery {
                 User u = new User(id, name, password, createDate, createdBy,lastUpdate, lastUpdatedBy);
 
                 allUsers.add(u);
-
-//                System.out.println(id + " | " + name);
             }
 
             return allUsers;
@@ -46,7 +43,7 @@ public abstract class UserQuery {
         return null;
     }
 
-    public static User getUser(int id) {
+    public static User select(int id) {
 
         try {
             String sql = "SELECT * FROM users WHERE User_ID = ?";
@@ -63,8 +60,6 @@ public abstract class UserQuery {
                 String lastUpdatedBy = rs.getString("Last_Updated_By");
 
                 User u = new User(id, name, password, createDate, createdBy,lastUpdate, lastUpdatedBy);
-
-//                System.out.println(id + " | " + name);
 
                 return u;
             }
@@ -93,11 +88,6 @@ public abstract class UserQuery {
                 String lastUpdatedBy = rs.getString("Last_Updated_By");
 
                 currentUser = new User(userId, enteredUsername, password, createDate, createdBy, lastUpdate, lastUpdatedBy);
-
-//                System.out.println(currentUser);
-//                System.out.println("User: " + userId + " | " + enteredUsername + " | " + password + " | " + createDate + " | "
-//                    + createdBy + " | " + lastUpdate + " | " + lastUpdatedBy
-//                );
 
                 return true;
             }

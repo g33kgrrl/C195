@@ -2,11 +2,12 @@ package dao;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import model.Division;
-
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+
+import model.Division;
+
 
 public abstract class DivisionQuery {
 
@@ -21,8 +22,8 @@ public abstract class DivisionQuery {
                 int divisionId = rs.getInt("Division_ID");
                 String division = rs.getString("Division");
                 int countryId = rs.getInt("Country_ID");
-                Division division1 = new Division(divisionId, division, countryId);
-                return division1;
+
+                return new Division(divisionId, division, countryId);
             }
         }
         catch(SQLException ex) {
@@ -49,8 +50,6 @@ public abstract class DivisionQuery {
 
                 Division d = new Division(id, name, countryId);
                 allDivisions.add(d);
-
-//                System.out.println(id + " | " + name + "|" + countryIdFK);
             }
 
             return allDivisions;
@@ -69,12 +68,8 @@ public abstract class DivisionQuery {
             ps.setInt(1, divisionId);
             ResultSet rs = ps.executeQuery();
 
-            while (rs.next()) {
-                int countryId = rs.getInt("Country_ID");
-
-//                System.out.println(countryId);
-
-                return countryId;
+            if (rs.next()) {
+                return rs.getInt("Country_ID");
             }
         }
         catch (SQLException ex) {
@@ -83,5 +78,4 @@ public abstract class DivisionQuery {
 
         return -1;
     }
-
 }

@@ -90,8 +90,8 @@ public class AddModAppointmentController implements Initializable {
         startHourCombo.setValue(String.format("%02d", start.getHour()) + ":00");
         endDatePicker.setValue(end.toLocalDate());
         endHourCombo.setValue(String.format("%02d", end.getHour()) + ":00");
-        customerCombo.setValue(CustomerQuery.getCustomer(appointment.getCustomerId()));
-        userCombo.setValue(UserQuery.getUser(appointment.getUserId()));
+        customerCombo.setValue(CustomerQuery.select(appointment.getCustomerId()));
+        userCombo.setValue(UserQuery.select(appointment.getUserId()));
         contactCombo.setValue(ContactQuery.getContact(appointment.getContactId()));
     }
 

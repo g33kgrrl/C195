@@ -3,7 +3,6 @@ package dao;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import model.Country;
-import model.Division;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -24,8 +23,6 @@ public abstract class CountryQuery {
                 String name = rs.getString("Country");
                 Country c = new Country(id, name);
                 allCountries.add(c);
-
-//                System.out.println(id + " | " + name);
             }
         }
         catch(SQLException ex) {
@@ -49,8 +46,6 @@ public abstract class CountryQuery {
 
                 Country c = new Country(countryId, countryName);
                 selectedCountry.add(c);
-
-//                System.out.println(countryId + " | " + countryName);
             }
         }
         catch(SQLException ex) {
@@ -61,8 +56,6 @@ public abstract class CountryQuery {
     }
 
     public static Country getCountryByDivId(int divisionId) {
-        ObservableList<Country> selectedCountry = FXCollections.observableArrayList();
-
         try {
             String sql = "SELECT * FROM first_level_divisions WHERE Division_ID = ?";
             PreparedStatement ps = JDBC.getConnection().prepareStatement(sql);

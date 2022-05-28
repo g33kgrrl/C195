@@ -1,13 +1,6 @@
 package model;
 
-import dao.DivisionQuery;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
-
-
 public class Division {
-    private static ObservableList<Division> allDivisions = FXCollections.observableArrayList(); // put in another class?
-
     private int id;
     private String name;
     private int countryId;
@@ -16,11 +9,6 @@ public class Division {
         this.id = id;
         this.name = name;
         this.countryId = countryId;
-    }
-
-    // List not good idea - should prob be in another class
-    public static ObservableList<Division> getAllDivisions(int countryId) {
-        return DivisionQuery.selectAllForCountry(countryId);
     }
 
     @Override

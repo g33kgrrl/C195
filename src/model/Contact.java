@@ -1,13 +1,6 @@
 package model;
 
-import dao.ContactQuery;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
-
-
 public class Contact {
-    private static ObservableList<Contact> allContacts = FXCollections.observableArrayList();
-
     private int id;
     private String name;
     private String email;
@@ -18,15 +11,8 @@ public class Contact {
         this.email = email;
     }
 
-    public static ObservableList<Contact> getAllContacts() {
-        return ContactQuery.getAll();
-    }
-
     @Override
-    public String toString() {
-//        return("#" + Integer.toString(id) + " " + name);
-        return(name);
-    }
+    public String toString() { return(name); }
 
     public int getId() {
         return id;

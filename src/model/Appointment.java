@@ -2,12 +2,12 @@ package model;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
 public class Appointment {
     private static ObservableList<Appointment> allAppointments = FXCollections.observableArrayList();
+    private DateTimeFormatter dtf = DateTimeFormatter.ofPattern("MM-dd-yyyy HH:mm");
 
     private int id;
     private String title;
@@ -23,8 +23,6 @@ public class Appointment {
     private int customerId;
     private int userId;
     private int contactId;
-
-    DateTimeFormatter dtf = DateTimeFormatter.ofPattern("MM-dd-yyyy HH:mm");
 
 
     public Appointment(int id, String title, String description, String location, String type, LocalDateTime start,
@@ -54,17 +52,6 @@ public class Appointment {
     public String getStartString() { return dtf.format(start); }
 
     public String getEndString() { return dtf.format(end); }
-
-
-    // TODO: Fix later
-//    public static ObservableList<Appointment> getAllAppointments() {
-//
-//        return AppointmentQuery.selectAll();
-//    }
-
-//    public static void setAllCustomers(ObservableList<Appointment> allCustomers) {
-//        Appointment.allCustomers = allCustomers;
-//    }
 
     public int getId() {
         return id;

@@ -1,14 +1,12 @@
 package model;
 
-import dao.AppointmentQuery;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-
 
 public class TypeMonthAppt {
     private static ObservableList<TypeMonthAppt> allTypeMonthAppts = FXCollections.observableArrayList();
 
-    // total COUNT of customer appointments by TYPE and MONTH
+    // total counts of customer appointments by type and month (regardless of year)
     private int appointmentId;
     private int count;
     private String type;
@@ -20,16 +18,6 @@ public class TypeMonthAppt {
         this.type = type;
         this.monthName = monthName;
     }
-
-    public static ObservableList<TypeMonthAppt> getAllTypeMonthAppts() {
-        return AppointmentQuery.getAllByTypeMonth();
-    }
-
-//    @Override
-//    public String toString() {
-////        return("#" + Integer.toString(id) + " " + name);
-//        return(name);
-//    }
 
     public int getAppointmentId() {
         return appointmentId;

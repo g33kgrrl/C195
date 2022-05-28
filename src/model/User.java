@@ -1,10 +1,8 @@
 package model;
 
-import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.sql.Date;
 import java.time.LocalDateTime;
 
 public class User {
@@ -32,11 +30,9 @@ public class User {
     }
 
     public static void trackLoginActivity(String activityToLog) {
-        String fileName = "src/login_activity.txt";
-
-        try(FileWriter fileWriter = new FileWriter(fileName, true);
-            PrintWriter printWriter = new PrintWriter(fileWriter);) {
-
+        try {
+            FileWriter fileWriter = new FileWriter("src/login_activity.txt", true);
+            PrintWriter printWriter = new PrintWriter(fileWriter);
             printWriter.println(activityToLog);
             System.out.println(activityToLog);
         } catch (IOException e) {
@@ -44,59 +40,29 @@ public class User {
         }
     }
 
-    public int getUserId() {
-        return userId;
-    }
+    public int getUserId() { return userId; }
 
-    public void setUserId(int userId) {
-        this.userId = userId;
-    }
+    public String getUserName() { return userName; }
 
-    public String getUserName() {
-        return userName;
-    }
+    public void setUserName(String userName) { this.userName = userName; }
 
-    public void setUserName(String userName) {
-        this.userName = userName;
-    }
+    public String getPassword() { return password; }
 
-    public String getPassword() {
-        return password;
-    }
+    public void setPassword(String password) { this.password = password; }
 
-    public void setPassword(String password) {
-        this.password = password;
-    }
+    public LocalDateTime getCreateDate() { return createDate; }
 
-    public LocalDateTime getCreateDate() {
-        return createDate;
-    }
+    public void setCreateDate(LocalDateTime createDate) { this.createDate = createDate; }
 
-    public void setCreateDate(LocalDateTime createDate) {
-        this.createDate = createDate;
-    }
+    public String getCreatedBy() { return createdBy; }
 
-    public String getCreatedBy() {
-        return createdBy;
-    }
+    public void setCreatedBy(String createdBy) { this.createdBy = createdBy; }
 
-    public void setCreatedBy(String createdBy) {
-        this.createdBy = createdBy;
-    }
+    public LocalDateTime getLastUpdate() { return lastUpdate; }
 
-    public LocalDateTime getLastUpdate() {
-        return lastUpdate;
-    }
+    public void setLastUpdate(LocalDateTime lastUpdate) { this.lastUpdate = lastUpdate; }
 
-    public void setLastUpdate(LocalDateTime lastUpdate) {
-        this.lastUpdate = lastUpdate;
-    }
+    public String getLastUpdatedBy() { return lastUpdatedBy; }
 
-    public String getLastUpdatedBy() {
-        return lastUpdatedBy;
-    }
-
-    public void setLastUpdatedBy(String lastUpdatedBy) {
-        this.lastUpdatedBy = lastUpdatedBy;
-    }
+    public void setLastUpdatedBy(String lastUpdatedBy) { this.lastUpdatedBy = lastUpdatedBy; }
 }
