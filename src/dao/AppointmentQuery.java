@@ -118,9 +118,7 @@ public abstract class AppointmentQuery {
             PreparedStatement ps = JDBC.getConnection().prepareStatement(sql);
             ps.setInt(1, appointmentId);
 
-            int rowsAffected = ps.executeUpdate();
-            System.out.println("Rows affected: " + rowsAffected);
-            return rowsAffected;
+            return ps.executeUpdate();
         }
         catch(SQLException ex) {
             ex.printStackTrace();

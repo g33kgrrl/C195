@@ -45,8 +45,7 @@ public abstract class CustomerQuery {
             ps.setString(4, phone);
             ps.setInt(5, divisionId);
 
-            int rowsAffected = ps.executeUpdate();
-            return rowsAffected;
+            return ps.executeUpdate();
         }
         catch (SQLException ex) {
             ex.printStackTrace();
@@ -66,9 +65,7 @@ public abstract class CustomerQuery {
             ps.setInt(5, divisionId);
             ps.setInt(6, customerId);
 
-            int rowsAffected = ps.executeUpdate();
-            System.out.println("Rows affected: " + rowsAffected);
-            return rowsAffected;
+            return ps.executeUpdate();
         }
         catch(SQLException ex) {
             ex.printStackTrace();
@@ -83,9 +80,7 @@ public abstract class CustomerQuery {
             PreparedStatement ps = JDBC.getConnection().prepareStatement(sql);
             ps.setInt(1, customerId);
 
-            int rowsAffected = ps.executeUpdate();
-            System.out.println("Rows affected: " + rowsAffected);
-            return rowsAffected;
+            return ps.executeUpdate();
         }
         catch(SQLException ex) {
             ex.printStackTrace();

@@ -4,9 +4,7 @@ import dao.AppointmentQuery;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
-import java.time.Duration;
 import java.time.LocalDateTime;
-import java.time.Period;
 import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
 
@@ -54,24 +52,34 @@ public class Appointment {
         return(title);
     }
 
-    // search all Appointments for start time within 15m
-    public static ObservableList<Appointment> checkForUpcoming() {
-        ObservableList upcomingAppointments = FXCollections.observableArrayList();
+    // find and list Appointments with start time within 15m
+    public static String getUpcoming() {
+        ObservableList<Appointment> upcomingAppointments = FXCollections.observableArrayList();
         ObservableList<Appointment> allAppointments = AppointmentQuery.getAll();
         LocalDateTime nowLdt = LocalDateTime.now();
 
         for (Appointment a:allAppointments) {
             LocalDateTime apptStart = a.getStart();
 
-            // TODO: Change back to 15
-            if(apptStart.isAfter(nowLdt) && apptStart.isBefore(nowLdt.plusMinutes(120))) {
-                System.out.println(apptStart);
-
+            if(apptStart.isAfter(nowLdt) && apptStart.isBefore(nowLdt.plusMinutes(15))) {
                 upcomingAppointments.add(a);
             }
         }
 
-        return null;
+        int upcomingApptsCount = upcomingAppointments.size();
+
+        if(upcomingApptsCount == 0) {
+            return "No upcoming appointments.";
+        } else {
+            String upcomingApptsList = upcomingApptsCount + " upcoming appointment(s):\n\n";
+
+            for(Appointment a:upcomingAppointments) {
+                upcomingApptsList += a.start.format(DateTimeFormatter.ofPattern("HH:mm")) + "\t" + a.getTitle() + "\t" +
+                a.getDescription() + "\n";
+            }
+
+            return upcomingApptsList;
+        }
     }
 
     public static LocalDateTime getConvertedLtd(LocalDateTime ldt) {

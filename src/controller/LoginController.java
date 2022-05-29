@@ -9,10 +9,10 @@ import javafx.scene.control.*;
 import java.io.IOException;
 import java.net.URL;
 import java.time.*;
+import java.time.format.DateTimeFormatter;
 import java.util.Locale;
 import java.util.ResourceBundle;
 
-import main.Main;
 import model.Appointment;
 import model.User;
 
@@ -78,30 +78,12 @@ public class LoginController implements Initializable {
             logLine += "FAILED login attempt by username '" + userName + "'";
             User.trackLoginActivity(logLine);
 
-            Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setTitle("Login failed");
-            alert.setContentText("Please check your username and password and try again.");
-            alert.showAndWait();
+            MainController.showAlert("error", "Login failed",
+                    "Please check your username and password and try again.");
         } else {
             logLine += "Successful login by user '" + userName + "'";
             User.trackLoginActivity(logLine);
-
-            String upcomingAppointmentsList = "";
-            ObservableList<Appointment> upcomingAppts = Appointment.checkForUpcoming();
-
-            if(upcomingAppts == null) {
-                upcomingAppointmentsList += "No upcoming appointments in the next 15 minutes.";
-
-            } else {
-                for (Appointment a:upcomingAppts) {
-                    upcomingAppointmentsList += a.getFormattedStart() + " - " + a.getFormattedEnd() + " " +
-                            a.getTitle() + " " + a.getDescription() + "\n";
-                }
-            }
-
-            System.out.println(upcomingAppointmentsList);
-
-            MainController.showAlert("information", "Upcoming appointments", upcomingAppointmentsList);
+            MainController.showAlert("information", "Upcoming appointments", Appointment.getUpcoming());
 
             MainController.toMain(actionEvent);
         }

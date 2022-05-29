@@ -31,9 +31,11 @@ public class User {
 
     public static void trackLoginActivity(String activityToLog) {
         try {
+            // TODO: Has this stopped working now?
             FileWriter fileWriter = new FileWriter("src/login_activity.txt", true);
             PrintWriter printWriter = new PrintWriter(fileWriter);
             printWriter.println(activityToLog);
+            // TODO: Remove thiss
             System.out.println(activityToLog);
         } catch (IOException e) {
             e.printStackTrace();
