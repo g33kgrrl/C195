@@ -3,7 +3,10 @@ package model;
 import dao.AppointmentQuery;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+
+import java.time.Duration;
 import java.time.LocalDateTime;
+import java.time.Period;
 import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
 
@@ -51,22 +54,20 @@ public class Appointment {
         return(title);
     }
 
-    public static Appointment checkForUpcoming() {
-        // get current localdatetime
+    // search all Appointments for start time within 15m
+    public static ObservableList<Appointment> checkForUpcoming() {
+        ObservableList upcomingAppointments = FXCollections.observableArrayList();
+        ObservableList<Appointment> allAppointments = AppointmentQuery.getAll();
         LocalDateTime nowLdt = LocalDateTime.now();
 
-        // search all Appointments for start time within 15m
-        // Q: Do through db, or code? Prob code.
-        ObservableList<Appointment> allAppointments = AppointmentQuery.getAll();
+        for (Appointment a:allAppointments) {
+            LocalDateTime apptStart = a.getStart();
 
-        for (Appointment a:allAppointments
-             ) {
-            // if a.getStart - nowLdt < 15, set alert
-            if(a.getStart().compareTo(nowLdt) < 15) {
-                // Try Period.between
-                System.out.println(a.getStart().compareTo(nowLdt));
-            } else {
-                System.out.println("None upcoming");
+            // TODO: Change back to 15
+            if(apptStart.isAfter(nowLdt) && apptStart.isBefore(nowLdt.plusMinutes(120))) {
+                System.out.println(apptStart);
+
+                upcomingAppointments.add(a);
             }
         }
 

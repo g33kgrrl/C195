@@ -1,6 +1,7 @@
 package controller;
 
 import dao.UserQuery;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -11,6 +12,7 @@ import java.time.*;
 import java.util.Locale;
 import java.util.ResourceBundle;
 
+import main.Main;
 import model.Appointment;
 import model.User;
 
@@ -84,7 +86,22 @@ public class LoginController implements Initializable {
             logLine += "Successful login by user '" + userName + "'";
             User.trackLoginActivity(logLine);
 
-            Appointment.checkForUpcoming();
+            String upcomingAppointmentsList = "";
+            ObservableList<Appointment> upcomingAppts = Appointment.checkForUpcoming();
+
+            if(upcomingAppts == null) {
+                upcomingAppointmentsList += "No upcoming appointments in the next 15 minutes.";
+
+            } else {
+                for (Appointment a:upcomingAppts) {
+                    upcomingAppointmentsList += a.getFormattedStart() + " - " + a.getFormattedEnd() + " " +
+                            a.getTitle() + " " + a.getDescription() + "\n";
+                }
+            }
+
+            System.out.println(upcomingAppointmentsList);
+
+            MainController.showAlert("information", "Upcoming appointments", upcomingAppointmentsList);
 
             MainController.toMain(actionEvent);
         }
