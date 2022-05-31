@@ -153,10 +153,9 @@ public class AddModAppointmentController implements Initializable {
                 }
 
                 if(rowsAffected != 1) {
-                    Alert alert = new Alert(Alert.AlertType.ERROR);
-                    alert.setTitle("Appointment add/modify error");
-                    alert.setContentText("Unable to add/modify appointment.");
-                    alert.showAndWait();
+                    MainController.showAlert("error", "Appointment add/modify error",
+                            "Unable to add/modify appointment.");
+
                 }
 
                 MainController.toMain(actionEvent);

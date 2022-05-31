@@ -1,5 +1,6 @@
 package model;
 
+import controller.MainController;
 import dao.AppointmentQuery;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -107,15 +108,14 @@ public class Appointment {
     // Use data from form but still pass Appointment object as well because it's needed in order to eliminate self-reference
     // in the resulting ObservableList... and form data may differ from that in the object!
     public static boolean checkOverlap(int customerId, LocalDateTime propStart, LocalDateTime propEnd, Appointment appt) {
-        // get proposed start and end times
-//        LocalDateTime propStart = appt.start;
-//        LocalDateTime propEnd = appt.end;
-
         // get all appts *for that customer* - and for Modify, exclude current appt (by appt ID) from checks
         ObservableList<Appointment> custAppointments = AppointmentQuery.getAllForCustomerId(customerId);
 
+        System.out.println(custAppointments.size() + " appts found");
+
         if(appt != null) {
             custAppointments.remove(appt);
+            System.out.println("Removing appt" + appt.start + "-" + appt.end + " - " + appt.title + " " + appt.description);
         }
 
         for (Appointment a:custAppointments) {
@@ -126,19 +126,20 @@ public class Appointment {
             // Overlap when Start is in an appointment window
             if((propStart.isAfter(start) || propStart.isEqual(start)) && propStart.isBefore(end)) {
                 System.out.println("Start time is in appt window");
+                System.out.println(a.start + "-" + a.end + "  " + a.title + " " + a.description);
                 return true;
             }
             // Overlap when End is in an appointment window
             else if(propEnd.isAfter(start) && ((propEnd.isBefore(end)) || propEnd.isEqual(end))) {
                 System.out.println("End time is in appt window");
+                System.out.println(a.start + "-" + a.end + "  " + a.title + " " + a.description);
                 return true;
             }
             // Overlap when Start and End encompass an entire appointment
             else if((propStart.isBefore(start) || propStart.isEqual(start)) && (propEnd.isAfter(end) || propEnd.isEqual(end))) {
                 System.out.println("Time slot contains an appt");
+                System.out.println(a.start + "-" + a.end + "  " + a.title + " " + a.description);
                 return true;
-            } else {
-                System.out.println("No conflict.");
             }
         }
 
