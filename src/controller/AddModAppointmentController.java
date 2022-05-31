@@ -105,37 +105,41 @@ public class AddModAppointmentController implements Initializable {
             String type = typeCombo.getValue();
             LocalDateTime start = LocalDateTime.of(startDatePicker.getValue(), LocalTime.parse(startHourCombo.getValue().toString()));
             LocalDateTime end = LocalDateTime.of(endDatePicker.getValue(), LocalTime.parse(endHourCombo.getValue().toString()));
-            LocalDateTime lastUpdate = LocalDateTime.now();
-            String lastUpdatedBy = currentUser.getUserName();
             int customerId = ((Customer) customerCombo.getSelectionModel().getSelectedItem()).getId();
             int userId = ((User) userCombo.getValue()).getUserId();
             int contactId = ((Contact) contactCombo.getSelectionModel().getSelectedItem()).getId();
             int rowsAffected;
-
-            // If adding new appointment, creation is now by current user; otherwise, fetch from database
-            LocalDateTime createDate;
-            String createdBy;
-
-            if(appointment == null) {
-                createDate = LocalDateTime.now();
-                createdBy = currentUser.getUserName();
-            } else {
-                createDate = appointment.getCreateDate();
-                createdBy = appointment.getCreatedBy();
-            }
 
             // Validation: Ensure all fields are set
             if(title.isEmpty() || description.isEmpty() || location.isEmpty() || type.isEmpty() ||
                     startHourCombo.getSelectionModel().getSelectedItem() == null ||
                     endHourCombo.getSelectionModel().getSelectedItem() == null ||
                     startDatePicker.getValue() == null || endDatePicker.getValue() == null ||
-                    lastUpdate == null || lastUpdatedBy.isEmpty() ||
                     Integer.valueOf(customerId) == null || Integer.valueOf(userId) == null ||
-                    Integer.valueOf(contactId) == null || createDate == null || createdBy.isEmpty()
+                    Integer.valueOf(contactId) == null
             ) {
-                showValidateError();
+                MainController.showAlert("error", "Appointment add/modify form", "Please complete all fields.");
+            } else if(Appointment.checkOverlap(customerId, start, end, appointment)) {
+                MainController.showAlert("error", "Appointment add/modify form", "The selected start and end " +
+                        "times overlap one or more existing appointments for this customer. Please revise.");
             }
             else {
+                LocalDateTime lastUpdate = LocalDateTime.now();
+                String lastUpdatedBy = currentUser.getUserName();
+
+                // If adding new appointment, creation is now by current user; otherwise, fetch from database
+                // TODO: Move this into if/else below
+                LocalDateTime createDate;
+                String createdBy;
+
+                if(appointment == null) {
+                    createDate = LocalDateTime.now();
+                    createdBy = currentUser.getUserName();
+                } else {
+                    createDate = appointment.getCreateDate();
+                    createdBy = appointment.getCreatedBy();
+                }
+
                 if(appointment == null) {
                     rowsAffected = AppointmentQuery.insert(
                             title, description, location, type, start, end, createDate, createdBy, lastUpdate, lastUpdatedBy,
@@ -158,15 +162,8 @@ public class AddModAppointmentController implements Initializable {
                 MainController.toMain(actionEvent);
             }
         } catch (NullPointerException e) {
-            showValidateError();
+            MainController.showAlert("error", "Appointment add/modify form", "Please complete all fields.");
         }
-    }
-
-    public void showValidateError() {
-        Alert alert = new Alert(Alert.AlertType.ERROR);
-        alert.setTitle("Appointment add/modify form");
-        alert.setContentText("Please complete all fields.");
-        alert.showAndWait();
     }
 
     /**

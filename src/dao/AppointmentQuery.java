@@ -9,8 +9,6 @@ import java.time.*;
 
 
 public abstract class AppointmentQuery {
-    private static ZoneId localZoneId = ZoneId.systemDefault();
-
     public static Appointment select(int appointmentId) throws SQLException {
         try {
             String sql = "SELECT * FROM appointments WHERE Appointment_ID = ?";
