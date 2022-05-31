@@ -59,7 +59,7 @@ public class Appointment {
         LocalDateTime nowLdt = LocalDateTime.now();
 
         for (Appointment a:allAppointments) {
-            LocalDateTime apptStart = a.getStart();
+            LocalDateTime apptStart = a.start;
 
             if(apptStart.isAfter(nowLdt) && apptStart.isBefore(nowLdt.plusMinutes(15))) {
                 upcomingAppointments.add(a);
@@ -102,6 +102,35 @@ public class Appointment {
         }
 
         return validApptHours;
+    }
+
+    public static boolean checkOverlap(Appointment appt) {
+        // get proposed start and end times
+        LocalDateTime start2 = appt.start;
+        LocalDateTime end2 = appt.end;
+
+        // get all appts *for that customer* - and for Modify, exclude current appt (by appt ID) from checks
+        ObservableList<Appointment> custAppointments = AppointmentQuery.getAllForCustomerId(appt.customerId);
+        custAppointments.remove(appt);
+
+        for (Appointment a:custAppointments) {
+            LocalDateTime start1 = a.start;
+            LocalDateTime end1 = a.end;
+
+            // do 3 overlap checks
+            //     when Start is in the window: start1 >= start2 && start1 < end2
+            if((start1.isAfter(start2) || start1.isEqual(start2)) && (start1.isBefore(end2))) {
+
+            } else if(end2.isAfter(start1) && ((end2.isBefore(end1)) || end2.isEqual(end1))) {
+                //     when End is in the window:   end2 > start1 && end2 <= end1
+
+            } else if((start2.isBefore(start1) || start2.isEqual(start1)) && (end2.isAfter(end1) || end2.isEqual(end1))) {
+                //     when Start and End Outside:  start2 <= start1 && end2 >= end1
+
+            }
+        }
+
+        return false;
     }
 
     // Enables formatted start date and time in Appointments table

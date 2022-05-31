@@ -9,8 +9,6 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 import java.io.FileNotFoundException;
 import java.sql.SQLException;
-import java.time.LocalDateTime;
-import java.util.Locale;
 import java.util.Objects;
 
 public class Main extends Application {
@@ -34,16 +32,6 @@ public class Main extends Application {
      */
     public static void main(String[] args) throws SQLException, FileNotFoundException {
         JDBC.makeConnection();
-
-//        Locale.setDefault(new Locale("fr"));
-
-//        AppointmentQuery.insert("Fifteen", "15m Test", "HQ", "Test",
-//                LocalDateTime.now().plusMinutes(10), LocalDateTime.now().plusMinutes(25), LocalDateTime.parse("2022-04-06T17:48:23.558"), "Michael", LocalDateTime.parse("2017-05-01T10:20:23.558"),
-//                "Lisa", 1, 1, 2);
-//
-//        AppointmentQuery.insert("Fifteen 2", "15m Test 2", "HQ", "Test",
-//                LocalDateTime.now().plusMinutes(15), LocalDateTime.now().plusMinutes(30), LocalDateTime.parse("2022-04-06T17:48:23.558"), "Michael", LocalDateTime.parse("2017-05-01T10:20:23.558"),
-//                "Lisa", 1, 1, 2);
 
         launch(args);
 
