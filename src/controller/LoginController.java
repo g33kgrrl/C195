@@ -1,7 +1,6 @@
 package controller;
 
 import dao.UserQuery;
-import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -9,7 +8,6 @@ import javafx.scene.control.*;
 import java.io.IOException;
 import java.net.URL;
 import java.time.*;
-import java.time.format.DateTimeFormatter;
 import java.util.Locale;
 import java.util.ResourceBundle;
 
@@ -72,7 +70,7 @@ public class LoginController implements Initializable {
     public void onSubmitButtonAction(ActionEvent actionEvent) throws IOException {
         String logLine = LocalDateTime.now() + " - ";
         String userName = userNameText.getText();
-        boolean authorized = UserQuery.checkIfAuthorized(userName, passwordText.getText());
+        boolean authorized = UserQuery.validateUser(userName, passwordText.getText());
 
         if (!authorized) {
             logLine += "FAILED login attempt by username '" + userName + "'";
@@ -83,6 +81,7 @@ public class LoginController implements Initializable {
         } else {
             logLine += "Successful login by user '" + userName + "'";
             User.trackLoginActivity(logLine);
+            
             MainController.showAlert("information", "Upcoming appointments", Appointment.getUpcoming());
 
             MainController.toMain(actionEvent);

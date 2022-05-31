@@ -70,7 +70,7 @@ public abstract class UserQuery {
         return null;
     }
 
-    public static boolean checkIfAuthorized(String enteredUsername, String enteredPassword) {
+    public static boolean validateUser(String enteredUsername, String enteredPassword) {
         try {
             String sql = "SELECT * FROM users WHERE User_Name = ? AND Password = ?";
             PreparedStatement ps = JDBC.getConnection().prepareStatement(sql);
