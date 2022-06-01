@@ -128,24 +128,21 @@ public class AddModAppointmentController implements Initializable {
                 String lastUpdatedBy = currentUser.getUserName();
 
                 // If adding new appointment, creation is now by current user; otherwise, fetch from database
-                // TODO: Move this into if/else below
                 LocalDateTime createDate;
                 String createdBy;
 
                 if(appointment == null) {
                     createDate = LocalDateTime.now();
                     createdBy = currentUser.getUserName();
-                } else {
-                    createDate = appointment.getCreateDate();
-                    createdBy = appointment.getCreatedBy();
-                }
 
-                if(appointment == null) {
                     rowsAffected = AppointmentQuery.insert(
                             title, description, location, type, start, end, createDate, createdBy, lastUpdate, lastUpdatedBy,
                             customerId, userId, contactId
                     );
                 } else {
+                    createDate = appointment.getCreateDate();
+                    createdBy = appointment.getCreatedBy();
+
                     rowsAffected = AppointmentQuery.update(
                             appointment.getId(), title, description, location, type, start, end, createDate, createdBy,
                             lastUpdate, lastUpdatedBy, customerId, userId, contactId
@@ -154,14 +151,14 @@ public class AddModAppointmentController implements Initializable {
 
                 if(rowsAffected != 1) {
                     MainController.showAlert("error", "Appointment add/modify error",
-                            "Unable to add/modify appointment.");
-
+                            "Failed to save appointment to the database.");
                 }
 
                 MainController.toMain(actionEvent);
             }
         } catch (NullPointerException e) {
-            MainController.showAlert("error", "Appointment add/modify form", "Please complete all fields.");
+            MainController.showAlert("error", "Appointment add/modify error", "Please complete all " +
+                    "fields.");
         }
     }
 
