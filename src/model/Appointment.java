@@ -1,6 +1,5 @@
 package model;
 
-import controller.MainController;
 import dao.AppointmentQuery;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
