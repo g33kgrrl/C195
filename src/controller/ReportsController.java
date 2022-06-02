@@ -36,15 +36,15 @@ public class ReportsController implements Initializable {
 
 
     /**
-     * Sets up and displays reports screen.
-     * Initializes part and product tables, and populates them with current inventory items.
+     * Overrides initialize method.
      * @param url the url
-     * @param resourceBundle the resource bundle
+     * @param resourceBundle the resourceBundle
      */
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
     }
 
+    // TODO: get rid of this
     public void showReport(String title, String report) {
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
         alert.setTitle(title);
@@ -52,6 +52,11 @@ public class ReportsController implements Initializable {
         alert.showAndWait();
     }
 
+    /***
+     * Launch report showing the total number of customer appointments by type and month.
+     * @param actionEvent the report by type/month button click action
+     * @throws IOException for input/output exceptions
+     */
     public void onReportByTypeMonthButtonAction(ActionEvent actionEvent) throws IOException {
         // the total number of customer appointments by type and month
         Parent root = FXMLLoader.load(getClass().getResource("/view/ReportByTypeMonth.fxml"));
@@ -63,6 +68,11 @@ public class ReportsController implements Initializable {
         stage.show();
     }
 
+    /***
+     * Launch report showing all appointments for the selected contact.
+     * @param actionEvent the report by type/month button click action
+     * @throws IOException for input/output exceptions
+     */
     public void onReportByContactButtonAction(ActionEvent actionEvent) throws IOException {
         // a schedule for each contact in your organization that includes appointment ID, title, type and description,
         // start date and time, end date and time, and customer ID
@@ -75,6 +85,10 @@ public class ReportsController implements Initializable {
         stage.show();
     }
 
+    /***
+     * Launch report showing total count of all customers.
+     * @param actionEvent the report customer count button click action
+     */
     public void onReportCustomerCountButtonAction(ActionEvent actionEvent) {
         // an additional report of your choice that is different from the two other required reports in this prompt
         // and from the user log-in date and time stamp that will be tracked in part C
@@ -83,6 +97,12 @@ public class ReportsController implements Initializable {
         showReport("Report: Customer Count", "Total customer count is " + customerCount + ".");
     }
 
+    /***
+     * Handles Back button click.
+     * When Back button is clicked, dismiss report and return user to main screen.
+     * @param actionEvent the Back button click event
+     * @throws IOException for input/output exceptions
+     */
     public void onBackButtonAction(ActionEvent actionEvent) throws IOException {
         MainController.toMain(actionEvent);
     }

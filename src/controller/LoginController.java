@@ -36,14 +36,11 @@ public class LoginController implements Initializable {
 
     /***
      * Initializes login screen.
-     * Determines the user’s location and displays it in a label on the login form.
-     * Displays the login form in English or French based on the user’s computer
-     * language setting to translate all the text, labels, buttons, and errors on the
-     * form. Automatically translates error control messages into English or French
-     * based on the user’s computer language setting.
-     *
-     * @param url
-     * @param resourceBundle
+     * Checks the user's system zone setting and displays it in a label on the login form.
+     * Checks the user's system language setting for English or French, and automatically uses the appropriate language
+     * to display the text, labels, buttons, and errors on the form.
+     * @param url the url
+     * @param resourceBundle matching resourceBundle containing language phrases
      */
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -56,16 +53,23 @@ public class LoginController implements Initializable {
         submitButton.setText(rb.getString("submit"));
     }
 
+    /***
+     * Fetches the appropriate resourceBundle according to user's system settings, to get the proper phrases to display
+     * for each language.
+     * @return resourceBundle according to system language
+     */
     public static ResourceBundle getResourceBundle() {
         return rb;
     }
 
     /***
      * Handles login submit request.
-     * Check that user has entered a valid username/password pair, and if so, launches
-     * the main screen. If not, displays an error message prompting user to try again.
-     *
-     * @param actionEvent
+     * Gets username and password from textfields and compares against users in the database. If there is no match,
+     * display an error asking the user to try again. Otherwise, run a check and display an alert to notify the user
+     * whether there is or is not an upcoming appointment, and navigate to the main screen. Log details, including
+     * given username and timestamp, for failed and successful login attempts.
+     * @param actionEvent the Submit button click event
+     * @throws IOException for input/output exceptions
      */
     public void onSubmitButtonAction(ActionEvent actionEvent) throws IOException {
         String logLine = LocalDateTime.now() + " - ";

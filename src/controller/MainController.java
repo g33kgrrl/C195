@@ -49,9 +49,9 @@ public class MainController implements Initializable {
 
     /**
      * Sets up and displays main screen.
-     * Initializes part and product tables, and populates them with current inventory items.
+     * Initializes Customers and Appointments tables, and populates them with all existing items of each type.
      * @param url the url
-     * @param resourceBundle the resource bundle
+     * @param resourceBundle the resourceBundle
      */
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -95,6 +95,11 @@ public class MainController implements Initializable {
         stage.show();
     }
 
+    /**
+     * Navigates user to the reports screen.
+     * @param actionEvent the Reports button click event
+     * @throws IOException for input/output exceptions
+     */
     public static void toReports(ActionEvent actionEvent) throws IOException {
         Parent root = FXMLLoader.load(MainController.class.getResource("/view/Reports.fxml"));
         Stage stage = (Stage)((Node) actionEvent.getSource()).getScene().getWindow();
@@ -104,6 +109,12 @@ public class MainController implements Initializable {
         stage.show();
     }
 
+    /***
+     * Displays an alert of the specified type, with the specified title and content.
+     * @param alertType the alert type
+     * @param title the alert title
+     * @param content the alert content
+     */
     public static void showAlert(String alertType, String title, String content) {
         Alert alert = new Alert(Alert.AlertType.valueOf(alertType.toUpperCase()));
         alert.setTitle(title);
@@ -128,8 +139,8 @@ public class MainController implements Initializable {
 
     /**
      * Handles modify customer request.
-     * Checks that a customer has been selected. If so, it fetches that product's information, launches
-     * the modify customer dialog, and pre-populates the TextFields with that information. If no customer
+     * Checks that a customer has been selected. If so, it fetches that customer's information, launches
+     * the modify customer dialog, and pre-populates the fields with that information. If no customer
      * has been selected, displays an error message instead prompting user to select a customer.
      * @param actionEvent the modify customer button click event
      * @throws IOException for input/output exceptions
@@ -154,6 +165,14 @@ public class MainController implements Initializable {
         }
     }
 
+    /**
+     * Handles delete customer request.
+     * Checks that a customer has been selected. If so, it fetches that customer's information and displays an alert
+     * with the customer's information, including the number of associated appointments, to confirm the user wants to
+     * delete. If user confirms, all of the customer's appointments are deleted first, and then the customer, to avoid
+     * database issues with the Customer_ID foreign key.
+     * @param actionEvent the delete customer button click event
+     */
     public void onDeleteCustomerButtonAction(ActionEvent actionEvent) {
         try {
             Customer selectedCustomer = (Customer) CustomersTable.getSelectionModel().getSelectedItem();
@@ -184,6 +203,12 @@ public class MainController implements Initializable {
         }
     }
 
+    /**
+     * Handles add appointment request.
+     * Launches add/modify appointment dialog with no appointment data.
+     * @param actionEvent the add appointment button click event
+     * @throws IOException for input/output exceptions
+     */
     public void onAddAppointmentButtonAction(ActionEvent actionEvent) throws IOException {
         Parent root = FXMLLoader.load(getClass().getResource("/view/AddModAppointment.fxml"));
         Stage stage = (Stage)((Node) actionEvent.getSource()).getScene().getWindow();
@@ -194,11 +219,11 @@ public class MainController implements Initializable {
     }
 
     /**
-     * Handles modify customer request.
-     * Checks that a customer has been selected. If so, it fetches that product's information, launches
-     * the modify customer dialog, and pre-populates the TextFields with that information. If no customer
-     * has been selected, displays an error message instead prompting user to select a customer.
-     * @param actionEvent the modify customer button click event
+     * Handles modify appointment request.
+     * Checks that an appointment has been selected. If so, it fetches that appointment's information, launches
+     * the modify appointment dialog, and pre-populates the fields with that information. If no appointment
+     * has been selected, displays an error message instead prompting user to select an appointment.
+     * @param actionEvent the modify appointment button click event
      * @throws IOException for input/output exceptions
      */
     public void onModifyAppointmentButtonAction(ActionEvent actionEvent) throws IOException {
@@ -221,6 +246,13 @@ public class MainController implements Initializable {
         }
     }
 
+    /**
+     * Handles delete appointment request.
+     * Checks that an appointment has been selected. If so, it fetches that appointment's information and displays an
+     * alert with the appointment's information, to confirm the user wants to delete. If user confirms, the appointment
+     * is deleted from the database.
+     * @param actionEvent the delete customer button click event
+     */
     public void onDeleteAppointmentButtonAction(ActionEvent actionEvent) {
         try {
             Appointment selectedAppointment = (Appointment) AppointmentsTable.getSelectionModel().getSelectedItem();
@@ -268,7 +300,7 @@ public class MainController implements Initializable {
      * Handles sign out request.
      * Displays a confirmation dialog asking the user if they really want to sign out. If confirmed, the current (i.e.,
      * authenticated) user is reset to null and the login screen is shown. Otherwise the user is returned to the main screen.
-     * @param actionEvent the exit program button click event
+     * @param actionEvent the Sign Out button click event
      */
     public void onSignOutButtonAction(ActionEvent actionEvent) throws IOException {
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION, "Are you sure you want to sign out?");
@@ -288,15 +320,30 @@ public class MainController implements Initializable {
         }
     }
 
+    /***
+     * Set Appointments table to show all appointments.
+     */
     public void onAllRadioAction() {
         AppointmentsTable.setItems(AppointmentQuery.getAll());
     }
 
+    /***
+     * Set Appointments table to show this week's appointments.
+     */
     public void onWeekRadioAction() {
         AppointmentsTable.setItems(AppointmentQuery.getWeek());
     }
 
+    /***
+     * Set Appointments table to show this month's appointments.
+     */
     public void onMonthRadioAction() { AppointmentsTable.setItems(AppointmentQuery.getMonth()); }
 
+    /**
+     * Handles view reports request.
+     * Launches view reports screen.
+     * @param actionEvent the view reports button click event
+     * @throws IOException for input/output exceptions
+     */
     public void onViewReportsButtonAction(ActionEvent actionEvent) throws IOException { toReports(actionEvent); }
 }

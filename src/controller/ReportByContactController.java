@@ -28,16 +28,21 @@ public class ReportByContactController implements Initializable {
 
 
     /**
-     * Sets up and displays main screen.
-     * Initializes part and product tables, and populates them with current inventory items.
+     * Initializes available field options in report by contact screen.
      * @param url the url
-     * @param resourceBundle the resource bundle
+     * @param resourceBundle the resourceBundle
      */
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         contactCombo.setItems(ContactQuery.getAll());
     }
 
+    /***
+     * Handles change contact action.
+     * When a contact is selected, displays all appointments associated with that contact. If there are no appointments
+     * for that contact, display an alert to notify the user.
+     * @param actionEvent the change contact combobox action
+     */
     public void onContactComboAction(ActionEvent actionEvent) {
         Contact selectedContact = (Contact) contactCombo.getSelectionModel().getSelectedItem();
         ObservableList<Appointment> contactAppointments = AppointmentQuery.getAllByContact(selectedContact.getId());
@@ -62,6 +67,12 @@ public class ReportByContactController implements Initializable {
         }
     }
 
+    /***
+     * Handles OK button click.
+     * When OK button is clicked, dismiss report and return user to reports screen.
+     * @param actionEvent the OK button click event
+     * @throws IOException for input/output exceptions
+     */
     public void onOkButtonAction(ActionEvent actionEvent) throws IOException {
         MainController.toReports(actionEvent);
     }

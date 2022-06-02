@@ -25,11 +25,10 @@ public class AddModCustomerController implements Initializable {
     private Customer customer;
 
     /**
-     * Initializes part ID textfield.
-     * The Customer ID textfield is populated with a unique customer ID that cannot be edited by the user. This prevents
-     * creating a duplicate Customer ID when adding a new customer.
+     * Initializes available options for fields in add/modify customer dialog.
+     * Combobox options are set according to existing countries and divisions.
      * @param url the url
-     * @param resourceBundle the resource bundle
+     * @param resourceBundle the resourceBundle
      */
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -41,7 +40,7 @@ public class AddModCustomerController implements Initializable {
 
     /**
      * Initializes modify customer dialog with current data for the selected customer.
-     * Gets current data for the selected customer, and populates the modify customer textfields with
+     * Gets current data for the selected customer, and populates the modify customer fields with
      * that data. Customer ID textfield is disabled to prevent creation of duplicate customer IDs.
      * @param customer1 the selected customer to modify
      */
@@ -61,6 +60,12 @@ public class AddModCustomerController implements Initializable {
         divisionCombo.setValue(DivisionQuery.getDivision(divisionId));
     }
 
+    /***
+     * Initialize, or re-initialize, division combobox options when a country is selected.
+     * When a country is set in countryCombo, this fetches a list of valid divisions for that country and sets
+     * divisionCombo options accordingly.
+     * @param actionEvent the countryCombo change event
+     */
     public void onCountryCombo(ActionEvent actionEvent) {
         try {
             int countryIdFK = countryCombo.getSelectionModel().getSelectedItem().getId();
@@ -76,6 +81,7 @@ public class AddModCustomerController implements Initializable {
         divisionCombo.setPromptText("Select division");
     }
 
+    // TODO: Get rid of this
     public void showValidateError() {
         Alert alert = new Alert(Alert.AlertType.ERROR);
         alert.setTitle("Customer add/modify form");
@@ -83,6 +89,13 @@ public class AddModCustomerController implements Initializable {
         alert.showAndWait();
     }
 
+    /***
+     * Handles save customer request.
+     * Gets values from fields and ensures all fields are set. If not, an error is displayed. A new customer is added to
+     * the database using CustomerQuery.insert(), or CustomerQuery.update() is called to update an existing customer.
+     * @param actionEvent the Save button click event
+     * @throws IOException for input/output exceptions
+     */
     public void onSaveButtonAction(ActionEvent actionEvent) throws IOException {
         try {
             String name = nameText.getText();
@@ -124,7 +137,7 @@ public class AddModCustomerController implements Initializable {
 
     /**
      * Handles cancel request.
-     * Returns user to main screen without saving any entered textfield values.
+     * Returns user to main screen without saving any entered field values.
      * @param actionEvent the Cancel button click event
      * @throws IOException for input/output exceptions
      */

@@ -36,13 +36,12 @@ public class AddModAppointmentController implements Initializable {
     private Appointment appointment;
 
     /**
-     * Initializes add product dialog.
-     * The Product ID textfield is assigned a unique product ID that cannot be edited by the user. This
-     * prevents creating a duplicate product ID when adding a new part. The All Parts table is
-     * initialized with a list of all existing parts. The Associated Parts table is initialized with
-     * associated parts for this product, if any, and ready for parts to be added or removed as needed.
+     * Initializes available options for fields in add/modify appointment dialog.
+     * User's local time zone is checked. Comboboxes for appointment start and end times are initialized with a
+     * restricted set of hours, reflecting Eastern time zone corporate business hours converted to user's local time.
+     * Other combobox options are set according to existing customers, users, and limited list of types.
      * @param url the url
-     * @param resourceBundle the resource bundle
+     * @param resourceBundle the resourceBundle
      */
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -63,9 +62,9 @@ public class AddModAppointmentController implements Initializable {
     }
 
     /**
-     * Initializes modify product dialog with current data for the selected product.
-     * Gets current data for the selected product, and populates the modify product textfields with that
-     * data. Product ID textfield is disabled to prevent creation of duplicate product IDs.
+     * Initializes add/modify appointment dialog with any presets.
+     * Modify action populates fields with current data for the selected appointment. Add action leaves them blank.
+     * Appointment ID textfield is disabled to prevent creation of duplicate appointment IDs.
      * @param appointment1 the selected appointment to modify
      */
     public void displayAppointment(Appointment appointment1) {
@@ -90,11 +89,12 @@ public class AddModAppointmentController implements Initializable {
 
     /**
      * Handles save appointment request.
-     * Gets values from textfields, ensures input is valid, gets the list of associated parts, and then
-     * calls Inventory.updateProduct() to replace the current product object with a new product using the
-     * given data. Tracks next unique product ID to be used, and returns user to main screen. If input is
-     * invalid, an error message is displayed instead.
-     * @param actionEvent the save product button clidk event
+     * Gets values from fields and ensures all fields are set. If not, an error is displayed. Gets a list of all
+     * appointments for the selected customer and compares their start and end dates/times to the start and end
+     * dates/times set in the form, to check for overlaps. If an overlap is found, an error message notifies the user so
+     * a different time slot can be selected. A new appointment is added to the database using AppointmentQuery.insert(),
+     * or AppointmentQuery.update() is called to update an existing appointment.
+     * @param actionEvent the save product button click event
      * @throws IOException for input/output exceptions
      */
     public void onSaveButtonAction(ActionEvent actionEvent) throws IOException {
@@ -164,7 +164,7 @@ public class AddModAppointmentController implements Initializable {
 
     /**
      * Handles cancel request.
-     * Returns user to main screen without saving any entered textfield values.
+     * Returns user to main screen without saving any entered values.
      * @param actionEvent the Cancel button click event
      * @throws IOException for input/output exceptions
      */

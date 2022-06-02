@@ -21,10 +21,10 @@ public class ReportByTypeMonthController implements Initializable {
 
 
     /**
-     * Sets up and displays main screen.
-     * Initializes part and product tables, and populates them with current inventory items.
+     * Initializes table in report by type/month screen.
+     * Populates table with appointment counts grouped by type and month.
      * @param url the url
-     * @param resourceBundle the resource bundle
+     * @param resourceBundle the resourceBundle
      */
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -45,6 +45,12 @@ public class ReportByTypeMonthController implements Initializable {
         }
     }
 
+    /***
+     * Handles OK button click.
+     * When OK button is clicked, dismiss report and return user to reports screen.
+     * @param actionEvent the OK button click event
+     * @throws IOException for input/output exceptions
+     */
     public void onOkButtonAction(ActionEvent actionEvent) throws IOException {
         MainController.toReports(actionEvent);
     }
