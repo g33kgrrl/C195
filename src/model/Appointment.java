@@ -110,17 +110,22 @@ public class Appointment {
     public static boolean checkOverlap(int customerId, LocalDateTime propStart, LocalDateTime propEnd, Appointment appt) {
         // Get all appointments for the selected customer
         ObservableList<Appointment> custAppointments = AppointmentQuery.getAllForCustomerId(customerId);
+        System.out.println(custAppointments);
 
-        OverlapInterface overlapFilter = s -> "Hello " + s;
-        System.out.println(overlapFilter.getMessage("world"));
+//        OverlapInterface overlapFilter = s -> "Hello " + s;
+//        System.out.println(overlapFilter.getMessage("world"));
+
+        ObservableList<Appointment> filteredCustAppointments = custAppointments.filtered(appointment -> !appointment.equals(appt));
+        System.out.println(filteredCustAppointments);
+
 
         // If an appointment is being modified, skip the matching object so it doesn't trigger a time conflict with itself
-        for (Appointment a:custAppointments) {
+        for (Appointment a:filteredCustAppointments) {
 
-            // TODO: Replace this with lambda *before* the for loop!
-            if(appt != null && a.id == appt.id) {
-                continue ;
-            }
+//            // TODO: Replace this with lambda *before* the for loop!
+//            if(appt != null && a.id == appt.id) {
+//                continue ;
+//            }
 
             LocalDateTime start = a.start;
             LocalDateTime end = a.end;
