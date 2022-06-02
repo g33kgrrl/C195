@@ -3,6 +3,7 @@ package model;
 import dao.AppointmentQuery;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import main.OverlapInterface;
 
 import java.time.LocalDateTime;
 import java.time.ZoneId;
@@ -110,8 +111,13 @@ public class Appointment {
         // Get all appointments for the selected customer
         ObservableList<Appointment> custAppointments = AppointmentQuery.getAllForCustomerId(customerId);
 
+        OverlapInterface overlapFilter = s -> "Hello " + s;
+        System.out.println(overlapFilter.getMessage("world"));
+
         // If an appointment is being modified, skip the matching object so it doesn't trigger a time conflict with itself
         for (Appointment a:custAppointments) {
+
+            // TODO: Replace this with lambda *before* the for loop!
             if(appt != null && a.id == appt.id) {
                 continue ;
             }
