@@ -88,8 +88,7 @@ public abstract class AppointmentQuery {
             ps.setInt(12, userId);
             ps.setInt(13, contactId);
 
-            int rowsAffected = ps.executeUpdate();
-            return rowsAffected;
+            return ps.executeUpdate();
         }
         catch (SQLException ex) {
             ex.printStackTrace();
@@ -139,9 +138,7 @@ public abstract class AppointmentQuery {
             ps.setInt(13, contactId);
             ps.setInt(14, id);
 
-
-            int rowsAffected = ps.executeUpdate();
-            return rowsAffected;
+            return ps.executeUpdate();
         }
         catch(SQLException ex) {
             ex.printStackTrace();
