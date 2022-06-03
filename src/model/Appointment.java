@@ -8,6 +8,7 @@ import main.OverlapInterface;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
+import java.util.stream.Stream;
 
 
 public class Appointment {
@@ -105,28 +106,17 @@ public class Appointment {
         return validApptHours;
     }
 
-    // Use data from form but still pass Appointment object as well because it's needed in order to eliminate self-reference
+    // Use data from the form, but still pass Appointment object as well because it's needed in order to eliminate self-reference
     // in the resulting ObservableList... and form data may differ from that in the object!
     public static boolean checkOverlap(int customerId, LocalDateTime propStart, LocalDateTime propEnd, Appointment appt) {
-        // Get all appointments for the selected customer
+        // Get all appointments for the selected customer. If an appointment is being modified, skip the matching object
+        // so it doesn't trigger a time conflict with itself
         ObservableList<Appointment> custAppointments = AppointmentQuery.getAllForCustomerId(customerId);
-        System.out.println(custAppointments);
 
-//        OverlapInterface overlapFilter = s -> "Hello " + s;
-//        System.out.println(overlapFilter.getMessage("world"));
+        // If an appointment is being modified, remove it from the list so it doesn't cause a time conflict with itself
+        custAppointments = custAppointments.filtered(appointment -> appointment.id != appt.id);
 
-        ObservableList<Appointment> filteredCustAppointments = custAppointments.filtered(appointment -> !appointment.equals(appt));
-        System.out.println(filteredCustAppointments);
-
-
-        // If an appointment is being modified, skip the matching object so it doesn't trigger a time conflict with itself
-        for (Appointment a:filteredCustAppointments) {
-
-//            // TODO: Replace this with lambda *before* the for loop!
-//            if(appt != null && a.id == appt.id) {
-//                continue ;
-//            }
-
+        for(Appointment a:custAppointments) {
             LocalDateTime start = a.start;
             LocalDateTime end = a.end;
 
