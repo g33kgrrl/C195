@@ -9,6 +9,10 @@ import model.Contact;
 
 
 public abstract class ContactQuery {
+    /***
+     * Get all contacts in the database.
+     * @return all contacts, or null if none
+     */
     public static ObservableList<Contact> getAll() {
         ObservableList<Contact> allContacts = FXCollections.observableArrayList();
 
@@ -24,13 +28,21 @@ public abstract class ContactQuery {
                 Contact c = new Contact(id, name, email);
                 allContacts.add(c);
             }
+
+            return allContacts;
         }
         catch(SQLException ex) {
             ex.printStackTrace();
         }
-        return allContacts;
+
+        return null;
     }
 
+    /***
+     * Search the database for a contact, by contact ID.
+     * @param id the contact ID
+     * @return contact with the specified contact ID, or null if none
+     */
     public static Contact getContact(int id) {
         ObservableList<Contact> selectedContact = FXCollections.observableArrayList();
 

@@ -8,6 +8,10 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 public abstract class CountryQuery {
+    /***
+     * Get all countries in the database.
+     * @return all countries, or null if none
+     */
     public static ObservableList<Country> selectAll() {
         ObservableList<Country> allCountries = FXCollections.observableArrayList();
 
@@ -22,13 +26,20 @@ public abstract class CountryQuery {
                 Country c = new Country(id, name);
                 allCountries.add(c);
             }
+
+            return allCountries;
         }
         catch(SQLException ex) {
             ex.printStackTrace();
         }
-        return allCountries;
+        return null;
     }
 
+    /***
+     * Search the database for a country, by country ID.
+     * @param id the country ID
+     * @return country with the specified country ID, or null if not found
+     */
     public static Country getCountry(int id) {
         ObservableList<Country> selectedCountry = FXCollections.observableArrayList();
 
@@ -43,16 +54,22 @@ public abstract class CountryQuery {
                 String countryName = rs.getString("Country");
 
                 Country c = new Country(countryId, countryName);
-                selectedCountry.add(c);
+
+                return c;
             }
         }
         catch(SQLException ex) {
             ex.printStackTrace();
         }
 
-        return selectedCountry.get(0);
+        return null;
     }
 
+    /***
+     * Get country associated with a given division ID.
+     * @param divisionId the division ID
+     * @return the country for the given division ID, or null if none
+     */
     public static Country getCountryByDivId(int divisionId) {
         try {
             String sql = "SELECT * FROM first_level_divisions WHERE Division_ID = ?";
