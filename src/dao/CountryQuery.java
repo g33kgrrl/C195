@@ -41,8 +41,6 @@ public abstract class CountryQuery {
      * @return country with the specified country ID, or null if not found
      */
     public static Country getCountry(int id) {
-        ObservableList<Country> selectedCountry = FXCollections.observableArrayList();
-
         try {
             String sql = "SELECT * FROM countries WHERE Country_ID = ?";
             PreparedStatement ps = JDBC.getConnection().prepareStatement(sql);
@@ -53,9 +51,7 @@ public abstract class CountryQuery {
                 int countryId = rs.getInt("Country_ID");
                 String countryName = rs.getString("Country");
 
-                Country c = new Country(countryId, countryName);
-
-                return c;
+                return new Country(countryId, countryName);
             }
         }
         catch(SQLException ex) {

@@ -44,8 +44,6 @@ public abstract class ContactQuery {
      * @return contact with the specified contact ID, or null if none
      */
     public static Contact getContact(int id) {
-        ObservableList<Contact> selectedContact = FXCollections.observableArrayList();
-
         try {
             String sql = "SELECT * FROM contacts WHERE Contact_ID = ?";
             PreparedStatement ps = JDBC.getConnection().prepareStatement(sql);
@@ -57,9 +55,7 @@ public abstract class ContactQuery {
                 String contactName = rs.getString("Contact_Name");
                 String contactEmail = rs.getString("Email");
 
-                Contact c = new Contact(contactId, contactName, contactEmail);
-
-                return c;
+                return new Contact(contactId, contactName, contactEmail);
             }
         }
         catch(SQLException ex) {

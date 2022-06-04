@@ -54,7 +54,6 @@ public abstract class DivisionQuery {
             while (rs.next()) {
                 int id = rs.getInt("Division_ID");
                 String name = rs.getString("Division");
-                int countryIdFK = rs.getInt("Country_ID");
 
                 Division d = new Division(id, name, countryId);
                 allDivisions.add(d);

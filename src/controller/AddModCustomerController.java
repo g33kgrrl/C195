@@ -64,9 +64,8 @@ public class AddModCustomerController implements Initializable {
      * Initialize, or re-initialize, division combobox options when a country is selected.
      * When a country is set in countryCombo, this fetches a list of valid divisions for that country and sets
      * divisionCombo options accordingly.
-     * @param actionEvent the countryCombo change event
      */
-    public void onCountryCombo(ActionEvent actionEvent) {
+    public void onCountryCombo() {
         try {
             int countryIdFK = countryCombo.getSelectionModel().getSelectedItem().getId();
 
@@ -94,7 +93,6 @@ public class AddModCustomerController implements Initializable {
             String address = addressText.getText();
             String postalCode = postalCodeText.getText();
             String phone = phoneText.getText();
-            String country = countryCombo.getSelectionModel().getSelectedItem().toString();
             int divId = divisionCombo.getSelectionModel().getSelectedItem().getId();
             int rowsAffected;
 

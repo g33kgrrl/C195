@@ -171,9 +171,8 @@ public class MainController implements Initializable {
      * with the customer's information, including the number of associated appointments, to confirm the user wants to
      * delete. If user confirms, all of the customer's appointments are deleted first, and then the customer, to avoid
      * database issues with the Customer_ID foreign key.
-     * @param actionEvent the delete customer button click event
      */
-    public void onDeleteCustomerButtonAction(ActionEvent actionEvent) {
+    public void onDeleteCustomerButtonAction() {
         try {
             Customer selectedCustomer = (Customer) CustomersTable.getSelectionModel().getSelectedItem();
             int selectedCustomerId = selectedCustomer.getId();
@@ -252,9 +251,8 @@ public class MainController implements Initializable {
      * Checks that an appointment has been selected. If so, it fetches that appointment's information and displays an
      * alert with the appointment's information, to confirm the user wants to delete. If user confirms, the appointment
      * is deleted from the database.
-     * @param actionEvent the delete customer button click event
      */
-    public void onDeleteAppointmentButtonAction(ActionEvent actionEvent) {
+    public void onDeleteAppointmentButtonAction() {
         try {
             Appointment selectedAppointment = (Appointment) AppointmentsTable.getSelectionModel().getSelectedItem();
             int selectedAppointmentId = selectedAppointment.getId();
@@ -288,9 +286,7 @@ public class MainController implements Initializable {
                         "\tId: " + selectedAppointmentId + "\n\n" +
                         "\tType: " + selectedAppointment.getType() + "\n\n";
 
-                Alert deletedAlert = new Alert(Alert.AlertType.CONFIRMATION, deletedApptConfirm);
-
-                Optional<ButtonType> deletedPrompt = deletedAlert.showAndWait();
+                showAlert("confirmation", "Deleted appointment", deletedApptConfirm);
             }
         } catch (NullPointerException e) {
             showAlert("error", "Delete appointment", "Please select an appointment to delete.");

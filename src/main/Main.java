@@ -7,12 +7,9 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
-import java.io.FileNotFoundException;
-import java.sql.SQLException;
 import java.util.Objects;
 
 public class Main extends Application {
-
     @Override
     public void start(Stage primaryStage) throws Exception{
         Parent root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/view/Login.fxml")));
@@ -28,10 +25,8 @@ public class Main extends Application {
      * Database Driver version #: 10.00.19041.01
      *
      * @param args the args
-     * @throws SQLException
-     * @throws FileNotFoundException
      */
-    public static void main(String[] args) throws SQLException, FileNotFoundException {
+    public static void main(String[] args) {
         JDBC.makeConnection();
 
         launch(args);

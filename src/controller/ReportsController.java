@@ -7,9 +7,6 @@ import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Alert;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
 import javafx.stage.Stage;
 
 import java.io.IOException;
@@ -18,23 +15,6 @@ import java.util.ResourceBundle;
 
 
 public class ReportsController implements Initializable {
-    public TableView AppointmentsTable;
-    public TableColumn apptIdCol;
-    public TableColumn apptTitleCol;
-    public TableColumn apptLocationCol;
-    public TableColumn apptDescriptionCol;
-    public TableColumn apptTypeCol;
-    public TableColumn apptStartCol;
-    public TableColumn apptEndCol;
-    public TableColumn apptCreateDateCol;
-    public TableColumn apptCreatedByCol;
-    public TableColumn apptLastUpdateCol;
-    public TableColumn apptLastUpdatedByCol;
-    public TableColumn apptCustomerIdCol;
-    public TableColumn apptUserIdCol;
-    public TableColumn apptContactIdCol;
-
-
     /**
      * Overrides initialize method.
      * @param url the url
@@ -79,9 +59,8 @@ public class ReportsController implements Initializable {
 
     /***
      * Launch report showing total count of all customers.
-     * @param actionEvent the report customer count button click action
      */
-    public void onReportCustomerCountButtonAction(ActionEvent actionEvent) {
+    public void onReportCustomerCountButtonAction() {
         // an additional report of your choice that is different from the two other required reports in this prompt
         // and from the user log-in date and time stamp that will be tracked in part C
         int customerCount = CustomerQuery.getCustomerCount();

@@ -77,6 +77,14 @@ public abstract class UserQuery {
         return null;
     }
 
+    /***
+     * Check entered username and password against users in the database. If a match is found, fetch that user and set
+     * as the current user, meaning the user has been successfully authenticated, and return true. Otherwise, return
+     * false.
+     * @param enteredUsername the username entered by the user
+     * @param enteredPassword the password entered by the user
+     * @return true or false indicating whether the user was successfully authenticated
+     */
     public static boolean validateUser(String enteredUsername, String enteredPassword) {
         try {
             String sql = "SELECT * FROM users WHERE User_Name = ? AND Password = ?";
@@ -105,14 +113,18 @@ public abstract class UserQuery {
         return false;
     }
 
-    public static int getCurrentUserId() {
-        return currentUser.getUserId();
-    }
-
+    /***
+     * Get the current authenticated user.
+     * @return the user object associated with the current user
+     */
     public static User getCurrentUser() {
         return currentUser;
     }
 
+    /***
+     * Set the current authenticated user to null.
+     * Following this action, the user will no longer have access to the program and will need to log in again.
+     */
     public static void resetUser() { currentUser = null;
     }
 }

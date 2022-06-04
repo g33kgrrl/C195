@@ -41,9 +41,8 @@ public class ReportByContactController implements Initializable {
      * Handles change contact action.
      * When a contact is selected, displays all appointments associated with that contact. If there are no appointments
      * for that contact, display an alert to notify the user.
-     * @param actionEvent the change contact combobox action
      */
-    public void onContactComboAction(ActionEvent actionEvent) {
+    public void onContactComboAction() {
         Contact selectedContact = (Contact) contactCombo.getSelectionModel().getSelectedItem();
         ObservableList<Appointment> contactAppointments = AppointmentQuery.selectAllByContact(selectedContact.getId());
 
