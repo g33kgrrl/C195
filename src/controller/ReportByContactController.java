@@ -25,6 +25,7 @@ public class ReportByContactController implements Initializable {
     public TableColumn apptEndCol;
     public TableColumn apptCustomerIdCol;
     public ComboBox contactCombo;
+    public Button Back;
 
 
     /**

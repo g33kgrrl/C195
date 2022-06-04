@@ -4,6 +4,7 @@ import dao.AppointmentQuery;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
@@ -18,6 +19,7 @@ public class ReportByTypeMonthController implements Initializable {
     public TableColumn apptCountCol;
     public TableColumn apptTypeCol;
     public TableColumn apptMonthNameCol;
+    public Button Back;
 
 
     /**

@@ -19,15 +19,12 @@
                         <TableColumn fx:id="apptMonthNameCol" prefWidth="77.0" text="Month" />
                     </columns>
                 </TableView>
-
-                <!--            <RadioButton layoutX="14.0" layoutY="238.0" mnemonicParsing="false" text="RadioButton" />-->
-<!--            <RadioButton layoutX="133.0" layoutY="238.0" mnemonicParsing="false" text="RadioButton" />-->
             </children>
          <padding>
             <Insets bottom="6.0" />
          </padding>
         </Pane>
-          <Button fx:id="OK" layoutX="192.0" layoutY="221.0" mnemonicParsing="false" onAction="#onBackButtonAction" prefHeight="33.0" prefWidth="77.0" text="OK" AnchorPane.bottomAnchor="7.0" />
+          <Button fx:id="Back" layoutX="192.0" layoutY="221.0" mnemonicParsing="false" onAction="#onBackButtonAction" prefHeight="33.0" prefWidth="77.0" text="Back" AnchorPane.bottomAnchor="7.0" />
     </children>
    <rotationAxis>
       <Point3D />
