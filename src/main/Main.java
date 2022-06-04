@@ -27,8 +27,9 @@ public class Main extends Application {
      * Submission notes:
      * Database Driver version #: 10.00.19041.01
      *
-     * @param args
+     * @param args the args
      * @throws SQLException
+     * @throws FileNotFoundException
      */
     public static void main(String[] args) throws SQLException, FileNotFoundException {
         JDBC.makeConnection();
