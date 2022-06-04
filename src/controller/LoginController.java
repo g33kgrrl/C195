@@ -78,13 +78,13 @@ public class LoginController implements Initializable {
 
         if (!authorized) {
             logLine += "FAILED login attempt by username '" + userName + "'";
-            User.trackLoginActivity(logLine);
+            User.writeToActivityLog(logLine);
 
             MainController.showAlert("error", "Login failed",
                     "Please check your username and password and try again.");
         } else {
             logLine += "Successful login by user '" + userName + "'";
-            User.trackLoginActivity(logLine);
+            User.writeToActivityLog(logLine);
             
             MainController.showAlert("information", "Upcoming appointments", Appointment.getUpcoming());
 

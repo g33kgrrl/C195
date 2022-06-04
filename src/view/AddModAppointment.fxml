@@ -9,39 +9,53 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.Pane?>
 
-<AnchorPane xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.AddModAppointmentController">
-    <children>
-        <Pane layoutX="22.0" layoutY="18.0" style="-fx-border-style: solid; -fx-border-radius: 10px;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-            <padding>
-                <Insets left="15.0" right="10.0" top="15.0" />
-            </padding>
-            <TextField fx:id="idText" disable="true" editable="false" layoutX="100.0" layoutY="17.0" prefHeight="24.0" prefWidth="142.0" promptText="Auto Gen - Disabled" />
-            <TextField fx:id="titleText" layoutX="100.0" layoutY="57.0" prefHeight="24.0" prefWidth="142.0" promptText="Title" />
-            <TextField fx:id="descriptionText" layoutX="100.0" layoutY="97.0" prefHeight="24.0" prefWidth="142.0" promptText="Description" />
-            <TextField fx:id="locationText" layoutX="100.0" layoutY="137.0" prefHeight="24.0" prefWidth="142.0" promptText="Location" />
-            <ComboBox fx:id="customerCombo" layoutX="100.0" layoutY="177.0" prefHeight="25.0" prefWidth="142.0" promptText="Select Customer" />
-            <ComboBox fx:id="contactCombo" layoutX="340.0" layoutY="17.0" prefHeight="25.0" prefWidth="142.0" promptText="Select Contact" />
-            <ComboBox fx:id="typeCombo" layoutX="340.0" layoutY="56.0" prefHeight="25.0" prefWidth="142.0" promptText="Select Type" />
-            <DatePicker fx:id="startDatePicker" layoutX="340.0" layoutY="97.0" prefHeight="25.0" prefWidth="105.0" promptText="Date" />
-            <ComboBox fx:id="startHourCombo" layoutX="456.0" layoutY="97.0" prefHeight="25.0" prefWidth="76.0" />
-            <DatePicker fx:id="endDatePicker" layoutX="340.0" layoutY="137.0" prefHeight="25.0" prefWidth="105.0" promptText="Date" />
-            <ComboBox fx:id="endHourCombo" layoutX="456.0" layoutY="137.0" prefHeight="25.0" prefWidth="76.0" />
-            <Label layoutX="25.0" layoutY="20.0" text="ID" />
-            <Label layoutX="25.0" layoutY="60.0" text="Title" />
-            <Label layoutX="25.0" layoutY="100.0" text="Description" />
-            <Label layoutX="25.0" layoutY="140.0" text="Location" />
-            <Label layoutX="25.0" layoutY="180.0" text="Customer" />
-            <Label layoutX="285.0" layoutY="20.0" text="Contact" />
-            <Label layoutX="285.0" layoutY="60.0" text="Type" />
-            <Label layoutX="285.0" layoutY="100.0" text="Start" />
-            <Label layoutX="285.0" layoutY="140.0" text="End" />
-            <Label fx:id="userIdLabel" layoutX="285.0" layoutY="181.0" prefHeight="17.0" prefWidth="51.0" text="User" />
-            <ComboBox fx:id="userCombo" layoutX="340.0" layoutY="177.0" prefHeight="25.0" prefWidth="142.0" promptText="Select User" />
-            <Button layoutX="355.0" layoutY="237.0" mnemonicParsing="false" onAction="#onSaveButtonAction" prefHeight="33.0" prefWidth="67.0" text="Save" />
-            <Button layoutX="433.0" layoutY="237.0" mnemonicParsing="false" onAction="#onCancelButtonAction" prefHeight="33.0" prefWidth="70.0" text="Cancel" />
-        </Pane>
-    </children>
-   <padding>
-      <Insets bottom="15.0" left="15.0" right="15.0" top="15.0" />
-   </padding>
+
+<AnchorPane xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="controller.AddModAppointmentController">
+    <padding>
+        <Insets bottom="15.0" left="15.0" right="15.0" top="15.0"/>
+    </padding>
+    <Pane layoutX="22.0" layoutY="18.0" style="-fx-border-style: solid; -fx-border-radius: 10px;"
+          AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0"
+          AnchorPane.topAnchor="0.0">
+        <padding>
+            <Insets left="15.0" right="10.0" top="15.0"/>
+        </padding>
+        <TextField fx:id="idText" disable="true" editable="false" layoutX="100.0" layoutY="17.0" prefHeight="24.0"
+                   prefWidth="142.0" promptText="Auto Gen - Disabled"/>
+        <TextField fx:id="titleText" layoutX="100.0" layoutY="57.0" prefHeight="24.0" prefWidth="142.0"
+                   promptText="Title"/>
+        <TextField fx:id="descriptionText" layoutX="100.0" layoutY="97.0" prefHeight="24.0" prefWidth="142.0"
+                   promptText="Description"/>
+        <TextField fx:id="locationText" layoutX="100.0" layoutY="137.0" prefHeight="24.0" prefWidth="142.0"
+                   promptText="Location"/>
+        <ComboBox fx:id="customerCombo" layoutX="100.0" layoutY="177.0" prefHeight="25.0" prefWidth="142.0"
+                  promptText="Select Customer"/>
+        <ComboBox fx:id="contactCombo" layoutX="340.0" layoutY="17.0" prefHeight="25.0" prefWidth="142.0"
+                  promptText="Select Contact"/>
+        <ComboBox fx:id="typeCombo" layoutX="340.0" layoutY="56.0" prefHeight="25.0" prefWidth="142.0"
+                  promptText="Select Type"/>
+        <DatePicker fx:id="startDatePicker" layoutX="340.0" layoutY="97.0" prefHeight="25.0" prefWidth="105.0"
+                    promptText="Date"/>
+        <ComboBox fx:id="startHourCombo" layoutX="456.0" layoutY="97.0" prefHeight="25.0" prefWidth="76.0"/>
+        <DatePicker fx:id="endDatePicker" layoutX="340.0" layoutY="137.0" prefHeight="25.0" prefWidth="105.0"
+                    promptText="Date"/>
+        <ComboBox fx:id="endHourCombo" layoutX="456.0" layoutY="137.0" prefHeight="25.0" prefWidth="76.0"/>
+        <Label layoutX="25.0" layoutY="20.0" text="ID"/>
+        <Label layoutX="25.0" layoutY="60.0" text="Title"/>
+        <Label layoutX="25.0" layoutY="100.0" text="Description"/>
+        <Label layoutX="25.0" layoutY="140.0" text="Location"/>
+        <Label layoutX="25.0" layoutY="180.0" text="Customer"/>
+        <Label layoutX="285.0" layoutY="20.0" text="Contact"/>
+        <Label layoutX="285.0" layoutY="60.0" text="Type"/>
+        <Label layoutX="285.0" layoutY="100.0" text="Start"/>
+        <Label layoutX="285.0" layoutY="140.0" text="End"/>
+        <Label fx:id="userIdLabel" layoutX="285.0" layoutY="181.0" prefHeight="17.0" prefWidth="51.0" text="User"/>
+        <ComboBox fx:id="userCombo" layoutX="340.0" layoutY="177.0" prefHeight="25.0" prefWidth="142.0"
+                  promptText="Select User"/>
+        <Button layoutX="355.0" layoutY="237.0" mnemonicParsing="false" onAction="#onSaveButtonAction" prefHeight="33.0"
+                prefWidth="67.0" text="Save"/>
+        <Button layoutX="433.0" layoutY="237.0" mnemonicParsing="false" onAction="#onCancelButtonAction"
+                prefHeight="33.0" prefWidth="70.0" text="Cancel"/>
+    </Pane>
 </AnchorPane>

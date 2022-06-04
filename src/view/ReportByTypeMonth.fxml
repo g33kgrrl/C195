@@ -8,25 +8,26 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.Pane?>
 
-<AnchorPane prefHeight="261.0" prefWidth="299.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.ReportByTypeMonthController">
-    <children>
-        <Pane layoutX="166.0" layoutY="21.0" prefHeight="199.0" prefWidth="275.0" style="-fx-border-style: solid; -fx-border-radius: 10px;" AnchorPane.bottomAnchor="50.0" AnchorPane.leftAnchor="12.0" AnchorPane.rightAnchor="12.0" AnchorPane.topAnchor="12.0">
-            <children>
-                <TableView fx:id="TypeMonthApptsTable" layoutX="14.0" layoutY="14.0" prefHeight="172.0">
-                    <columns>
-                        <TableColumn fx:id="apptCountCol" prefWidth="55.0" text="Count" />
-                        <TableColumn fx:id="apptTypeCol" prefWidth="114.0" text="Type" />
-                        <TableColumn fx:id="apptMonthNameCol" prefWidth="77.0" text="Month" />
-                    </columns>
-                </TableView>
-            </children>
-         <padding>
-            <Insets bottom="6.0" />
-         </padding>
-        </Pane>
-          <Button fx:id="Back" layoutX="192.0" layoutY="221.0" mnemonicParsing="false" onAction="#onBackButtonAction" prefHeight="33.0" prefWidth="77.0" text="Back" AnchorPane.bottomAnchor="7.0" />
-    </children>
-   <rotationAxis>
-      <Point3D />
-   </rotationAxis>
+
+<AnchorPane prefHeight="261.0" prefWidth="299.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="controller.ReportByTypeMonthController">
+    <rotationAxis>
+        <Point3D/>
+    </rotationAxis>
+    <Pane layoutX="166.0" layoutY="21.0" prefHeight="199.0" prefWidth="275.0"
+          style="-fx-border-style: solid; -fx-border-radius: 10px;" AnchorPane.bottomAnchor="50.0"
+          AnchorPane.leftAnchor="12.0" AnchorPane.rightAnchor="12.0" AnchorPane.topAnchor="12.0">
+        <padding>
+            <Insets bottom="6.0"/>
+        </padding>
+        <TableView fx:id="TypeMonthApptsTable" layoutX="14.0" layoutY="14.0" prefHeight="172.0">
+            <columns>
+                <TableColumn fx:id="apptCountCol" prefWidth="55.0" text="Count"/>
+                <TableColumn fx:id="apptTypeCol" prefWidth="114.0" text="Type"/>
+                <TableColumn fx:id="apptMonthNameCol" prefWidth="77.0" text="Month"/>
+            </columns>
+        </TableView>
+    </Pane>
+    <Button fx:id="Back" layoutX="192.0" layoutY="221.0" mnemonicParsing="false" onAction="#onBackButtonAction"
+            prefHeight="33.0" prefWidth="77.0" text="Back" AnchorPane.bottomAnchor="7.0"/>
 </AnchorPane>

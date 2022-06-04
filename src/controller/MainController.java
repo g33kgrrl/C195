@@ -26,6 +26,8 @@ public class MainController implements Initializable {
     public Button AddAppointmentButton;
     public Button ModifyAppointmentButton;
     public Button DeleteAppointmentButton;
+    public Button ViewReportsButton;
+    public Button SignOutButton;
     public TableView AppointmentsTable;
     public TableView CustomersTable;
     public TableColumn custIdCol;
@@ -45,6 +47,10 @@ public class MainController implements Initializable {
     public TableColumn apptCustomerIdCol;
     public TableColumn apptUserIdCol;
     public TableColumn apptContactIdCol;
+    public RadioButton allRadio;
+    public RadioButton weekRadio;
+    public RadioButton monthRadio;
+    public ToggleGroup reportSelectionGroup;
 
 
     /**

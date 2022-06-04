@@ -12,76 +12,86 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="595.0" prefWidth="899.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.MainController">
-    <children>
-        <Pane layoutX="19.0" layoutY="20.0" prefHeight="271.0" prefWidth="617.0" style="-fx-border-style: solid; -fx-border-radius: 10px;" AnchorPane.topAnchor="20.0">
-            <children>
-                <TableView fx:id="CustomersTable" layoutX="14.0" layoutY="50.0" prefHeight="172.0" prefWidth="589.0">
-                    <columns>
-                        <TableColumn fx:id="custIdCol" prefWidth="39.0" text="ID" />
-                        <TableColumn fx:id="custNameCol" prefWidth="137.0" text="Name" />
-                        <TableColumn fx:id="custAddressCol" text="Address" />
-                        <TableColumn fx:id="custPostalCodeCol" prefWidth="63.0" text="Postal" />
-                        <TableColumn fx:id="custPhoneCol" prefWidth="116.0" text="Phone" />
-                        <TableColumn fx:id="custCountryCol" text="Country" />
-                        <TableColumn fx:id="custDivIdCol" prefWidth="52.0" text="Div ID" />
-                    </columns>
-                </TableView>
-                <Button fx:id="AddCustomerButton" layoutX="354.0" layoutY="230.0" mnemonicParsing="false" onAction="#onAddCustomerButtonAction" prefHeight="33.0" prefWidth="62.0" text="Add" />
-                <Button fx:id="ModifyCustomerButton" layoutX="430.0" layoutY="230.0" mnemonicParsing="false" onAction="#onModifyCustomerButtonAction" prefHeight="33.0" prefWidth="62.0" text="Modify" />
-                <Button fx:id="DeleteCustomerButton" layoutX="504.0" layoutY="230.0" mnemonicParsing="false" onAction="#onDeleteCustomerButtonAction" prefHeight="33.0" prefWidth="62.0" text="Delete" />
-                <Label layoutX="27.0" layoutY="22.0" text="Customers">
-                    <font>
-                        <Font name="System Bold" size="16.0" />
-                    </font>
-                </Label>
-            </children>
-            <padding>
-                <Insets bottom="6.0" right="12.0" />
-            </padding>
-        </Pane>
-        <Pane layoutX="20.0" layoutY="310.0" prefHeight="271.0" prefWidth="874.0" style="-fx-border-style: solid; -fx-border-radius: 10px;" AnchorPane.topAnchor="305.0">
-            <children>
-                <TableView fx:id="AppointmentsTable" layoutX="14.0" layoutY="50.0" prefHeight="172.0" prefWidth="846.0">
-                    <columns>
-                        <TableColumn fx:id="apptIdCol" prefWidth="35.0" text="ID" />
-                        <TableColumn fx:id="apptTitleCol" prefWidth="103.0" text="Title" />
-                        <TableColumn fx:id="apptDescriptionCol" prefWidth="123.0" text="Description" />
-                        <TableColumn fx:id="apptLocationCol" prefWidth="89.0" text="Location" />
-                        <TableColumn fx:id="apptContactIdCol" prefWidth="58.0" text="Cont ID" />
-                        <TableColumn fx:id="apptTypeCol" prefWidth="106.0" text="Type" />
-                        <TableColumn fx:id="apptStartCol" prefWidth="106.0" text="Start" />
-                        <TableColumn fx:id="apptEndCol" prefWidth="101.0" text="End" />
-                        <TableColumn fx:id="apptCustomerIdCol" prefWidth="56.0" text="Cust ID" />
-                        <TableColumn fx:id="apptUserIdCol" prefWidth="52.0" text="User ID" />
-                    </columns>
-                </TableView>
-                <Button fx:id="AddAppointmentButton" layoutX="609.0" layoutY="230.0" mnemonicParsing="false" onAction="#onAddAppointmentButtonAction" prefHeight="33.0" prefWidth="62.0" text="Add" />
-                <Button fx:id="ModifyAppointmentButton" layoutX="685.0" layoutY="230.0" mnemonicParsing="false" onAction="#onModifyAppointmentButtonAction" prefHeight="33.0" prefWidth="62.0" text="Modify" />
-                <Button fx:id="DeleteAppointmentButton" layoutX="759.0" layoutY="230.0" mnemonicParsing="false" onAction="#onDeleteAppointmentButtonAction" prefHeight="33.0" prefWidth="62.0" text="Delete" />
-                <Label layoutX="25.0" layoutY="22.0" text="Appointments">
-                    <font>
-                        <Font name="System Bold" size="16.0" />
-                    </font>
-                </Label>
-                <RadioButton fx:id="allRadio" layoutX="179.0" layoutY="26.0" mnemonicParsing="false" onAction="#onAllRadioAction" selected="true" text="All">
-                    <toggleGroup>
-                        <ToggleGroup fx:id="reportSelectionGroup" />
-                    </toggleGroup></RadioButton>
-                <RadioButton fx:id="weekRadio" layoutX="235.0" layoutY="26.0" mnemonicParsing="false" onAction="#onWeekRadioAction" text="Week" toggleGroup="$reportSelectionGroup" />
-                <RadioButton fx:id="monthRadio" layoutX="297.0" layoutY="26.0" mnemonicParsing="false" onAction="#onMonthRadioAction" text="Month" toggleGroup="$reportSelectionGroup" />
-            </children>
-         <padding>
-            <Insets bottom="6.0" right="12.0" />
-         </padding>
-        </Pane>
-      <Button fx:id="SignOutButton" layoutX="815.0" layoutY="20.0" mnemonicParsing="false" onAction="#onSignOutButtonAction" prefHeight="33.0" prefWidth="79.0" text="Sign Out" />
-      <Button fx:id="ViewReportsButton" layoutX="795.0" layoutY="72.0" mnemonicParsing="false" onAction="#onViewReportsButtonAction" prefHeight="33.0" prefWidth="99.0" text="View Reports" />
-    </children>
+
+<AnchorPane prefHeight="595.0" prefWidth="899.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="controller.MainController">
     <padding>
-        <Insets bottom="19.0" right="20.0" />
+        <Insets bottom="19.0" right="20.0"/>
     </padding>
-   <rotationAxis>
-      <Point3D />
-   </rotationAxis>
+    <rotationAxis>
+        <Point3D/>
+    </rotationAxis>
+    <Pane layoutX="19.0" layoutY="20.0" prefHeight="271.0" prefWidth="617.0"
+          style="-fx-border-style: solid; -fx-border-radius: 10px;" AnchorPane.topAnchor="20.0">
+        <padding>
+            <Insets bottom="6.0" right="12.0"/>
+        </padding>
+        <TableView fx:id="CustomersTable" layoutX="14.0" layoutY="50.0" prefHeight="172.0" prefWidth="589.0">
+            <columns>
+                <TableColumn fx:id="custIdCol" prefWidth="39.0" text="ID"/>
+                <TableColumn fx:id="custNameCol" prefWidth="137.0" text="Name"/>
+                <TableColumn fx:id="custAddressCol" text="Address"/>
+                <TableColumn fx:id="custPostalCodeCol" prefWidth="63.0" text="Postal"/>
+                <TableColumn fx:id="custPhoneCol" prefWidth="116.0" text="Phone"/>
+                <TableColumn fx:id="custCountryCol" text="Country"/>
+                <TableColumn fx:id="custDivIdCol" prefWidth="52.0" text="Div ID"/>
+            </columns>
+        </TableView>
+        <Button fx:id="AddCustomerButton" layoutX="354.0" layoutY="230.0" mnemonicParsing="false"
+                onAction="#onAddCustomerButtonAction" prefHeight="33.0" prefWidth="62.0" text="Add"/>
+        <Button fx:id="ModifyCustomerButton" layoutX="430.0" layoutY="230.0" mnemonicParsing="false"
+                onAction="#onModifyCustomerButtonAction" prefHeight="33.0" prefWidth="62.0" text="Modify"/>
+        <Button fx:id="DeleteCustomerButton" layoutX="504.0" layoutY="230.0" mnemonicParsing="false"
+                onAction="#onDeleteCustomerButtonAction" prefHeight="33.0" prefWidth="62.0" text="Delete"/>
+        <Label layoutX="27.0" layoutY="22.0" text="Customers">
+            <font>
+                <Font name="System Bold" size="16.0"/>
+            </font>
+        </Label>
+    </Pane>
+    <Pane layoutX="20.0" layoutY="310.0" prefHeight="271.0" prefWidth="874.0"
+          style="-fx-border-style: solid; -fx-border-radius: 10px;" AnchorPane.topAnchor="305.0">
+        <padding>
+            <Insets bottom="6.0" right="12.0"/>
+        </padding>
+        <TableView fx:id="AppointmentsTable" layoutX="14.0" layoutY="50.0" prefHeight="172.0" prefWidth="846.0">
+            <columns>
+                <TableColumn fx:id="apptIdCol" prefWidth="35.0" text="ID"/>
+                <TableColumn fx:id="apptTitleCol" prefWidth="103.0" text="Title"/>
+                <TableColumn fx:id="apptDescriptionCol" prefWidth="123.0" text="Description"/>
+                <TableColumn fx:id="apptLocationCol" prefWidth="89.0" text="Location"/>
+                <TableColumn fx:id="apptContactIdCol" prefWidth="58.0" text="Cont ID"/>
+                <TableColumn fx:id="apptTypeCol" prefWidth="106.0" text="Type"/>
+                <TableColumn fx:id="apptStartCol" prefWidth="106.0" text="Start"/>
+                <TableColumn fx:id="apptEndCol" prefWidth="101.0" text="End"/>
+                <TableColumn fx:id="apptCustomerIdCol" prefWidth="56.0" text="Cust ID"/>
+                <TableColumn fx:id="apptUserIdCol" prefWidth="52.0" text="User ID"/>
+            </columns>
+        </TableView>
+        <Button fx:id="AddAppointmentButton" layoutX="609.0" layoutY="230.0" mnemonicParsing="false"
+                onAction="#onAddAppointmentButtonAction" prefHeight="33.0" prefWidth="62.0" text="Add"/>
+        <Button fx:id="ModifyAppointmentButton" layoutX="685.0" layoutY="230.0" mnemonicParsing="false"
+                onAction="#onModifyAppointmentButtonAction" prefHeight="33.0" prefWidth="62.0" text="Modify"/>
+        <Button fx:id="DeleteAppointmentButton" layoutX="759.0" layoutY="230.0" mnemonicParsing="false"
+                onAction="#onDeleteAppointmentButtonAction" prefHeight="33.0" prefWidth="62.0" text="Delete"/>
+        <Label layoutX="25.0" layoutY="22.0" text="Appointments">
+            <font>
+                <Font name="System Bold" size="16.0"/>
+            </font>
+        </Label>
+        <RadioButton fx:id="allRadio" layoutX="179.0" layoutY="26.0" mnemonicParsing="false"
+                     onAction="#onAllRadioAction" selected="true" text="All">
+            <toggleGroup>
+                <ToggleGroup fx:id="reportSelectionGroup"/>
+            </toggleGroup>
+        </RadioButton>
+        <RadioButton fx:id="weekRadio" layoutX="235.0" layoutY="26.0" mnemonicParsing="false"
+                     onAction="#onWeekRadioAction" text="Week" toggleGroup="$reportSelectionGroup"/>
+        <RadioButton fx:id="monthRadio" layoutX="297.0" layoutY="26.0" mnemonicParsing="false"
+                     onAction="#onMonthRadioAction" text="Month" toggleGroup="$reportSelectionGroup"/>
+    </Pane>
+    <Button fx:id="SignOutButton" layoutX="815.0" layoutY="20.0" mnemonicParsing="false"
+            onAction="#onSignOutButtonAction" prefHeight="33.0" prefWidth="79.0" text="Sign Out"/>
+    <Button fx:id="ViewReportsButton" layoutX="795.0" layoutY="72.0" mnemonicParsing="false"
+            onAction="#onViewReportsButtonAction" prefHeight="33.0" prefWidth="99.0" text="View Reports"/>
 </AnchorPane>
