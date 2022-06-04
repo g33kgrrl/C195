@@ -126,20 +126,14 @@ public class Appointment {
             // Complete three overlap checks
             // 1. Overlap when Start is in an appointment window
             if((propStart.isAfter(start) || propStart.isEqual(start)) && propStart.isBefore(end)) {
-                System.out.println("Start time is in appt window");
-                System.out.println(a.start + "-" + a.end + "  " + a.title + " " + a.description);
                 return true;
             }
             // 2. Overlap when End is in an appointment window
             else if(propEnd.isAfter(start) && ((propEnd.isBefore(end)) || propEnd.isEqual(end))) {
-                System.out.println("End time is in appt window");
-                System.out.println(a.start + "-" + a.end + "  " + a.title + " " + a.description);
                 return true;
             }
             // 3. Overlap when Start and End encompass an entire appointment
             else if((propStart.isBefore(start) || propStart.isEqual(start)) && (propEnd.isAfter(end) || propEnd.isEqual(end))) {
-                System.out.println("Time slot contains an appt");
-                System.out.println(a.start + "-" + a.end + "  " + a.title + " " + a.description);
                 return true;
             }
         }

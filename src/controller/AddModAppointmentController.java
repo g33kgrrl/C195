@@ -111,13 +111,12 @@ public class AddModAppointmentController implements Initializable {
             int rowsAffected;
 
             // Validation: Ensure all fields are set
-            // TODO: Fix 3 id's at end - should look them up
             if(title.isEmpty() || description.isEmpty() || location.isEmpty() || type.isEmpty() ||
                     startHourCombo.getSelectionModel().getSelectedItem() == null ||
                     endHourCombo.getSelectionModel().getSelectedItem() == null ||
                     startDatePicker.getValue() == null || endDatePicker.getValue() == null ||
-                    customerCombo.getSelectionModel().isEmpty() || userCombo.getSelectionModel().isEmpty() ||
-                    contactCombo.getSelectionModel().isEmpty()
+                    customerCombo.getValue() == null || userCombo.getValue() == null ||
+                    contactCombo.getValue() == null
             ) {
                 MainController.showAlert("error", "Appointment add/modify form", "Please complete all fields.");
             } else if(Appointment.checkOverlap(customerId, start, end, appointment)) {
