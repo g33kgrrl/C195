@@ -45,7 +45,7 @@ public class ReportByContactController implements Initializable {
      */
     public void onContactComboAction(ActionEvent actionEvent) {
         Contact selectedContact = (Contact) contactCombo.getSelectionModel().getSelectedItem();
-        ObservableList<Appointment> contactAppointments = AppointmentQuery.getAllByContact(selectedContact.getId());
+        ObservableList<Appointment> contactAppointments = AppointmentQuery.selectAllByContact(selectedContact.getId());
 
         apptIdCol.setCellValueFactory(new PropertyValueFactory<>("id"));
         apptTitleCol.setCellValueFactory(new PropertyValueFactory<>("title"));
@@ -55,7 +55,7 @@ public class ReportByContactController implements Initializable {
         apptEndCol.setCellValueFactory(new PropertyValueFactory<>("end"));
         apptCustomerIdCol.setCellValueFactory(new PropertyValueFactory<>("customerId"));
 
-        if(contactAppointments.size() == 0) {
+        if(contactAppointments == null) {
             TypeMonthApptsTable.setItems(null);
 
             MainController.showAlert("information", "Search Appointments by Contact",

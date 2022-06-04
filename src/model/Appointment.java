@@ -3,16 +3,14 @@ package model;
 import dao.AppointmentQuery;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import main.OverlapInterface;
 
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
-import java.util.stream.Stream;
 
 
 public class Appointment {
-    private DateTimeFormatter dtf = DateTimeFormatter.ofPattern("MM-dd-yyyy HH:mm");
+    private final DateTimeFormatter dtf = DateTimeFormatter.ofPattern("MM-dd-yyyy HH:mm");
 
     private int id;
     private String title;
@@ -60,6 +58,8 @@ public class Appointment {
         ObservableList<Appointment> allAppointments = AppointmentQuery.getAll();
         LocalDateTime nowLdt = LocalDateTime.now();
 
+        if(allAppointments == null) { return "No upcoming appointments."; }
+
         for (Appointment a:allAppointments) {
             LocalDateTime apptStart = a.start;
 
@@ -88,9 +88,8 @@ public class Appointment {
         final ZoneId hqZoneId = ZoneId.of("US/Eastern");
 
         ZoneId systemZoneId = ZoneId.systemDefault();
-        LocalDateTime systemLdt = ldt.atZone(hqZoneId).withZoneSameInstant(systemZoneId).toLocalDateTime();
 
-        return systemLdt;
+        return ldt.atZone(hqZoneId).withZoneSameInstant(systemZoneId).toLocalDateTime();
     }
 
     public static ObservableList<String> getValidApptHours(LocalDateTime openLdt, LocalDateTime closeLdt) {
@@ -111,10 +110,14 @@ public class Appointment {
     public static boolean checkOverlap(int customerId, LocalDateTime propStart, LocalDateTime propEnd, Appointment appt) {
         // Get all appointments for the selected customer. If an appointment is being modified, skip the matching object
         // so it doesn't trigger a time conflict with itself
-        ObservableList<Appointment> custAppointments = AppointmentQuery.getAllForCustomerId(customerId);
+        ObservableList<Appointment> custAppointments = AppointmentQuery.selectAllForCustomerId(customerId);
+
+        if(custAppointments == null) { return false; }
 
         // If an appointment is being modified, remove it from the list so it doesn't cause a time conflict with itself
         custAppointments = custAppointments.filtered(appointment -> appointment.id != appt.id);
+
+        if(custAppointments == null) { return false; }
 
         for(Appointment a:custAppointments) {
             LocalDateTime start = a.start;

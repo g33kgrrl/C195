@@ -177,7 +177,8 @@ public class MainController implements Initializable {
         try {
             Customer selectedCustomer = (Customer) CustomersTable.getSelectionModel().getSelectedItem();
             int selectedCustomerId = selectedCustomer.getId();
-            ObservableList<Appointment> customerAppointments = AppointmentQuery.getAllForCustomerId(selectedCustomerId);
+            ObservableList<Appointment> associatedAppts = AppointmentQuery.selectAllForCustomerId(selectedCustomerId);
+            int associatedApptsSize = (associatedAppts == null) ? 0 : associatedAppts.size();
 
             String deleteConfirm = "Are you sure you want to delete this customer and any associated appointments?\n\n" +
                     "\tId: " + selectedCustomerId + "\n\n" +
@@ -186,7 +187,7 @@ public class MainController implements Initializable {
                     "\tPostal Code: " + selectedCustomer.getPostalCode() + "\n\n" +
                     "\tPhone: " + selectedCustomer.getPhone() + "\n\n" +
                     "\tDivision ID: " + selectedCustomer.getDivisionId() + "\n\n" +
-                    "\tAssociated appointments: " + AppointmentQuery.getAllForCustomerId(selectedCustomerId).size();
+                    "\tAssociated appointments: " + associatedApptsSize;
 
             Alert alert = new Alert(Alert.AlertType.CONFIRMATION, deleteConfirm);
 

@@ -105,18 +105,19 @@ public class AddModAppointmentController implements Initializable {
             String type = typeCombo.getValue();
             LocalDateTime start = LocalDateTime.of(startDatePicker.getValue(), LocalTime.parse(startHourCombo.getValue().toString()));
             LocalDateTime end = LocalDateTime.of(endDatePicker.getValue(), LocalTime.parse(endHourCombo.getValue().toString()));
-            int customerId = ((Customer) customerCombo.getSelectionModel().getSelectedItem()).getId();
-            int userId = ((User) userCombo.getValue()).getUserId();
-            int contactId = ((Contact) contactCombo.getSelectionModel().getSelectedItem()).getId();
+            int customerId = customerCombo.getSelectionModel().getSelectedItem().getId();
+            int userId = userCombo.getValue().getUserId();
+            int contactId = contactCombo.getSelectionModel().getSelectedItem().getId();
             int rowsAffected;
 
             // Validation: Ensure all fields are set
+            // TODO: Fix 3 id's at end - should look them up
             if(title.isEmpty() || description.isEmpty() || location.isEmpty() || type.isEmpty() ||
                     startHourCombo.getSelectionModel().getSelectedItem() == null ||
                     endHourCombo.getSelectionModel().getSelectedItem() == null ||
                     startDatePicker.getValue() == null || endDatePicker.getValue() == null ||
-                    Integer.valueOf(customerId) == null || Integer.valueOf(userId) == null ||
-                    Integer.valueOf(contactId) == null
+                    customerCombo.getSelectionModel().isEmpty() || userCombo.getSelectionModel().isEmpty() ||
+                    contactCombo.getSelectionModel().isEmpty()
             ) {
                 MainController.showAlert("error", "Appointment add/modify form", "Please complete all fields.");
             } else if(Appointment.checkOverlap(customerId, start, end, appointment)) {

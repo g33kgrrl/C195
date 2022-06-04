@@ -11,14 +11,14 @@ import model.Customer;
 public abstract class CustomerQuery {
     /***
      * Search the database for a customer, by customer ID.
-     * @param customerId the customer ID
+     * @param id the customer ID
      * @return customer with the specified customer ID, or null if none
      */
-    public static Customer select(int customerId) {
+    public static Customer select(int id) {
         try {
             String sql = "SELECT * FROM customers WHERE Customer_ID = ?";
             PreparedStatement ps = JDBC.getConnection().prepareStatement(sql);
-            ps.setInt(1, customerId);
+            ps.setInt(1, id);
             ResultSet rs = ps.executeQuery();
 
             if (rs.next()) {
@@ -28,9 +28,7 @@ public abstract class CustomerQuery {
                 String phone = rs.getString("Phone");
                 int divisionIdFK = rs.getInt("Division_ID");
 
-                Customer c = new Customer(customerId, customerName, address, postalCode, phone, divisionIdFK);
-
-                return c;
+                return new Customer(id, customerName, address, postalCode, phone, divisionIdFK);
             }
         }
         catch (SQLException ex) {
@@ -101,21 +99,19 @@ public abstract class CustomerQuery {
     /***
      * Delete a customer from the database, by customer ID.
      * @param customerId the customer ID
-     * @return number of rows deleted, or -1 if delete failed
      */
-    public static int delete(int customerId) {
+    public static void delete(int customerId) {
         try {
             String sql = "DELETE FROM customers WHERE Customer_ID = ?";
             PreparedStatement ps = JDBC.getConnection().prepareStatement(sql);
             ps.setInt(1, customerId);
 
-            return ps.executeUpdate();
+            ps.executeUpdate();
         }
         catch(SQLException ex) {
             ex.printStackTrace();
         }
 
-        return -1;
     }
 
     /***

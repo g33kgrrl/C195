@@ -28,13 +28,13 @@ public class ReportByTypeMonthController implements Initializable {
      */
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        ObservableList<TypeMonthAppt> typeMonthAppts = AppointmentQuery.getAllByTypeMonth();
+        ObservableList<TypeMonthAppt> typeMonthAppts = AppointmentQuery.selectAllByTypeMonth();
 
         apptCountCol.setCellValueFactory(new PropertyValueFactory<>("count"));
         apptTypeCol.setCellValueFactory(new PropertyValueFactory<>("type"));
         apptMonthNameCol.setCellValueFactory(new PropertyValueFactory<>("monthName"));
 
-        if(typeMonthAppts.size() == 0) {
+        if(typeMonthAppts == null) {
             TypeMonthApptsTable.setItems(null);
 
             MainController.showAlert("information", "Count Appointments by Type and Month",

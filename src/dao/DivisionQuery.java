@@ -9,8 +9,12 @@ import model.Division;
 
 
 public abstract class DivisionQuery {
-
-    public static Division getDivision(int id) {
+    /***
+     * Search the database for a division, by division ID.
+     * @param id the division id
+     * @return division with the specified division ID, or null if none
+     */
+    public static Division select(int id) {
         try {
             String sql = "SELECT * FROM first_level_divisions WHERE Division_ID = ?";
             PreparedStatement ps = JDBC.getConnection().prepareStatement(sql);
@@ -32,6 +36,11 @@ public abstract class DivisionQuery {
         return null;
     }
 
+    /***
+     * Get all divisions associated with the given country ID.
+     * @param countryId the country ID
+     * @return all divisions for the given country ID, or null if none
+     */
     public static ObservableList<Division> selectAllForCountry(int countryId) {
         ObservableList<Division> allDivisions = FXCollections.observableArrayList();
 
@@ -60,6 +69,11 @@ public abstract class DivisionQuery {
         return null;
     }
 
+    /***
+     * Get the country ID associated with the given division ID.
+     * @param divisionId the division ID
+     * @return the country ID for the given division ID, or -1 if none found
+     */
     public static int getCountryId(int divisionId) {
         try {
             String sql = "SELECT Country_ID FROM first_level_divisions WHERE Division_ID = ?";

@@ -11,6 +11,10 @@ import model.User;
 public abstract class UserQuery {
     private static User currentUser;
 
+    /***
+     * Get all users in the database.
+     * @return all users, or null if none
+     */
     public static ObservableList<User> getAll() {
         ObservableList<User> allUsers = FXCollections.observableArrayList();
 
@@ -42,6 +46,11 @@ public abstract class UserQuery {
         return null;
     }
 
+    /***
+     * Search the database for a user, by user ID.
+     * @param id the user ID
+     * @return user with the specified user ID, or null if not found
+     */
     public static User select(int id) {
 
         try {
@@ -58,9 +67,7 @@ public abstract class UserQuery {
                 LocalDateTime lastUpdate = rs.getTimestamp("Last_Update").toLocalDateTime();
                 String lastUpdatedBy = rs.getString("Last_Updated_By");
 
-                User u = new User(id, name, password, createDate, createdBy,lastUpdate, lastUpdatedBy);
-
-                return u;
+                return new User(id, name, password, createDate, createdBy,lastUpdate, lastUpdatedBy);
             }
         }
         catch(SQLException ex) {
@@ -106,5 +113,6 @@ public abstract class UserQuery {
         return currentUser;
     }
 
-    public static User resetUser() { currentUser = null; return currentUser; }
+    public static void resetUser() { currentUser = null;
+    }
 }

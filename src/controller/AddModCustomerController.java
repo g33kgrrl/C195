@@ -57,7 +57,7 @@ public class AddModCustomerController implements Initializable {
         countryCombo.setItems(CountryQuery.selectAll());
         countryCombo.setValue(CountryQuery.getCountry(countryId));
         divisionCombo.setItems(DivisionQuery.selectAllForCountry(countryId));
-        divisionCombo.setValue(DivisionQuery.getDivision(divisionId));
+        divisionCombo.setValue(DivisionQuery.select(divisionId));
     }
 
     /***
@@ -108,7 +108,7 @@ public class AddModCustomerController implements Initializable {
 
             // Validation: Ensure all fields are set
             if(name.isEmpty() || address.isEmpty() || postalCode.isEmpty() || phone.isEmpty() ||
-                    Integer.valueOf(divId) == null) {
+                    divisionCombo.getSelectionModel().isEmpty()) {
                 showValidateError();
             }
             else {

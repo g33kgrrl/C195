@@ -11,14 +11,14 @@ import java.time.*;
 public abstract class AppointmentQuery {
     /***
      * Search the database for an appointment, by appointment ID.
-     * @param appointmentId the appointment ID
+     * @param id the appointment ID
      * @return appointment with the specified appointment ID, or null if not found
      */
-    public static Appointment select(int appointmentId) {
+    public static Appointment select(int id) {
         try {
             String sql = "SELECT * FROM appointments WHERE Appointment_ID = ?";
             PreparedStatement ps = JDBC.getConnection().prepareStatement(sql);
-            ps.setInt(1, appointmentId);
+            ps.setInt(1, id);
             ResultSet rs = ps.executeQuery();
 
             if (rs.next()) {
@@ -26,20 +26,18 @@ public abstract class AppointmentQuery {
                 String description = rs.getString("Description");
                 String location = rs.getString("Location");
                 String type = rs.getString("Type");
-                LocalDateTime start = rs.getTimestamp("Start").toLocalDateTime(); // atZone(localZoneId).withZoneSameInstant(ZoneOffset.UTC).toLocalDateTime();
-                LocalDateTime end = rs.getTimestamp("End").toLocalDateTime(); // .atZone(ZoneOffset.UTC).withZoneSameInstant(localZoneId).toLocalDateTime();
-                LocalDateTime createDate = rs.getTimestamp("Create_Date").toLocalDateTime(); // .atZone(ZoneOffset.UTC).withZoneSameInstant(localZoneId).toLocalDateTime();
+                LocalDateTime start = rs.getTimestamp("Start").toLocalDateTime();
+                LocalDateTime end = rs.getTimestamp("End").toLocalDateTime();
+                LocalDateTime createDate = rs.getTimestamp("Create_Date").toLocalDateTime();
                 String createdBy = rs.getString("Created_By");
-                LocalDateTime lastUpdate = rs.getTimestamp("Last_Update").toLocalDateTime(); //.atZone(ZoneOffset.UTC).withZoneSameInstant(localZoneId).toLocalDateTime();
+                LocalDateTime lastUpdate = rs.getTimestamp("Last_Update").toLocalDateTime();
                 String lastUpdatedBy = rs.getString("Last_Updated_By");
                 int customerId = rs.getInt("Customer_ID");
                 int userId = rs.getInt("User_ID");
                 int contactId = rs.getInt("Contact_ID");
 
-                Appointment a = new Appointment(appointmentId, title, description, location, type, start, end, createDate,
+                return new Appointment(id, title, description, location, type, start, end, createDate,
                         createdBy, lastUpdate, lastUpdatedBy, customerId, userId, contactId);
-
-                return a;
             }
         }
         catch(SQLException ex) {
@@ -147,41 +145,38 @@ public abstract class AppointmentQuery {
         return -1;
     }
 
-
     /***
      * Delete an appointment from the database, by appointment ID.
      * @param appointmentId the appointment ID
-     * @return number of rows deleted, or -1 if delete failed
      */
-    public static int delete(int appointmentId) {
+    public static void delete(int appointmentId) {
         try {
             String sql = "DELETE FROM appointments WHERE Appointment_ID = ?";
             PreparedStatement ps = JDBC.getConnection().prepareStatement(sql);
             ps.setInt(1, appointmentId);
 
-            return ps.executeUpdate();
+            ps.executeUpdate();
         }
         catch(SQLException ex) {
             ex.printStackTrace();
         }
 
-        return -1;
     }
 
     /***
      * Delete all appointments associated with the given customer ID.
      * @param customerId the customer ID
-     * @return the number of rows deleted
      */
-    public static int deleteAllForCustomerId(int customerId) {
-        ObservableList<Appointment> thisCustomerAppointments = getAllForCustomerId(customerId);
+    public static void deleteAllForCustomerId(int customerId) {
+        ObservableList<Appointment> thisCustomerAppointments = selectAllForCustomerId(customerId);
+
+        if(thisCustomerAppointments == null) { return; }
 
         for (Appointment appointment : thisCustomerAppointments
         ) {
             delete(appointment.getId());
         }
 
-        return thisCustomerAppointments.size();
     }
 
     /***
@@ -189,7 +184,7 @@ public abstract class AppointmentQuery {
      * @param customerId the customer ID
      * @return the number of rows selected, or null
      */
-    public static ObservableList<Appointment> getAllForCustomerId(int customerId) {
+    public static ObservableList<Appointment> selectAllForCustomerId(int customerId) {
         ObservableList<Appointment> customerAppointments = FXCollections.observableArrayList();
 
         try {
@@ -361,7 +356,7 @@ public abstract class AppointmentQuery {
      * Get all appointments in the database and group by type and month.
      * @return all appointments grouped by type and month, or null if none
      */
-    public static ObservableList<TypeMonthAppt> getAllByTypeMonth() {
+    public static ObservableList<TypeMonthAppt> selectAllByTypeMonth() {
         ObservableList<TypeMonthAppt> allTypeMonthAppts = FXCollections.observableArrayList();
 
         try {
@@ -394,7 +389,7 @@ public abstract class AppointmentQuery {
      * @param contactId the contact ID
      * @return all appointments for the given contact ID, or null if none
      */
-    public static ObservableList<Appointment> getAllByContact(int contactId) {
+    public static ObservableList<Appointment> selectAllByContact(int contactId) {
         ObservableList<Appointment> contactAppointments = FXCollections.observableArrayList();
 
         try {
