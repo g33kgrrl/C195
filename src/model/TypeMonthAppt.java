@@ -3,10 +3,10 @@ package model;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
+
 public class TypeMonthAppt {
     private static ObservableList<TypeMonthAppt> allTypeMonthAppts = FXCollections.observableArrayList();
 
-    // total counts of customer appointments by type and month (regardless of year)
     private int appointmentId;
     private int count;
     private String type;
@@ -19,31 +19,37 @@ public class TypeMonthAppt {
         this.monthName = monthName;
     }
 
+    /***
+     * Get the appointment ID.
+     * @return the id
+     */
     public int getAppointmentId() {
         return appointmentId;
     }
 
+    /***
+     * Get count of appointments grouped by type and month (regardless of year).
+     * Note that this is not called directly, but used by ReportsByTypeMonthController to initialize the
+     * TypeMonthApptsTable.
+     * @return the count of appointments grouped by type and month
+     */
     public int getCount() {
         return count;
     }
 
-    public void setCount(int count) {
-        this.count = count;
-    }
-
+    /***
+     * Get appointment type.
+     * @return the type
+     */
     public String getType() {
         return type;
     }
 
-    public void setType(String type) {
-        this.type = type;
-    }
-
+    /***
+     * Get appointment month name.
+     * @return the month name
+     */
     public String getMonthName() {
         return monthName;
-    }
-
-    public void setMonthName(String monthName) {
-        this.monthName = monthName;
     }
 }

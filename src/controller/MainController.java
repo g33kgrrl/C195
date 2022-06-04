@@ -78,7 +78,7 @@ public class MainController implements Initializable {
         apptCustomerIdCol.setCellValueFactory(new PropertyValueFactory<>("customerId"));
         apptUserIdCol.setCellValueFactory(new PropertyValueFactory<>("userId"));
 
-        AppointmentsTable.setItems(AppointmentQuery.getAll());
+        AppointmentsTable.setItems(AppointmentQuery.selectAll());
     }
 
     /**
@@ -176,7 +176,7 @@ public class MainController implements Initializable {
         try {
             Customer selectedCustomer = (Customer) CustomersTable.getSelectionModel().getSelectedItem();
             int selectedCustomerId = selectedCustomer.getId();
-            ObservableList<Appointment> associatedAppts = AppointmentQuery.selectAllForCustomerId(selectedCustomerId);
+            ObservableList<Appointment> associatedAppts = AppointmentQuery.selectByCustomerId(selectedCustomerId);
             int associatedApptsSize = (associatedAppts == null) ? 0 : associatedAppts.size();
 
             String deleteConfirm = "Are you sure you want to delete this customer and any associated appointments?\n\n" +
@@ -196,7 +196,7 @@ public class MainController implements Initializable {
                 AppointmentQuery.deleteAllForCustomerId(selectedCustomerId);
                 CustomerQuery.delete(selectedCustomerId);
                 CustomersTable.setItems(CustomerQuery.getAll());
-                AppointmentsTable.setItems(AppointmentQuery.getAll());
+                AppointmentsTable.setItems(AppointmentQuery.selectAll());
             }
         } catch (NullPointerException e) {
             showAlert("error", "Delete customer", "Please select a customer to delete.");
@@ -280,7 +280,7 @@ public class MainController implements Initializable {
 
             if (toDeletePrompt.isPresent() && toDeletePrompt.get() == ButtonType.OK) {
                 AppointmentQuery.delete(selectedAppointmentId);
-                AppointmentsTable.setItems(AppointmentQuery.getAll());
+                AppointmentsTable.setItems(AppointmentQuery.selectAll());
 
                 String deletedApptConfirm = "Deleted appointment:\n\n" +
                         "\tId: " + selectedAppointmentId + "\n\n" +
@@ -321,20 +321,20 @@ public class MainController implements Initializable {
      * Set Appointments table to show all appointments.
      */
     public void onAllRadioAction() {
-        AppointmentsTable.setItems(AppointmentQuery.getAll());
+        AppointmentsTable.setItems(AppointmentQuery.selectAll());
     }
 
     /***
      * Set Appointments table to show this week's appointments.
      */
     public void onWeekRadioAction() {
-        AppointmentsTable.setItems(AppointmentQuery.getWeek());
+        AppointmentsTable.setItems(AppointmentQuery.selectCurrentWeek());
     }
 
     /***
      * Set Appointments table to show this month's appointments.
      */
-    public void onMonthRadioAction() { AppointmentsTable.setItems(AppointmentQuery.getMonth()); }
+    public void onMonthRadioAction() { AppointmentsTable.setItems(AppointmentQuery.selectCurrentMonth()); }
 
     /**
      * Handles view reports request.

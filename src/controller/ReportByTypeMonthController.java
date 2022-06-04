@@ -22,13 +22,13 @@ public class ReportByTypeMonthController implements Initializable {
 
     /**
      * Initializes table in report by type/month screen.
-     * Populates table with appointment counts grouped by type and month.
+     * Populates table with appointment counts grouped by type and month (regardless of year).
      * @param url the url
      * @param resourceBundle the resourceBundle
      */
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        ObservableList<TypeMonthAppt> typeMonthAppts = AppointmentQuery.selectAllByTypeMonth();
+        ObservableList<TypeMonthAppt> typeMonthAppts = AppointmentQuery.selectByTypeMonth();
 
         apptCountCol.setCellValueFactory(new PropertyValueFactory<>("count"));
         apptTypeCol.setCellValueFactory(new PropertyValueFactory<>("type"));
@@ -46,12 +46,12 @@ public class ReportByTypeMonthController implements Initializable {
     }
 
     /***
-     * Handles OK button click.
-     * When OK button is clicked, dismiss report and return user to reports screen.
-     * @param actionEvent the OK button click event
+     * Handles Back button click.
+     * When Back button is clicked, dismiss report and return user to reports screen.
+     * @param actionEvent the Back button click event
      * @throws IOException for input/output exceptions
      */
-    public void onOkButtonAction(ActionEvent actionEvent) throws IOException {
+    public void onBackButtonAction(ActionEvent actionEvent) throws IOException {
         MainController.toReports(actionEvent);
     }
 }

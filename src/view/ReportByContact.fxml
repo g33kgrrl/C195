@@ -41,7 +41,7 @@
             <Insets bottom="6.0" right="12.0" />
          </padding>
         </Pane>
-          <Button fx:id="OK" layoutX="516.0" layoutY="249.0" mnemonicParsing="false" onAction="#onOkButtonAction" prefHeight="33.0" prefWidth="77.0" text="OK" />
+          <Button fx:id="OK" layoutX="516.0" layoutY="249.0" mnemonicParsing="false" onAction="#onBackButtonAction" prefHeight="33.0" prefWidth="77.0" text="OK" />
     </children>
     <padding>
         <Insets bottom="10.0" />

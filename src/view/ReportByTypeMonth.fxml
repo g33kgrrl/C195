@@ -27,7 +27,7 @@
             <Insets bottom="6.0" />
          </padding>
         </Pane>
-          <Button fx:id="OK" layoutX="192.0" layoutY="221.0" mnemonicParsing="false" onAction="#onOkButtonAction" prefHeight="33.0" prefWidth="77.0" text="OK" AnchorPane.bottomAnchor="7.0" />
+          <Button fx:id="OK" layoutX="192.0" layoutY="221.0" mnemonicParsing="false" onAction="#onBackButtonAction" prefHeight="33.0" prefWidth="77.0" text="OK" AnchorPane.bottomAnchor="7.0" />
     </children>
    <rotationAxis>
       <Point3D />

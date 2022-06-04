@@ -44,14 +44,14 @@ public class ReportByContactController implements Initializable {
      */
     public void onContactComboAction() {
         Contact selectedContact = (Contact) contactCombo.getSelectionModel().getSelectedItem();
-        ObservableList<Appointment> contactAppointments = AppointmentQuery.selectAllByContact(selectedContact.getId());
+        ObservableList<Appointment> contactAppointments = AppointmentQuery.selectByContact(selectedContact.getId());
 
         apptIdCol.setCellValueFactory(new PropertyValueFactory<>("id"));
         apptTitleCol.setCellValueFactory(new PropertyValueFactory<>("title"));
         apptTypeCol.setCellValueFactory(new PropertyValueFactory<>("type"));
         apptDescriptionCol.setCellValueFactory(new PropertyValueFactory<>("description"));
-        apptStartCol.setCellValueFactory(new PropertyValueFactory<>("start"));
-        apptEndCol.setCellValueFactory(new PropertyValueFactory<>("end"));
+        apptStartCol.setCellValueFactory(new PropertyValueFactory<>("formattedStart"));
+        apptEndCol.setCellValueFactory(new PropertyValueFactory<>("formattedEnd"));
         apptCustomerIdCol.setCellValueFactory(new PropertyValueFactory<>("customerId"));
 
         if(contactAppointments == null) {
@@ -67,12 +67,12 @@ public class ReportByContactController implements Initializable {
     }
 
     /***
-     * Handles OK button click.
-     * When OK button is clicked, dismiss report and return user to reports screen.
-     * @param actionEvent the OK button click event
+     * Handles Back button click.
+     * When Back button is clicked, dismiss report and return user to reports screen.
+     * @param actionEvent the Back button click event
      * @throws IOException for input/output exceptions
      */
-    public void onOkButtonAction(ActionEvent actionEvent) throws IOException {
+    public void onBackButtonAction(ActionEvent actionEvent) throws IOException {
         MainController.toReports(actionEvent);
     }
 }
