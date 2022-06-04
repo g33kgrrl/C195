@@ -44,14 +44,6 @@ public class ReportsController implements Initializable {
     public void initialize(URL url, ResourceBundle resourceBundle) {
     }
 
-    // TODO: get rid of this
-    public void showReport(String title, String report) {
-        Alert alert = new Alert(Alert.AlertType.INFORMATION);
-        alert.setTitle(title);
-        alert.setContentText(report);
-        alert.showAndWait();
-    }
-
     /***
      * Launch report showing the total number of customer appointments by type and month.
      * @param actionEvent the report by type/month button click action
@@ -94,7 +86,8 @@ public class ReportsController implements Initializable {
         // and from the user log-in date and time stamp that will be tracked in part C
         int customerCount = CustomerQuery.getCustomerCount();
 
-        showReport("Report: Customer Count", "Total customer count is " + customerCount + ".");
+        MainController.showAlert("information", "Report: Customer Count", "Total customer count " +
+                "is " + customerCount + ".");
     }
 
     /***

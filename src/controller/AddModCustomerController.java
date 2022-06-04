@@ -81,14 +81,6 @@ public class AddModCustomerController implements Initializable {
         divisionCombo.setPromptText("Select division");
     }
 
-    // TODO: Get rid of this
-    public void showValidateError() {
-        Alert alert = new Alert(Alert.AlertType.ERROR);
-        alert.setTitle("Customer add/modify form");
-        alert.setContentText("Please complete all fields.");
-        alert.showAndWait();
-    }
-
     /***
      * Handles save customer request.
      * Gets values from fields and ensures all fields are set. If not, an error is displayed. A new customer is added to
@@ -109,7 +101,9 @@ public class AddModCustomerController implements Initializable {
             // Validation: Ensure all fields are set
             if(name.isEmpty() || address.isEmpty() || postalCode.isEmpty() || phone.isEmpty() ||
                     divisionCombo.getSelectionModel().isEmpty()) {
-                showValidateError();
+
+                MainController.showAlert("error", "Customer add/modify form", "Please complete " +
+                        "all fields.");
             }
             else {
                 if (customer == null) {
@@ -131,7 +125,8 @@ public class AddModCustomerController implements Initializable {
             }
         }
         catch (NullPointerException e) {
-            showValidateError();
+            MainController.showAlert("error", "Customer add/modify form", "Please complete " +
+                    "all fields.");
         }
     }
 
