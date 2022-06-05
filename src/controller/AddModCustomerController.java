@@ -97,7 +97,7 @@ public class AddModCustomerController implements Initializable {
 
             // Validation: Ensure all fields are set
             if(name.isEmpty() || address.isEmpty() || postalCode.isEmpty() || phone.isEmpty() ||
-                    divisionCombo.getSelectionModel().isEmpty()) {
+                    divisionCombo.getValue() == null) {
 
                 MainController.showAlert("error", "Customer add/modify form", "Please complete " +
                         "all fields.");

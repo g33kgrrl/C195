@@ -52,7 +52,7 @@ public class ReportByContactController implements Initializable {
         apptEndCol.setCellValueFactory(new PropertyValueFactory<>("formattedEnd"));
         apptCustomerIdCol.setCellValueFactory(new PropertyValueFactory<>("customerId"));
 
-        if(contactAppointments == null) {
+        if(contactAppointments.isEmpty()) {
             TypeMonthApptsTable.setItems(null);
 
             MainController.showAlert("information", "Search Appointments by Contact",

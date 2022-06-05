@@ -110,8 +110,8 @@ public class AddModAppointmentController implements Initializable {
 
             // Validation: Ensure all fields are set
             if(title.isEmpty() || description.isEmpty() || location.isEmpty() || type.isEmpty() ||
-                    startHourCombo.getSelectionModel().getSelectedItem() == null ||
-                    endHourCombo.getSelectionModel().getSelectedItem() == null ||
+                    startHourCombo.getValue() == null ||
+                    endHourCombo.getValue() == null ||
                     startDatePicker.getValue() == null || endDatePicker.getValue() == null ||
                     customerCombo.getValue() == null || userCombo.getValue() == null ||
                     contactCombo.getValue() == null
