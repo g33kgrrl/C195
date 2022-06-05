@@ -2,7 +2,8 @@
 Acme Appointment Manager
 
 ## Purpose
-Acme Appointment Manager is used to track customers and associated appointment data, and generate reports to aid in business decisions.
+Acme Appointment Manager tracks customers and associated appointment data, and generates reports to aid in
+business decisions.
 
 ## Author
 Lisa Georgiades
@@ -29,7 +30,7 @@ JavaFX-SDK-17.0.1
 Unzip Acme_Scheduler.zip in the desired directory
 Open IntelliJ IDEA
 Click File -> Open and point it to the C195 directory
-Click the green run button
+When the project opens, click the green Run button
 
 ## Description of additional report
 The additional report displays a total count of all customers in the system.
