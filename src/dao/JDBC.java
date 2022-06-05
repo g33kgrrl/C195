@@ -22,7 +22,6 @@ public class JDBC {
               Class.forName(driver); // Locate Driver
               //password = Details.getPassword(); // Assign password
               connection = DriverManager.getConnection(jdbcUrl, userName, password); // reference Connection object
-              System.out.println("Connection successful!");
           }
                   catch(ClassNotFoundException e) {
                       System.out.println("Error:" + e.getMessage());
@@ -38,7 +37,6 @@ public class JDBC {
              public static void closeConnection() {
                  try {
                      connection.close();
-                     System.out.println("Connection closed!");
                  } catch (SQLException e) {
                      System.out.println(e.getMessage());
                  }

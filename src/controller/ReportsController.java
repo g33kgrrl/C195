@@ -67,8 +67,6 @@ public class ReportsController implements Initializable {
      * Launch report showing total count of all customers.
      */
     public void onReportCustomerCountButtonAction() {
-        // an additional report of your choice that is different from the two other required reports in this prompt
-        // and from the user log-in date and time stamp that will be tracked in part C
         int customerCount = CustomerQuery.getCustomerCount();
 
         MainController.showAlert("information", "Report: Customer Count", "Total customer count " +
