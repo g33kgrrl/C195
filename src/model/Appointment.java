@@ -60,13 +60,19 @@ public class Appointment {
      *  Find upcoming appointments.
      *  Fetches a list of all appointments from the database, then loops through them and compares their start times to
      *  current time. Any appointments with a start time in the next 15 minutes are listed.
+     *
+     * LAMBDA EXPRESSION JUSTIFICATION: Originally, upcomingApptsList was initialized as a string, and string
+     * concatenation '+=' was used in a for loop. This is not good practice, as it degrades performance by creating a
+     * new String object for each concatenation and takes up unnecessary resources until garbage collection. Using a
+     * StringBuilder inside of a lambda expression made more efficient use of resources, while also keeping the code
+     * concise by condensing the task into one self-contained line.
+     *
      * @return string representing list of appointments, or "no upcoming" if none are found
      */
     public static String getUpcoming() {
         ObservableList<Appointment> upcomingAppointments = FXCollections.observableArrayList();
         ObservableList<Appointment> allAppointments = AppointmentQuery.selectAll();
         LocalDateTime nowLdt = LocalDateTime.now();
-        StringBuilder upcomingApptsList = new StringBuilder();
 
         if(allAppointments == null) { return "No upcoming appointments."; }
 
@@ -83,17 +89,14 @@ public class Appointment {
         if(upcomingApptsCount == 0) {
             return "No upcoming appointments.";
         } else {
-            upcomingApptsList.append(upcomingApptsCount + " upcoming appointment(s):\n\n");
+            StringBuilder upcomingApptsList = new StringBuilder();
+            upcomingApptsList.append(upcomingApptsCount).append(" upcoming appointment(s):\n\n");
 
-            // Complains about += is not good practice in loop (creates extraneous String objects that
-            // must be garbage collected) but using repeated StringBuilder.append is clunky, hard to read
-//            for(Appointment a:upcomingAppointments) {
-//                upcomingApptsList += a.start.format(DateTimeFormatter.ofPattern("HH:mm")) + "\t" + a.getTitle() + "\t" +
-//                a.getDescription() + "\n";
-//            }
-
-            upcomingAppointments.forEach(a -> upcomingApptsList.append(a.start.format(DateTimeFormatter.ofPattern("HH:mm")) +
-                    "\t" + a.getTitle() + "\t\t" + a.getDescription() + "\n"));
+            // Lambda expression
+            // For each upcoming appointment, append to StringBuilder to be displayed in report
+            upcomingAppointments.forEach(a -> upcomingApptsList.append(a.start.format(
+                    DateTimeFormatter.ofPattern("HH:mm"))).append("\t").append(a.getTitle()).append("\t\t").append(
+                    a.getDescription()).append("\n"));
 
             return upcomingApptsList.toString();
         }
