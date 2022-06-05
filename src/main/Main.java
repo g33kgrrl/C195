@@ -9,6 +9,20 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 import java.util.Objects;
 
+/***
+ * <h2>Acme Appointment Manager</h2>
+ * <p>Acme Appointment Manager is used to track vital appointment data.<br/>
+ * Please see README.txt for more details.</p>
+ *
+ * @author <p>Lisa Georgiades<br>#0733734<br>C195 Final Project</p>
+ *
+ * <h2>Important Locations</h2>
+ * <ol>
+ *   <li>The javadoc folder is located in the C195 project folder.</li>
+ *   <li>Lambda expression #1 is located in Appointment.java, in the getUpcoming() method.</li>
+ *   <li>Lambda expression #2 is located in Appointment.java, in the checkOverlap method.</li>
+ * </ol>
+ */
 public class Main extends Application {
     @Override
     public void start(Stage primaryStage) throws Exception{
@@ -19,12 +33,8 @@ public class Main extends Application {
     }
 
     /***
-     *
-     * TODO: Figure out where to put this
-     * Submission notes:
-     * Database Driver version #: 10.00.19041.01
-     *
-     * @param args the args
+     * The main method, where the program begins executing.
+     * @param args the args to pass to launch
      */
     public static void main(String[] args) {
         JDBC.makeConnection();
