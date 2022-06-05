@@ -61,11 +61,11 @@ public class Appointment {
      *  Fetches a list of all appointments from the database, then loops through them and compares their start times to
      *  current time. Any appointments with a start time in the next 15 minutes are listed.
      *
-     * <p><b>LAMBDA EXPRESSION JUSTIFICATION: Originally, upcomingApptsList was initialized as a string, and string
+     * <p><b>LAMBDA EXPRESSION JUSTIFICATION</b>: Originally, upcomingApptsList was initialized as a string, and string
      * concatenation '+=' was used in a for loop. This is not good practice, as it degrades performance by creating a
      * new String object for each concatenation and takes up unnecessary resources until garbage collection. Using a
      * StringBuilder inside of a lambda expression made more efficient use of resources, while also keeping the code
-     * concise by condensing the task into one self-contained line.</b></p>
+     * concise by condensing the task into one self-contained line.</p>
      *
      * @return string representing list of appointments, or "no upcoming" if none are found
      */
@@ -150,8 +150,8 @@ public class Appointment {
      * uses the appt param to remove the current appointment from the list before the check, so that it won't create a
      * time conflict with itself when modifying.
      *
-     * <p><b>LAMBDA EXPRESSION JUSTIFICATION: A "for" loop could have been used here to filter the modified appointment from
-     * the list, but a lambda expression is both more readable and more efficient.</b></p>
+     * <p><b>LAMBDA EXPRESSION JUSTIFICATION</b>: A "for" loop could have been used here to filter the modified appointment from
+     * the list, but a lambda expression is both more readable and more efficient.</p>
      *
      * @param proposedCustomerId the user-selected customer ID
      * @param proposedStart the user-selected start LocalDateTime
