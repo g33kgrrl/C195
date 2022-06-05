@@ -66,6 +66,7 @@ public class Appointment {
         ObservableList<Appointment> upcomingAppointments = FXCollections.observableArrayList();
         ObservableList<Appointment> allAppointments = AppointmentQuery.selectAll();
         LocalDateTime nowLdt = LocalDateTime.now();
+        StringBuilder upcomingApptsList = new StringBuilder();
 
         if(allAppointments == null) { return "No upcoming appointments."; }
 
@@ -82,7 +83,7 @@ public class Appointment {
         if(upcomingApptsCount == 0) {
             return "No upcoming appointments.";
         } else {
-            String upcomingApptsList = upcomingApptsCount + " upcoming appointment(s):\n\n";
+            upcomingApptsList.append(upcomingApptsCount + " upcoming appointment(s):\n\n");
 
             // Complains about += is not good practice in loop (creates extraneous String objects that
             // must be garbage collected) but using repeated StringBuilder.append is clunky, hard to read
@@ -91,10 +92,10 @@ public class Appointment {
 //                a.getDescription() + "\n";
 //            }
 
-            upcomingAppointments.forEach(a -> upcomingApptsList.concat(a.start.format(DateTimeFormatter.ofPattern("HH:mm")) +
-                    "\t" + a.getTitle() + "\t" + a.getDescription() + "\n"));
+            upcomingAppointments.forEach(a -> upcomingApptsList.append(a.start.format(DateTimeFormatter.ofPattern("HH:mm")) +
+                    "\t" + a.getTitle() + "\t\t" + a.getDescription() + "\n"));
 
-            return upcomingApptsList;
+            return upcomingApptsList.toString();
         }
     }
 
