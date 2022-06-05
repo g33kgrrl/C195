@@ -11,8 +11,7 @@ import java.util.Objects;
 
 /***
  * <h2>Acme Appointment Manager</h2>
- * <p>Acme Appointment Manager is used to track vital customer and appointment data.<br/>
- * Please see README.txt for more details.</p>
+ * <p>tracks customers and associated appointment data, and generates reports to aid in business decisions.</p>
  *
  * @author <p>Lisa Georgiades<br>#0733734<br>C195 Final Project</p>
  *
