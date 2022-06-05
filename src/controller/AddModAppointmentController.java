@@ -6,7 +6,6 @@ import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
-import java.io.IOException;
 import java.net.URL;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -95,9 +94,8 @@ public class AddModAppointmentController implements Initializable {
      * a different time slot can be selected. A new appointment is added to the database using AppointmentQuery.insert(),
      * or AppointmentQuery.update() is called to update an existing appointment.
      * @param actionEvent the save product button click event
-     * @throws IOException for input/output exceptions
      */
-    public void onSaveButtonAction(ActionEvent actionEvent) throws IOException {
+    public void onSaveButtonAction(ActionEvent actionEvent) {
         try {
             String title = titleText.getText();
             String description = descriptionText.getText();
@@ -166,9 +164,8 @@ public class AddModAppointmentController implements Initializable {
      * Handles cancel request.
      * Returns user to main screen without saving any entered values.
      * @param actionEvent the Cancel button click event
-     * @throws IOException for input/output exceptions
      */
-    public void onCancelButtonAction(ActionEvent actionEvent) throws IOException {
+    public void onCancelButtonAction(ActionEvent actionEvent) {
         MainController.toMain(actionEvent);
     }
 }

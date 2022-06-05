@@ -85,9 +85,8 @@ public class AddModCustomerController implements Initializable {
      * Gets values from fields and ensures all fields are set. If not, an error is displayed. A new customer is added to
      * the database using CustomerQuery.insert(), or CustomerQuery.update() is called to update an existing customer.
      * @param actionEvent the Save button click event
-     * @throws IOException for input/output exceptions
      */
-    public void onSaveButtonAction(ActionEvent actionEvent) throws IOException {
+    public void onSaveButtonAction(ActionEvent actionEvent) {
         try {
             String name = nameText.getText();
             String address = addressText.getText();
@@ -132,9 +131,8 @@ public class AddModCustomerController implements Initializable {
      * Handles cancel request.
      * Returns user to main screen without saving any entered field values.
      * @param actionEvent the Cancel button click event
-     * @throws IOException for input/output exceptions
      */
-    public void onCancelButtonAction(ActionEvent actionEvent) throws IOException {
+    public void onCancelButtonAction(ActionEvent actionEvent) {
         MainController.toMain(actionEvent);
     }
 }

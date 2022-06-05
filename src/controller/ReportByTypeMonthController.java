@@ -51,9 +51,8 @@ public class ReportByTypeMonthController implements Initializable {
      * Handles Back button click.
      * When Back button is clicked, dismiss report and return user to reports screen.
      * @param actionEvent the Back button click event
-     * @throws IOException for input/output exceptions
      */
-    public void onBackButtonAction(ActionEvent actionEvent) throws IOException {
+    public void onBackButtonAction(ActionEvent actionEvent) {
         MainController.toReports(actionEvent);
     }
 }

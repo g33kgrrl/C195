@@ -7,12 +7,10 @@ import javafx.event.ActionEvent;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
-import model.Appointment;
-import model.Contact;
-
-import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
+import model.Appointment;
+import model.Contact;
 
 
 public class ReportByContactController implements Initializable {
@@ -26,7 +24,6 @@ public class ReportByContactController implements Initializable {
     public TableColumn apptCustomerIdCol;
     public ComboBox contactCombo;
     public Button Back;
-
 
     /**
      * Initializes available field options in report by contact screen.
@@ -71,9 +68,8 @@ public class ReportByContactController implements Initializable {
      * Handles Back button click.
      * When Back button is clicked, dismiss report and return user to reports screen.
      * @param actionEvent the Back button click event
-     * @throws IOException for input/output exceptions
      */
-    public void onBackButtonAction(ActionEvent actionEvent) throws IOException {
+    public void onBackButtonAction(ActionEvent actionEvent) {
         MainController.toReports(actionEvent);
     }
 }

@@ -90,29 +90,37 @@ public class MainController implements Initializable {
     /**
      * Navigates user back to the main screen.
      * @param actionEvent an event requiring redirect to main screen
-     * @throws IOException for input/output exceptions
      */
-    public static void toMain(ActionEvent actionEvent) throws IOException {
-        Parent root = FXMLLoader.load(MainController.class.getResource("/view/Main.fxml"));
-        Stage stage = (Stage)((Node)actionEvent.getSource()).getScene().getWindow();
-        Scene scene = new Scene(root);
-        stage.setTitle("Schedule Management System");
-        stage.setScene(scene);
-        stage.show();
+    public static void toMain(ActionEvent actionEvent) {
+        try {
+            Parent root = FXMLLoader.load(MainController.class.getResource("/view/Main.fxml"));
+            Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
+            Scene scene = new Scene(root);
+            stage.setTitle("Schedule Management System");
+            stage.setScene(scene);
+            stage.show();
+        }
+        catch(IOException e) {
+            e.printStackTrace();
+        }
     }
 
     /**
      * Navigates user to the reports screen.
      * @param actionEvent the Reports button click event
-     * @throws IOException for input/output exceptions
      */
-    public static void toReports(ActionEvent actionEvent) throws IOException {
-        Parent root = FXMLLoader.load(MainController.class.getResource("/view/Reports.fxml"));
-        Stage stage = (Stage)((Node) actionEvent.getSource()).getScene().getWindow();
-        Scene scene = new Scene(root);
-        stage.setTitle("Reports");
-        stage.setScene(scene);
-        stage.show();
+    public static void toReports(ActionEvent actionEvent) {
+        try {
+            Parent root = FXMLLoader.load(MainController.class.getResource("/view/Reports.fxml"));
+            Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
+            Scene scene = new Scene(root);
+            stage.setTitle("Reports");
+            stage.setScene(scene);
+            stage.show();
+        }
+        catch(IOException e) {
+            e.printStackTrace();
+        }
     }
 
     /***
@@ -346,7 +354,6 @@ public class MainController implements Initializable {
      * Handles view reports request.
      * Launches view reports screen.
      * @param actionEvent the view reports button click event
-     * @throws IOException for input/output exceptions
      */
-    public void onViewReportsButtonAction(ActionEvent actionEvent) throws IOException { toReports(actionEvent); }
+    public void onViewReportsButtonAction(ActionEvent actionEvent) { toReports(actionEvent); }
 }

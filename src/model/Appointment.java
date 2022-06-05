@@ -84,10 +84,15 @@ public class Appointment {
         } else {
             String upcomingApptsList = upcomingApptsCount + " upcoming appointment(s):\n\n";
 
-            for(Appointment a:upcomingAppointments) {
-                upcomingApptsList += a.start.format(DateTimeFormatter.ofPattern("HH:mm")) + "\t" + a.getTitle() + "\t" +
-                a.getDescription() + "\n";
-            }
+            // Complains about += is not good practice in loop (creates extraneous String objects that
+            // must be garbage collected) but using repeated StringBuilder.append is clunky, hard to read
+//            for(Appointment a:upcomingAppointments) {
+//                upcomingApptsList += a.start.format(DateTimeFormatter.ofPattern("HH:mm")) + "\t" + a.getTitle() + "\t" +
+//                a.getDescription() + "\n";
+//            }
+
+            upcomingAppointments.forEach(a -> upcomingApptsList.concat(a.start.format(DateTimeFormatter.ofPattern("HH:mm")) +
+                    "\t" + a.getTitle() + "\t" + a.getDescription() + "\n"));
 
             return upcomingApptsList;
         }
@@ -141,7 +146,7 @@ public class Appointment {
      * uses the appt param to remove the current appointment from the list before the check, so that it won't create a
      * time conflict with itself when modifying.
      *
-     * Lambda expression justification: A "for" loop could have been used here to filter the modified appointment from
+     * LAMBDA EXPRESSION JUSTIFICATION: A "for" loop could have been used here to filter the modified appointment from
      * the list, but a lambda expression is both more readable and more efficient.
      *
      * @param proposedCustomerId the user-selected customer ID
@@ -157,6 +162,7 @@ public class Appointment {
         // If there are no appointments for this customer, there cannot be a conflict; return false
         if(custAppointments == null) { return false; }
 
+        // Lambda expression
         // If an appointment is being modified, remove it from the list so it doesn't cause a time conflict with itself
         custAppointments = custAppointments.filtered(appointment -> appointment.id != appt.id);
 

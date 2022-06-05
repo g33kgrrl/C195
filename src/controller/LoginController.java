@@ -69,9 +69,8 @@ public class LoginController implements Initializable {
      * whether there is or is not an upcoming appointment, and navigate to the main screen. Log details, including
      * given username and timestamp, for failed and successful login attempts.
      * @param actionEvent the Submit button click event
-     * @throws IOException for input/output exceptions
      */
-    public void onSubmitButtonAction(ActionEvent actionEvent) throws IOException {
+    public void onSubmitButtonAction(ActionEvent actionEvent) {
         String logLine = LocalDateTime.now() + " - ";
         String userName = userNameText.getText();
         boolean authorized = UserQuery.validateUser(userName, passwordText.getText());
