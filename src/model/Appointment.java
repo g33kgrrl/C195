@@ -166,12 +166,14 @@ public class Appointment {
         // If there are no appointments for this customer, there cannot be a conflict; return false
         if(custAppointments == null) { return false; }
 
-        // Lambda expression
         // If an appointment is being modified, remove it from the list so it doesn't cause a time conflict with itself
-        custAppointments = custAppointments.filtered(appointment -> appointment.id != appt.id);
+        // Lambda expression
+        if(appt != null) {
+            custAppointments = custAppointments.filtered(appointment -> appointment.id != appt.id);
 
-        // If there are no other appointments in the list, there cannot be a conflict; return false
-        if(custAppointments == null) { return false; }
+            // If there are no other appointments left in the list, there cannot be a conflict; return false
+            if(custAppointments == null) { return false; }
+        }
 
         // Check the remaining appointments in the list against the proposed start and end LocalDateTimes
         for(Appointment a:custAppointments) {

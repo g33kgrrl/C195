@@ -103,18 +103,16 @@ public class AddModAppointmentController implements Initializable {
             String type = typeCombo.getValue();
             LocalDateTime start = LocalDateTime.of(startDatePicker.getValue(), LocalTime.parse(startHourCombo.getValue().toString()));
             LocalDateTime end = LocalDateTime.of(endDatePicker.getValue(), LocalTime.parse(endHourCombo.getValue().toString()));
-            int customerId = customerCombo.getSelectionModel().getSelectedItem().getId();
+            int customerId = customerCombo.getValue().getId();
             int userId = userCombo.getValue().getUserId();
-            int contactId = contactCombo.getSelectionModel().getSelectedItem().getId();
+            int contactId = contactCombo.getValue().getId();
             int rowsAffected;
 
             // Validation: Ensure all fields are set
-            if(title.isEmpty() || description.isEmpty() || location.isEmpty() || type.isEmpty() ||
-                    startHourCombo.getValue() == null ||
-                    endHourCombo.getValue() == null ||
-                    startDatePicker.getValue() == null || endDatePicker.getValue() == null ||
-                    customerCombo.getValue() == null || userCombo.getValue() == null ||
-                    contactCombo.getValue() == null
+            if(title.equals("") || description.equals("") || location.equals("") || type == null ||
+                    startDatePicker.getValue() == null || startHourCombo == null ||
+                    endDatePicker.getValue() == null || endHourCombo == null ||
+                    customerId == 0 || userId == 0 || contactId == 0
             ) {
                 MainController.showAlert("error", "Appointment add/modify form", "Please complete all fields.");
             } else if(Appointment.checkOverlap(customerId, start, end, appointment)) {
