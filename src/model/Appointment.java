@@ -94,9 +94,8 @@ public class Appointment {
 
             // Lambda expression
             // For each upcoming appointment, append to StringBuilder to be displayed in report
-            // ****** does not include an appointment ID and date.
-            upcomingAppointments.forEach(a -> upcomingApptsList.append(dtf.format(a.start)).append("\t").append(
-                    a.id).append(a.title).append("\t\t").append(a.description).append("\n"));
+            upcomingAppointments.forEach(a -> upcomingApptsList.append(a.id).append("\t").append(
+                    dtf.format(a.start)).append("\t").append(a.title).append("\t").append(a.description).append("\n"));
 
             return upcomingApptsList.toString();
         }
